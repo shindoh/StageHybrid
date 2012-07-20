@@ -138,7 +138,6 @@ $.stage.component.infosend = function(eleId,tmpId,url,params,func)
 	
 }
 
-
 /*
  * @pass params 
  * 
@@ -170,6 +169,60 @@ $.stage.component.pageMove = function(page,jsonParams,options)
 	}
 
 	$.mobile.changePage(page,options);
+}
+
+/*
+ * @has session 
+ * 
+ */
+$.stage.component.hasSession = function()
+{
+	var userInformation = JSON.parse(localStorage.getItem("userInformation"));
+	var result = false;
+	if(userInformation && userInformation.userId)
+	{
+		result = true
+	}
+	return result;
+}
+
+
+/*
+ * @session setting  
+ * 
+ */
+$.stage.component.setSession = function(userId,pass)
+{
+	var userInformation = {
+			userId : userId,
+			pass : pass
+	}
+	localStorage.setItem("userInformation",JSON.stringify(userInformation));
+}
+
+
+/*
+ * @get session  
+ * 
+ */
+$.stage.component.getSession = function()
+{
+	var strUserInform = localStorage.getItem("userInformation");
+	var userInformation = null;
+	if(strUserInform)
+	{
+		userInformation = JSON.parse(strUserInform);
+	}
+	return userInformation;
+}
+
+/*
+ * @session out (logout)  
+ * 
+ */
+$.stage.component.sessionOut = function()
+{
+	localStorage.setItem("userInformation",null);
 }
 
 

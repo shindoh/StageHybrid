@@ -5,6 +5,30 @@ RestPool = function(){
 	
 	/*
 	 * 
+	 * SESSION
+	 * 
+	 * 
+	 **/		
+		/*
+		 * method : post  
+		 * params : id (required) - limit length = 10
+		 * 			pass (required) - min 6 ~ max 12
+		 * 			mail (required)
+		 * 			sex (required)
+		 */		
+		this.JOIN_USER = this.STAGE_REST + "/join";		
+		
+		/*
+		 * method : post  
+		 * params : id (required)
+		 * 			pass (required)
+		 */		
+		this.LOGIN_USER = this.STAGE_REST + "/login";		
+	
+	
+	
+	/*
+	 * 
 	 * TALK
 	 * 
 	 * 
@@ -14,8 +38,8 @@ RestPool = function(){
 		 * params : listIndex (required)
 		 * 			listCount (required)
 		 * 			{userId}
-		 * description : 1. listIndex���� listCount��ŭ�� Ÿ�Ӷ����� �����´�. 
-		 * 				 2. /talkList/{userId}�� ����Ҷ��� �ش� userId�� �ش��ϴ� ������ Ÿ�Ӷ��ε��� 1��� ���� �����´�.  
+		 * description : 1. listIndex占쏙옙占쏙옙 listCount占쏙옙큼占쏙옙 타占쌈띰옙占쏙옙占쏙옙 占쏙옙占쏙옙占승댐옙. 
+		 * 				 2. /talkList/{userId}占쏙옙 占쏙옙占쏙옙秊占쏙옙占�占쌔댐옙 userId占쏙옙 占쌔댐옙占싹댐옙 占쏙옙占쏙옙占쏙옙 타占쌈띰옙占싸듸옙占쏙옙 1占쏙옙占�占쏙옙占쏙옙 占쏙옙占쏙옙占승댐옙.  
 		 */
 		this.GET_TALK_LIST = this.STAGE_REST + "/talkList";
 		this.GET_TALK_SUB_LIST = this.STAGE_REST + "/talkSubList/"
@@ -113,9 +137,9 @@ RestPool = function(){
 		 * 			photoIdx (path)
 		 */		
 		this.DELETE_USER_PHOTO_ALBUM = this.STAGE_REST + "/user/photoAlbum/delete/";		
-	
 		
-		
+
+
 };
 
 $.stage.restPool = new RestPool();
