@@ -28,6 +28,7 @@
 				
 	
 		ajax.open("GET",url,true);
+		ajax.setRequestHeader("If-Modified-Since","Sat, 1 Jan 2000 00:00:00 GMT");
 		ajax.onreadystatechange=function(){
 			if(ajax.readyState==4 && (ajax.status==200||ajax.status==0)){
 				var data = eval("(" + ajax.responseText + ')');
@@ -90,8 +91,8 @@
 	 * 			  phonegap-x.js 
 	 * 
 	 * 	 params : imageUrl(required)
-	 * 	 description : flickrUploadFinish ȣ�� �� 'flickrUploadFinish'�̺�Ʈ�� ��Ƽ� 
-	 * 				   FI.photoURL�� ȣ���Ͽ� Flickr�� ���ε尡 �Ϸ�� �ش��̹����� url�� �����ͼ� ����Ѵ�.
+	 * 	 description : flickrUploadFinish 호占쏙옙 占쏙옙 'flickrUploadFinish'占싱븝옙트占쏙옙 占쏙옙티占�
+	 * 				   FI.photoURL占쏙옙 호占쏙옙占싹울옙 Flickr占쏙옙 占쏙옙占싸드가 占싹뤄옙占�占쌔댐옙占싱뱄옙占쏙옙占쏙옙 url占쏙옙 占쏙옙占쏙옙占싶쇽옙 占쏙옙占쏙옙磯占�
 	 */
 	FlickrInstance = function(){
 		this.api_key = "104cbf46f6344b76e544c0823454ed1f",
@@ -105,7 +106,7 @@
 	
 	var FI = new FlickrInstance();
 	
-	$.stage.ajax.uploadPhotoToFlickr = function(imageURI)	//imageURI�� Phonegap�� navigator.camera.getPicture�� �̿��ؼ� ������ ���õ� �̹����� ����(����̽�)���
+	$.stage.ajax.uploadPhotoToFlickr = function(imageURI)	//imageURI占쏙옙 Phonegap占쏙옙 navigator.camera.getPicture占쏙옙 占싱울옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占쏙옙占시듸옙 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙(占쏙옙占쏙옙決占�占쏙옙占�
 	{
 		FI.imageURI = imageURI;
 		FI.photoURL = "";
