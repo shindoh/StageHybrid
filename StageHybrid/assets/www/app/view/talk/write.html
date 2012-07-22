@@ -1,0 +1,50 @@
+<div data-role="page" id="talkWritePage">
+
+	<header data-role="header" data-position="fixed"
+		data-tap-toggle="false">
+		<h1>스테이지 톡 쓰기</h1>
+	</header>
+
+	<section data-role="content">
+
+		<input type="text" id="writeId" value="test46" /> 
+		<input type="text" id="writeTxt" value="" /> 
+		<input type="button" id="btn" value="입력">
+
+	</section>
+
+	<footer data-role="footer" data-theme="a" data-position="fixed"
+		data-tap-toggle="false">
+		<div data-role="navbar">
+			<a href="talkList.html" data-role="button" data-icon="myapp-email"
+				data-iconpos="top" id="mainTalkButton">톡톡</a> <a
+				href="clubList.html" data-role="button" id="mainClubButton">스테이지</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">블로그</a> <a
+				href="setting.html" data-role="button" id="mainSettingButton">셋팅</a>
+		</div>
+	</footer>
+	<script type="text/javascript">
+	$('#talkWritePage').bind("pageinit",function(){ 
+	 	$("#btn").click(function (){
+	
+	 		var param={
+	 				userId : $("#writeId").val(),
+	 				comment:$("#writeTxt").val(),
+	 				imgUrl : "",
+	 				type : 1,
+	 		};
+	 		
+	 		$.stageAjax.postJson($.stageRestPool.STAGE_REST+"/talk",param,function(result){
+	 			alert("등록완료 "+result);				
+			},true);
+	 		
+
+	 		$.stageComponent.pageMove("talkList.html",{});
+	 		
+	 		
+	 	}); 		
+	}); 
+
+</script>
+</div>
