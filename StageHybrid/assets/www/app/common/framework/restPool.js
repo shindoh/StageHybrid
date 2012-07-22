@@ -46,6 +46,21 @@ RestPool = function(){
 		
 		/*
 		 * method : post
+		 * params : talkIdx (require)
+		 * 			userId (required) 
+		 * 			comment (required) 
+		 * 			imgUrl  
+		 */				
+		this.MODIFY_TALK = this.STAGE_REST + "/talkUpdate";
+		
+		/*
+		 * method : post
+		 * params : talkIdx (require)
+		 * 			userId (required) 
+		 */				
+		this.DELETE_TALK = this.STAGE_REST + "/talkDelete";	
+		/*
+		 * method : post
 		 * params : userId (required) 
 		 * 			comment (required)
 		 * 			imgUrl (required) default = ""
