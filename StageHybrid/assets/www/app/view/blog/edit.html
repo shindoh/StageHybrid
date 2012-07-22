@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width;initial-scale=1.0; maximum-scale=1.0;" />
+
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="No-Cache">
+<meta http-equiv="expires" content="wed, 04 jul 1973 16:00:00 gmt">
+
+<div data-role="page" id="talkSubListPage">
+	<script type="text/javascript">
+		$("#talkSubListPage").on("pageinit", function() {
+			var img_data;
+			getImage();
+
+			$("#back").click(function() {
+				$.stageComponent.pageMove("index.html", {});
+			});
+
+			$("#space .photo").live("click", function() {
+				if (this.id == "img_1")
+					getImageFile();
+				else {
+					var answer = confirm("삭제할까요?");
+					if (answer == true)
+						deleteImage(this.id);
+
+				}
+			});
+
+			$(document).bind("flickrUploadFinish", function() {
+				//$("img").attr('src', FI.photoURL);
+				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
+				var post_params = {
+					userId : 'testimage',
+					photoUrl : FI.photoURL,
+					thumnail : FI.thumbnailUrl
+				};
+				$.stage.ajax.postJson(post_url, post_params, function(data) {
+					;
+				}, true);
+
+				addImage(FI.photoURL);
+
+			});
+		});
+		function getImage() {
+			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
+			var get_params = {
+				userId : 'testimage',
+				listIndex : 0,
+				listCount : 20
+			};
+			$.stage.ajax.getJson(get_url, get_params, function(data) {
+				img_data = data;
+				for ( var a = 0; a < 20; a++) {
+					if (data.list[a] == null)
+						break;
+					/*$("<img>").insertAfter("#img_1").attr("src", data.list[a].photoUrl).attr("width",
+					'25%').attr("height", '25%');*/
+					$("<img>").appendTo("#space").attr("src",
+							data.list[a].photoUrl).attr("width", '25%').attr(
+							"height", '25%').attr('class', 'photo').attr('id',
+							a);
+				}
+			}, true, false);
+		}
+		function addImage(URI) {
+			$("<img>").appendTo("#space").attr("src", URI).attr("width", '25%')
+					.attr("height", '25%').attr('class', 'photo');
+			/*$("<img>").insertAfter("#img_1").attr("src", URI).attr("width",
+					'25%').attr("height", '25%');*/
+
+		}
+
+		function getImageFile() {
+			navigator.camera.getPicture(function(URI) {
+				FI.imageURI = URI;
+				var answer = confirm("사진을 올릴까요?");
+				if (answer == true)
+					proc();
+			}, function(message) {
+				FI.imageURI = "";
+				FI.photoURL = "";
+				FI.frob = "";
+			}, {
+				quality : 50,
+				destinationType : navigator.camera.DestinationType.FILE_URI,
+				sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
+			});
+		}
+
+		function deleteImage(index) {
+			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
+			var get_params = {
+				userId : 'testimage',
+				listIndex : 0,
+				listCount : 20
+			};
+			var delete_idx = img_data.list[index].idx;
+			console.log(delete_idx);
+			deleteImageFile(delete_idx);
+		}
+
+		function deleteImageFile(delete_idx) {
+			var delete_url = $.stage.restPool.DELETE_USER_PHOTO_ALBUM;
+			var idx = delete_idx;
+			delete_url += idx;
+			var delete_params = {
+				userId : 'testimage'
+
+			};
+			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
+				alert("삭제 완료");
+				location.reload();
+			}, true);
+
+		}
+	</script>
+	<style>
+#content {
+	padding: 10px;
+}
+
+img {
+	cursor: pointer;
+	margin: 5px;
+}
+</style>
+	<header data-role="header" data-position="fixed">
+		<a href="#" data-role="button" data-icon="forward" id="back">뒤로</a>
+		<h1>블로그_편집</h1>
+	</header>
+
+	<div id="content">
+		<!-- <font size="3" id="url">url</font><br/> -->
+		<div id="space">
+			<img src="gravatar.jpg" id="img_1" class="photo" width="25%"
+				height="25%" />
+		</div>
+	</div>
+
+	<footer data-role="footer" data-position="fixed">
+		<h1>하단</h1>
+	</footer>
+
+</div>

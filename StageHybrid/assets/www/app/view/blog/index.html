@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width;initial-scale=1.0; maximum-scale=1.0;" />
+
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="No-Cache">
+<meta http-equiv="expires" content="wed, 04 jul 1973 16:00:00 gmt">
+
+<div data-role="page" id="CameraPage">
+	<script type="text/javascript">
+		$("#CameraPage").on("pageinit", function() {
+			getImageList();
+
+			$("#edit").click(function() {
+				//alert("편집창으로 이동");
+				$.stageComponent.pageMove("edit.html", {});
+			});
+		});
+		function getImageList() {
+			var url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
+			var params = {
+				userId : 'testimage',
+				listIndex : 0,
+				listCount : 20
+			};
+			$.stage.ajax.getJson(url, params, function(data) {
+				for ( var a = 0; a < 20; a++) {
+					if (data.list[a] == null)
+						break;
+					$("<img>").appendTo("#img_space").attr("src",
+							data.list[a].photoUrl).attr("width", '25%').attr(
+							"height", '25%');
+					//	$("<p>").appendTo("#img_space").text(data.list[a].photoUrl);
+				}
+			}, true, false);
+		}
+	</script>
+	<style>
+#content {
+	padding: 10px;
+}
+
+img {
+	cursor: pointer;
+	margin: 5px;
+}
+</style>
+	<header data-role="header" data-position="fixed">
+		<a href="#" data-role="button" data-icon="star" id="edit">편집</a> <a
+			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
+			id="list">목록</a>
+
+		<h1>블로그_앨범</h1>
+
+	</header>
+
+	<div id="content">
+		<div id="img_space"></div>
+	</div>
+
+	<footer data-role="footer" data-position="fixed">
+		<h1>하단</h1>
+	</footer>
+
+</div>
