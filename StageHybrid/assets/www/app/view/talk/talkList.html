@@ -15,8 +15,14 @@
 			$.stageComponent.listview("talkList","talkItemTpl",$.stageRestPool.GET_TALK_LIST,null,function(){
 				
 				$("#talkList >li").bind("tap",function(){
+			
+					// ${이름} 과  변수명이 같아야 한다 그래야 tmpl 에서 알아서 찾아줌 
 					var talkIdx =$(this).attr("data-messageId");
-					$.stage.component.pageMove("talkSubList.html",{talkIdx:talkIdx});		
+					var userId =$(this).children("h3").text();
+					var thumnail =$(this).children("img").attr("src");
+					var comment = $(this).children("div").children("p").children("strong").text();
+					
+					$.stage.component.pageMove("talkSubList.html",{talkIdx:talkIdx, userId:userId, thumnail:thumnail, comment:comment});		
 				});
 			});
 		});		
