@@ -1,10 +1,11 @@
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta charset="UTF-8">
 <div data-role="page" id="CameraPage">
 	<script type="text/javascript">
 		$("#CameraPage").on("pageinit", function() {
 			getImageList();
-			
+
 			$("#edit").click(function() {
 				//alert("편집창으로 이동");
 				$.stageComponent.pageMove("edit.html", {});

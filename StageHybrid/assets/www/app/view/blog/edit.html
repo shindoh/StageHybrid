@@ -1,4 +1,5 @@
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta charset="UTF-8">
 <div data-role="page" id="talkSubListPage">
 	<script type="text/javascript">
@@ -6,11 +7,13 @@
 			var img_data;
 
 			getImage();
+
 			$("#back").click(function() {
 				$.stageComponent.pageMove("index.html", {});
 			});
 
 			$("#space .photo").live("click", function() {
+				$(this).unbind('click'); // 중복클릭 막기.
 				if (this.id == "img_1")
 					getImageFile();
 				else {
@@ -22,7 +25,6 @@
 
 				}
 			});
-
 			$(document).bind("flickrUploadFinish", function() {
 				//$("img").attr('src', FI.photoURL);
 				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
