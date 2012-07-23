@@ -8,7 +8,7 @@
 			var img_data;
 
 			getImage();
-
+			$('#loading').hide();
 			$("#back").click(function() {
 				$.stageComponent.pageMove("camera.html", {});
 			});
@@ -23,6 +23,7 @@
 					var answer = confirm("삭제할까요?");
 					if (answer == true) {
 						deleteImage(this.id);
+						$('#loading').show();
 					}
 
 				}
@@ -66,7 +67,8 @@
 		}
 		function addImage(URI) {
 			$("<img>").appendTo("#space").attr("src", URI).attr("width", '30%')
-					.attr("height", '30%').attr('class', 'delete_img');
+					.attr("height", '30%').attr('class', 'photo');
+			$('#loading').hide();
 
 		}
 
@@ -74,8 +76,10 @@
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
 				var answer = confirm("사진을 올릴까요?");
-				if (answer == true)
+				if (answer == true){
 					proc();
+					$('#loading').show();
+				}
 			}, function(message) {
 				FI.imageURI = "";
 				FI.photoURL = "";
@@ -108,6 +112,7 @@
 			};
 			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
 				alert("삭제 완료");
+				$('#loading').hide();
 				getImage();
 			}, true);
 
@@ -123,18 +128,24 @@ img {
 	margin: 1.5%;
 }
 
-.delete_img {
-	cursor: pointer;
-	margin: 5px;
-	border: none;
+#loading {
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	display: block;
+	opacity: 0.7;
+	background-color: #fff;
+	z-index: 99;
+	text-align: center;
 }
 
-.delete_img_chose {
-	cursor: pointer;
-	margin: 5px;
-	border-width: 3px;
-	border-style: dotted;
-	border-color: red;
+#loading-image {
+	position: absolute;
+	top: 40%;
+	left: 40%;
+	z-index: 100;
 }
 </style>
 	<header data-role="header" data-position="fixed">
@@ -143,6 +154,9 @@ img {
 	</header>
 
 	<div id="content">
+		<div id="loading">
+			<img id="loading-image" src="../../../libs/images/ajax-loader.gif" alt="Loading..." />
+		</div>
 		<div id="space">
 			<img src="gravatar.jpg" id="img_1" class=photo width="30%"
 				height="30%" />
