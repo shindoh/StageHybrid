@@ -1,13 +1,3 @@
-<!DOCTYPE HTML>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width;initial-scale=1.0; maximum-scale=1.0;" />
-
-<meta http-equiv="Expires" content="-1">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Cache-Control" content="No-Cache">
-<meta http-equiv="expires" content="wed, 04 jul 1973 16:00:00 gmt">
-
 <div data-role="page" id="talkSubListPage">
 	<script type="text/javascript">
 		$("#talkSubListPage").on("pageinit", function() {
@@ -22,7 +12,7 @@
 				if (this.id == "img_1")
 					getImageFile();
 				else {
-					var answer = confirm("ì‚­ì œí• ê¹Œìš”?");
+					var answer = confirm("»èÁ¦ÇÒ±î¿ä?");
 					if (answer == true)
 						deleteImage(this.id);
 
@@ -77,7 +67,7 @@
 		function getImageFile() {
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
-				var answer = confirm("ì‚¬ì§„ì„ ì˜¬ë¦´ê¹Œìš”?");
+				var answer = confirm("»çÁøÀ» ¿Ã¸±±î¿ä?");
 				if (answer == true)
 					proc();
 			}, function(message) {
@@ -112,7 +102,7 @@
 
 			};
 			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
-				alert("ì‚­ì œ ì™„ë£Œ");
+				alert("»èÁ¦ ¿Ï·á");
 				location.reload();
 			}, true);
 
@@ -129,8 +119,8 @@ img {
 }
 </style>
 	<header data-role="header" data-position="fixed">
-		<a href="#" data-role="button" data-icon="forward" id="back">ë’¤ë¡œ</a>
-		<h1>ë¸”ë¡œê·¸_í¸ì§‘</h1>
+		<a href="#" data-role="button" data-icon="forward" id="back">µÚ·Î</a>
+		<h1>ºí·Î±×_ÆíÁı</h1>
 	</header>
 
 	<div id="content">
@@ -142,7 +132,7 @@ img {
 	</div>
 
 	<footer data-role="footer" data-position="fixed">
-		<h1>í•˜ë‹¨</h1>
+		<h1>ÇÏ´Ü</h1>
 	</footer>
 
 </div>
