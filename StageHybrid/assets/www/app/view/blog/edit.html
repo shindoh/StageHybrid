@@ -1,9 +1,11 @@
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
 <div data-role="page" id="talkSubListPage">
 	<script type="text/javascript">
 		$("#talkSubListPage").on("pageinit", function() {
 			var img_data;
-			getImage();
 
+			getImage();
 			$("#back").click(function() {
 				$.stageComponent.pageMove("index.html", {});
 			});
@@ -12,9 +14,11 @@
 				if (this.id == "img_1")
 					getImageFile();
 				else {
-					var answer = confirm("ªË¡¶«“±Óø‰?");
-					if (answer == true)
+					//$(this).toggleClass('delete_img_chose');
+					var answer = confirm("ÏÇ≠Ï†úÌï†ÍπåÏöî?");
+					if (answer == true) {
 						deleteImage(this.id);
+					}
 
 				}
 			});
@@ -23,7 +27,7 @@
 				//$("img").attr('src', FI.photoURL);
 				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
 				var post_params = {
-					userId : 'testimage',
+					userId : 'pkh1022',
 					photoUrl : FI.photoURL,
 					thumnail : FI.thumbnailUrl
 				};
@@ -38,7 +42,7 @@
 		function getImage() {
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
-				userId : 'testimage',
+				userId : 'pkh1022',
 				listIndex : 0,
 				listCount : 20
 			};
@@ -50,15 +54,15 @@
 					/*$("<img>").insertAfter("#img_1").attr("src", data.list[a].photoUrl).attr("width",
 					'25%').attr("height", '25%');*/
 					$("<img>").appendTo("#space").attr("src",
-							data.list[a].photoUrl).attr("width", '25%').attr(
-							"height", '25%').attr('class', 'photo').attr('id',
+							data.list[a].photoUrl).attr("width", '30%').attr(
+							"height", '30%').attr('class', 'photo').attr('id',
 							a);
 				}
-			}, true, false);
+			}, true);
 		}
 		function addImage(URI) {
-			$("<img>").appendTo("#space").attr("src", URI).attr("width", '25%')
-					.attr("height", '25%').attr('class', 'photo');
+			$("<img>").appendTo("#space").attr("src", URI).attr("width", '30%')
+					.attr("height", '30%').attr('class', 'delete_img');
 			/*$("<img>").insertAfter("#img_1").attr("src", URI).attr("width",
 					'25%').attr("height", '25%');*/
 
@@ -67,7 +71,7 @@
 		function getImageFile() {
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
-				var answer = confirm("ªÁ¡¯¿ª ø√∏±±Óø‰?");
+				var answer = confirm("ÏÇ¨ÏßÑÏùÑ Ïò¨Î¶¥ÍπåÏöî?");
 				if (answer == true)
 					proc();
 			}, function(message) {
@@ -84,12 +88,12 @@
 		function deleteImage(index) {
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
-				userId : 'testimage',
+				userId : 'pkh1022',
 				listIndex : 0,
 				listCount : 20
 			};
 			var delete_idx = img_data.list[index].idx;
-			console.log(delete_idx);
+			//console.log(delete_idx);
 			deleteImageFile(delete_idx);
 		}
 
@@ -98,11 +102,11 @@
 			var idx = delete_idx;
 			delete_url += idx;
 			var delete_params = {
-				userId : 'testimage'
+				userId : 'pkh1022'
 
 			};
 			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
-				alert("ªË¡¶ øœ∑·");
+				alert("ÏÇ≠Ï†ú ÏôÑÎ£å");
 				location.reload();
 			}, true);
 
@@ -115,24 +119,37 @@
 
 img {
 	cursor: pointer;
+	margin: 3px;
+}
+
+.delete_img {
+	cursor: pointer;
 	margin: 5px;
+	border: none;
+}
+
+.delete_img_chose {
+	cursor: pointer;
+	margin: 5px;
+	border-width: 3px;
+	border-style: dotted;
+	border-color: red;
 }
 </style>
 	<header data-role="header" data-position="fixed">
-		<a href="#" data-role="button" data-icon="forward" id="back">µ⁄∑Œ</a>
-		<h1>∫Ì∑Œ±◊_∆Ì¡˝</h1>
+		<a href="#" data-role="button" data-icon="forward" id="back">Îí§Î°ú</a>
+		<h1>Î∏îÎ°úÍ∑∏_Ìé∏Ïßë</h1>
 	</header>
 
 	<div id="content">
-		<!-- <font size="3" id="url">url</font><br/> -->
 		<div id="space">
-			<img src="gravatar.jpg" id="img_1" class="photo" width="25%"
-				height="25%" />
+			<img src="gravatar.jpg" id="img_1" class=photo width="30%"
+				height="30%" />
 		</div>
 	</div>
 
 	<footer data-role="footer" data-position="fixed">
-		<h1>«œ¥‹</h1>
+		<h1>ÌïòÎã®</h1>
 	</footer>
 
 </div>

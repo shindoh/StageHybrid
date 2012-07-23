@@ -1,27 +1,20 @@
-<!DOCTYPE HTML>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width;initial-scale=1.0; maximum-scale=1.0;" />
-
-<meta http-equiv="Expires" content="-1">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Cache-Control" content="No-Cache">
-<meta http-equiv="expires" content="wed, 04 jul 1973 16:00:00 gmt">
-
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
 <div data-role="page" id="CameraPage">
 	<script type="text/javascript">
 		$("#CameraPage").on("pageinit", function() {
 			getImageList();
-
+			
 			$("#edit").click(function() {
 				//alert("편집창으로 이동");
 				$.stageComponent.pageMove("edit.html", {});
 			});
+
 		});
 		function getImageList() {
 			var url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var params = {
-				userId : 'testimage',
+				userId : 'pkh1022',
 				listIndex : 0,
 				listCount : 20
 			};
@@ -30,21 +23,28 @@
 					if (data.list[a] == null)
 						break;
 					$("<img>").appendTo("#img_space").attr("src",
-							data.list[a].photoUrl).attr("width", '25%').attr(
-							"height", '25%');
+							data.list[a].photoUrl).attr("width", '30%').attr(
+							"height", '30%').attr("alt", "앨범");
 					//	$("<p>").appendTo("#img_space").text(data.list[a].photoUrl);
+
 				}
-			}, true, false);
+
+			}, true);
 		}
 	</script>
 	<style>
 #content {
 	padding: 10px;
+	text-align: justify;
 }
 
 img {
 	cursor: pointer;
 	margin: 5px;
+}
+
+img.enlargement {
+	width: 100%;
 }
 </style>
 	<header data-role="header" data-position="fixed">
