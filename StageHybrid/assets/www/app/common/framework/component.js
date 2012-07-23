@@ -161,12 +161,20 @@ $.stage.component.pageParam = function(jsonParams)
  *  jsonParams : send data to move page(type json)
  *     options : jquery options of $.mobile.changePage method required(type json)
  */ 
-$.stage.component.pageMove = function(page,jsonParams,options)
+$.stage.component.pageMove = function(page,jsonParams,doSessionCheck,options)
 {
+	if(doSessionCheck && !$.stage.component.hasSession())
+	{
+		$.mobile.changePage("../session/login.html");
+		return;
+	}
+	
 	if(jsonParams)
 	{
 		localStorage.setItem("pageParams",JSON.stringify(jsonParams));		
-	}
+	}		
+
+
 
 	$.mobile.changePage(page,options);
 }
