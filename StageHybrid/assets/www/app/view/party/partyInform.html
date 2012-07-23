@@ -1,0 +1,72 @@
+<meta charset="UTF-8">
+<div data-role="page" id="partyInformPage">	
+
+	<script id="partyInformTpl" type="text/x-jquery-tmpl">
+	<li>파티명: ${partyName}</li>
+	<li id ="location"><strong>장소: ${location} ${clubName}</strong></li>
+	<li id = "date"><p>${openDate}</p></li>
+	<li id = "formDate">날짜: </li>
+	<li>인원: ${persons}</li>	
+	<li>안내 사항: ${comment}</li>
+	<li id="posterView">▼ 파티 포스터 보기 ▼</li>
+	<img src="${poster1}" width="100%">
+	<img src="${poster2}" width="100%">
+	<img src="${poster3}" width="100%">
+	<img src="${poster4}" width="100%"
+	<img src="${poster5}" width="100%">
+
+	</script>
+
+
+	<script type="text/javascript">
+		$("#partyInformPage").on("pageinit", function(){
+
+			var pageParams = $.stageComponent.pageParam();
+			var partyInformIdx = pageParams.partyIdx;
+			var partyInformUrl= $.stageRestPool.GET_PARTY_INFORM+partyInformIdx;
+			$.stageComponent.infoview("partyInform","partyInformTpl",partyInformUrl,null,function(){
+				var orgDate = $("#partyInform>li>p").text();
+
+					var UTCmilli = orgDate*1;
+					var today = new Date(UTCmilli);
+					var year = today.getYear()+1900;
+					var month = today.getMonth()+1;
+					var date = today.getDate();
+					var day = today.getDay();
+					var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");
+
+					$("#date").remove();					
+				    $("#formDate").append(""+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일");
+
+
+					list.listview("refresh");
+			});
+
+			
+		});	
+		
+		
+	</script>
+	
+    <header data-role="header" data-theme="a" data-position="fixed">
+    	<a href="partyList.html" data-icon="grid" data-theme="b">뒤로</a>
+        <h1>파티 상세보기</h1>
+ 
+		
+    </header>
+
+    <section data-role="content">
+		<ul data-role="listview" id="partyInform">
+		</ul>
+    </section>
+
+    <footer data-role="footer" data-theme="a" data-position="fixed" >
+		<div data-role="navbar">
+			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">스톡</a>
+			<a href="clubList.html" data-role="button" id="mainClubButton">클럽리스트</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">블로그</a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">설정</a>	
+		</div>		
+    </footer>
+</div>

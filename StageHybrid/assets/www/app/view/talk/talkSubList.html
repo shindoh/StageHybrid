@@ -12,7 +12,15 @@
 	<script type="text/javascript">
 		$("#talkSubListPage").on("pageinit", function(){
 			var pageParams = $.stageComponent.pageParam();
-			$.stageComponent.listview("talkSubList","talkItemTpl",$.stageRestPool.GET_TALK_SUB_LIST+pageParams.talkIdx,null,function(){});
+	
+			var list = $("#talkSubList");
+			$("#talkItemTpl").tmpl(pageParams).appendTo(list);
+			
+			$.stageComponent.listview("talkSubList","talkItemTpl",$.stageRestPool.GET_TALK_SUB_LIST+pageParams.talkIdx,null,function(){
+			
+				
+			});
+			
 		});	
 		$("#del").click(function (){
 			
@@ -41,8 +49,10 @@
     </header>
 
     <section data-role="content">
+    	
 		<ul data-role="listview" id="talkSubList">
 		</ul>
+	    
     </section>
 
     <footer data-role="footer" data-theme="a" data-position="fixed" data-id="foo1">
