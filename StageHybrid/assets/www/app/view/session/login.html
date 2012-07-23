@@ -1,0 +1,72 @@
+<div data-role="page" id="loginPage" >
+
+	<script type="text/javascript">
+	$.isNull = function(){
+		if($("#ID").val()==""){
+			alert("ID가 비었습니다.");
+			$("#ID").focus();
+			return false;
+		}else if($("#CODE").val()==""){
+			alert("CODE가 비었습니다.");
+			$("#CODE").focus();
+			return false;
+		}else{
+			return true;
+		}
+	};
+		$("#loginPage").on("pageinit", function(){
+			
+			$("#SUBMIT").bind("click",function(){
+				if($.isNull()){
+					$.mobile.showPageLoadingMsg("b", "loading...", true);
+					var params ={};
+					params.id = $("#ID").val();
+					params.pass = $("#CODE").val();
+					$.stageAjax.postJson($.stageRestPool.LOGIN_USER,params,function(result){
+						var infoData = result.data;
+						if(infoData == null){
+							alert('ID 또는 CODE가 잘못 되었습니다');
+						}else{
+							$.stage.component.setSession(params.id,params.pass);
+							$.mobile.changePage("../talk/talkList.html");
+						}
+					},true);
+					$.mobile.hidePageLoadingMsg();
+				}
+				
+			});
+			
+			$("#JOIN").bind("click",function(){
+				$.mobile.changePage("join.html");
+			});
+		});	
+	</script>
+	
+ 	<header data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>로그인</h1>
+    </header>
+    
+    <section data-role="content" data-role="fieldcontain">
+		<label for="ID">Personal ID :</label>
+    	<input type="text" name="name" maxlength="10" id="ID" value="fanatic"  />
+    	
+    	<label for="CODE">Security Code :</label>
+    	<input type="password" name="name" id="CODE" value="123456"  />
+    	<br>
+    	<button type="submit" data-theme="a" id ="SUBMIT">Submit</button>
+    	
+    	<button type="submit" data-theme="d" id ="JOIN">Join Us</button>
+		
+		
+    </section>
+    
+    <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar">
+			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">톡톡</a>
+			<a href="../party/partyList.html" data-role="button" id="mainClubButton">스테이지</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
+			<a href="../blog/blog.html" data-role="button" id="mainBlogButton">블로그</a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">셋팅</a>	
+		</div>		
+    </footer>
+</div>
