@@ -1,17 +1,17 @@
 <div data-role="page" id="joinPage" >
 	<script type="text/javascript">
 		$.isNull = function(){
-			if($("#ID").val()==""){
+			if($("#id").val()==""){
 				alert("ID가 비었습니다.");
-				$("#ID").focus();
+				$("#id").focus();
 				return false;
-			}else if($("#CODE").val()==""){
+			}else if($("#code").val()==""){
 				alert("CODE가 비었습니다.");
-				$("#CODE").focus();
+				$("#code").focus();
 				return false;
-			}else if($("#MAIL").val()==""){
+			}else if($("#mail").val()==""){
 				alert("MAIL이 비었습니다.");
-				$("#MAIL").focus();
+				$("#mail").focus();
 				return false;
 			}else{
 				return true;
@@ -20,10 +20,31 @@
 	
 		$("#joinPage").on("pageinit", function(){
 			
-			$("#SUBMIT").bind("click",function(){
+			
+			
+			$("#submit").bind("click",function(){
+				
 				if($.isNull()){
-					
-					alert("완료");
+					$.mobile.showPageLoadingMsg("b", "loading...", true);
+					var params ={};
+					params.id = $("#id").val();
+					params.pass = $("#code").val();
+					input[name='RadioButtonList1']:checked
+					params.sex = $("input[type='radio']").attr("checked",true).val();
+					alert(params.sex);
+					params.mail = $("#mail").val();
+					/*
+					$.stageAjax.postJson($.stageRestPool.LOGIN_USER,params,function(result){
+						var infoData = result.data;
+						if(infoData == null){
+							alert('ID 또는 CODE가 잘못 되었습니다');
+						}else{
+							$.stage.component.setSession(params.id,params.pass);
+							$.mobile.changePage("../talk/talkList.html");
+						}
+					},true);*/
+					$.mobile.hidePageLoadingMsg();
+
 				}
 				
 				//$.mobile.changePage("join.html");
@@ -38,25 +59,25 @@
     </header>
     
     <section data-role="content">
-		<label for="ID">Personal ID :</label>
-    	<input type="text" name="name" maxlength="10" id="ID" value=""  />
+		<label for="id">Personal ID :</label>
+    	<input type="text" name="name" maxlength="10" id="id" value="test1024"  />
     	
-    	<label for="CODE">Security Code :</label>
-    	<input type="password" name="name" id="CODE" value=""  />
+    	<label for="code">Security Code :</label>
+    	<input type="password" name="name" id="code" value="test1024"  />
     	
     	<fieldset data-role="controlgroup" data-type="horizontal">
     	<legend>Gender :</legend>
-         	<input type="radio" name="radio-choice-2" id="radio-choice-21" value="choice-1" checked="checked" />
+         	<input type="radio" name="radio-choice-2" id="radio-choice-21" value="M" checked="checked" />
          	<label for="radio-choice-21">male</label>
 
-         	<input type="radio" name="radio-choice-2" id="radio-choice-22" value="choice-2"  />
+         	<input type="radio" name="radio-choice-2" id="radio-choice-22" value="F"  />
          	<label for="radio-choice-22">Female</label>
     	</fieldset>
     	
-    	<label for="MAIL">E-Mail :</label>
-    	<input type="text" name="name" id="MAIL" value=""  />
+    	<label for="mail">E-Mail :</label>
+    	<input type="text" name="name" id="mail" value="test1024"  />
     	
-    	<button type="submit" data-theme="a" id="SUBMIT">Submit</button>
+    	<button type="submit" data-theme="a" id="submit">Submit</button>
 		
 		
     </section>
