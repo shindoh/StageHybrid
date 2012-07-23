@@ -25,7 +25,6 @@
 			console.log("params : "+resultParams);
 			console.log("open...");
 		}
-				
 	
 		ajax.open("GET",url,true);
 		ajax.setRequestHeader("If-Modified-Since","Sat, 1 Jan 2000 00:00:00 GMT");
