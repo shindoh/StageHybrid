@@ -108,7 +108,7 @@ FlickrInstance = function(){
 
 var FI = new FlickrInstance();
 
-$.stage.ajax.uploadPhotoToFlickr = function(imageURI)	//imageURI�좎룞��Phonegap�좎룞��navigator.camera.getPicture�좎룞���좎떛�몄삕�좎뙏�쎌삕 �좎룞�쇿뜝�숈삕�좎룞���좎룞�쇿뜝�쒕벝���좎떛諭꾩삕�좎룞�쇿뜝�숈삕 �좎룞�쇿뜝�숈삕(�좎룞�쇿뜝�숈삕黎뷴뜝占썲뜝�숈삕�좑옙
+$.stage.ajax.uploadPhotoToFlickr = function(imageURI)	//imageURI占쏙옙 Phonegap占쏙옙 navigator.camera.getPicture占쏙옙 占싱울옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占쏙옙占시듸옙 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙(占쏙옙占쏙옙決占�占쏙옙占�
 {
 	FI.imageURI = imageURI;
 	FI.photoURL = "";
@@ -195,9 +195,9 @@ function flickrUploadSuccess(r) {
 			photo_id : photo_id,
 			api_sig : api_sig
 	};
-
+	
 	var photoUrl = $.stage.ajax.getJson(url,params,function(data){
-
+	
 		if(data.photo)
 		{
 			var photoId = data.photo.id;
@@ -208,7 +208,7 @@ function flickrUploadSuccess(r) {
 
 			var imageUrl = "http://farm"+farm+".static.flickr.com/"+server+"/"+photoId+"_"+secret+"."+imageFormat;
 			var thumbnailUrl = "http://farm"+farm+".static.flickr.com/"+server+"/"+photoId+"_"+secret+"_t."+imageFormat;
-
+			
 			FI.photoURL = imageUrl;  
 			FI.thumbnailUrl = thumbnailUrl;
 			console.log(imageUrl);

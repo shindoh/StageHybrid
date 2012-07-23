@@ -3,12 +3,12 @@
 <meta charset="UTF-8">
 <div data-role="page" id="talkSubListPage">
 	<script type="text/javascript">
-	
 		$("#talkSubListPage").on("pageinit", function() {
 			var img_data;
-
 			getImage();
+
 			$('#loading').hide();
+
 			$("#back").click(function() {
 				$.stageComponent.pageMove("camera.html", {});
 			});
@@ -39,14 +39,15 @@
 					;
 				}, true);
 
-				addImage(FI.photoURL);
-
+				getImage();
 			});
 		});
 		function getImage() {
-			
-			$("#space").html('<img src="gravatar.jpg" id="img_1" class=photo width="30%" height="30%" />');
-			
+
+			$("#space")
+					.html(
+							'<img src="gravatar.jpg" id="img_1" class=photo width="30%" height="30%" />');
+
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
 				userId : 'pkh1022',
@@ -56,27 +57,24 @@
 			$.stage.ajax.getJson(get_url, get_params, function(data) {
 				img_data = data;
 				for ( var a = 0; a < 20; a++) {
-					if (data.list[a] == null)
+					if (data.list[a] == null) {
+						lastIndex = a;
 						break;
+					}
 					$("<img>").appendTo("#space").attr("src",
 							data.list[a].photoUrl).attr("width", '30%').attr(
 							"height", '30%').attr('class', 'photo').attr('id',
 							a);
 				}
 			}, true);
-		}
-		function addImage(URI) {
-			$("<img>").appendTo("#space").attr("src", URI).attr("width", '30%')
-					.attr("height", '30%').attr('class', 'photo');
 			$('#loading').hide();
-
 		}
 
 		function getImageFile() {
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
 				var answer = confirm("사진을 올릴까요?");
-				if (answer == true){
+				if (answer == true) {
 					proc();
 					$('#loading').show();
 				}
@@ -92,12 +90,7 @@
 		}
 
 		function deleteImage(index) {
-			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
-			var get_params = {
-				userId : 'pkh1022',
-				listIndex : 0,
-				listCount : 20
-			};
+
 			var delete_idx = img_data.list[index].idx;
 			deleteImageFile(delete_idx);
 		}
@@ -155,11 +148,13 @@ img {
 
 	<div id="content">
 		<div id="loading">
-			<img id="loading-image" src="../../../libs/images/ajax-loader.gif" alt="Loading..." />
+			<img id="loading-image" src="../../../libs/images/ajax-loader.gif"
+				alt="Loading..." />
 		</div>
 		<div id="space">
 			<img src="gravatar.jpg" id="img_1" class=photo width="30%"
 				height="30%" />
+
 		</div>
 	</div>
 
