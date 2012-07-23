@@ -3,6 +3,7 @@
 <meta charset="UTF-8">
 <div data-role="page" id="talkSubListPage">
 	<script type="text/javascript">
+	
 		$("#talkSubListPage").on("pageinit", function() {
 			var img_data;
 
@@ -42,6 +43,9 @@
 			});
 		});
 		function getImage() {
+			
+			$("#space").html('<img src="gravatar.jpg" id="img_1" class=photo width="30%" height="30%" />');
+			
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
 				userId : 'pkh1022',
@@ -53,8 +57,6 @@
 				for ( var a = 0; a < 20; a++) {
 					if (data.list[a] == null)
 						break;
-					/*$("<img>").insertAfter("#img_1").attr("src", data.list[a].photoUrl).attr("width",
-					'25%').attr("height", '25%');*/
 					$("<img>").appendTo("#space").attr("src",
 							data.list[a].photoUrl).attr("width", '30%').attr(
 							"height", '30%').attr('class', 'photo').attr('id',
@@ -65,8 +67,6 @@
 		function addImage(URI) {
 			$("<img>").appendTo("#space").attr("src", URI).attr("width", '30%')
 					.attr("height", '30%').attr('class', 'delete_img');
-			/*$("<img>").insertAfter("#img_1").attr("src", URI).attr("width",
-					'25%').attr("height", '25%');*/
 
 		}
 
@@ -108,19 +108,19 @@
 			};
 			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
 				alert("삭제 완료");
-				location.reload();
+				getImage();
 			}, true);
 
 		}
 	</script>
 	<style>
 #content {
-	padding: 10px;
+	padding: 1%;
 }
 
 img {
 	cursor: pointer;
-	margin: 3px;
+	margin: 1.5%;
 }
 
 .delete_img {
