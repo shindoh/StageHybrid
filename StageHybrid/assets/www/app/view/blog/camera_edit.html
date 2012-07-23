@@ -26,7 +26,6 @@
 				}
 			});
 			$(document).bind("flickrUploadFinish", function() {
-				//$("img").attr('src', FI.photoURL);
 				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
 				var post_params = {
 					userId : 'pkh1022',
@@ -95,7 +94,6 @@
 				listCount : 20
 			};
 			var delete_idx = img_data.list[index].idx;
-			//console.log(delete_idx);
 			deleteImageFile(delete_idx);
 		}
 
