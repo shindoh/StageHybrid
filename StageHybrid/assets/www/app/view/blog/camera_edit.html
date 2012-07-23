@@ -13,6 +13,8 @@
 			});
 
 			$("#space .photo").live("click", function() {
+				$(this).unbind('click'); // 중복클릭 막기.
+				$(this).unbind('click'); // 중복클릭 막기.
 				if (this.id == "img_1")
 					getImageFile();
 				else {
