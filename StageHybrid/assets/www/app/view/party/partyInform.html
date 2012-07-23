@@ -1,13 +1,14 @@
+<meta charset="UTF-8">
 <div data-role="page" id="partyInformPage">	
 
 	<script id="partyInformTpl" type="text/x-jquery-tmpl">
-	<li>ÆÄÆ¼¸í: ${partyName}</li>
-	<li id ="location"><strong>Àå¼Ò: ${location} ${clubName}</strong></li>
+	<li>íŒŒí‹°ëª…: ${partyName}</li>
+	<li id ="location"><strong>ì¥ì†Œ: ${location} ${clubName}</strong></li>
 	<li id = "date"><p>${openDate}</p></li>
-	<li id = "formDate">³¯Â¥: </li>
-	<li>ÀÎ¿ø: ${persons}</li>	
-	<li>¾È³» »çÇ×: ${comment}</li>
-	<li id="posterView">¡å ÆÄÆ¼ Æ÷½ºÅÍ º¸±â ¡å</li>
+	<li id = "formDate">ë‚ ì§œ: </li>
+	<li>ì¸ì›: ${persons}</li>	
+	<li>ì•ˆë‚´ ì‚¬í•­: ${comment}</li>
+	<li id="posterView">â–¼ íŒŒí‹° í¬ìŠ¤í„° ë³´ê¸° â–¼</li>
 	<img src="${poster1}" width="100%">
 	<img src="${poster2}" width="100%">
 	<img src="${poster3}" width="100%">
@@ -32,10 +33,10 @@
 					var month = today.getMonth()+1;
 					var date = today.getDate();
 					var day = today.getDay();
-					var dayArr= new Array ("ÀÏ", "¿ù", "È­", "¼ö", "¸ñ", "±İ", "Åä");
+					var dayArr= new Array ("ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† ");
 
 					$("#date").remove();					
-				    $("#formDate").append(""+year+"³â "+month+"¿ù "+date+"ÀÏ "+dayArr[day]+"¿äÀÏ");
+				    $("#formDate").append(""+year+"ë…„ "+month+"ì›” "+date+"ì¼ "+dayArr[day]+"ìš”ì¼");
 
 
 					list.listview("refresh");
@@ -48,8 +49,8 @@
 	</script>
 	
     <header data-role="header" data-theme="a" data-position="fixed">
-    	<a href="partyList.html" data-icon="grid" data-theme="b">µÚ·Î</a>
-        <h1>ÆÄÆ¼ »ó¼¼º¸±â</h1>
+    	<a href="partyList.html" data-icon="grid" data-theme="b">ë’¤ë¡œ</a>
+        <h1>íŒŒí‹° ìƒì„¸ë³´ê¸°</h1>
  
 		
     </header>
@@ -61,11 +62,11 @@
 
     <footer data-role="footer" data-theme="a" data-position="fixed" >
 		<div data-role="navbar">
-			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">½ºÅå</a>
-			<a href="clubList.html" data-role="button" id="mainClubButton">Å¬·´¸®½ºÆ®</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">¶ó¿îÁö</a>
-			<a href="blog.html" data-role="button" id="mainBlogButton">ºí·Î±×</a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">¼³Á¤</a>	
+			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">ìŠ¤í†¡</a>
+			<a href="clubList.html" data-role="button" id="mainClubButton">í´ëŸ½ë¦¬ìŠ¤íŠ¸</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">ë¼ìš´ì§€</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">ë¸”ë¡œê·¸</a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">ì„¤ì •</a>	
 		</div>		
     </footer>
 </div>

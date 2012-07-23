@@ -1,3 +1,4 @@
+<meta charset="UTF-8">
 <div data-role="page" id="partyListPage">
 
 <script id="partyItemTpl" type="text/x-jquery-tmpl">
@@ -29,9 +30,9 @@
 					var month = today.getMonth()+1;
 					var date = today.getDate();
 					var day = today.getDay();
-					var dayArr= new Array ("ÀÏ", "¿ù", "È­", "¼ö", "¸ñ", "±İ", "Åä");
+					var dayArr= new Array ("ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† ");
 					
-					$(this).html("<strong>"+year+"³â "+month+"¿ù "+date+"ÀÏ "+dayArr[day]+"¿äÀÏ</strong>");
+					$(this).html("<strong>"+year+"ë…„ "+month+"ì›” "+date+"ì¼ "+dayArr[day]+"ìš”ì¼</strong>");
 				});
 
 		}, {autoLoad:false});
@@ -40,7 +41,7 @@
 
 
 	<header data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>ÆÄÆ¼ ¸®½ºÆ®</h1>
+        <h1>íŒŒí‹° ë¦¬ìŠ¤íŠ¸</h1>
  
     </header>
 
@@ -51,11 +52,11 @@
 
     <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
 		<div data-role="navbar">
-			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">½ºÅå</a>
-			<a href="clubList.html" data-role="button" id="mainClubButton">Å¬·´¸®½ºÆ®</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">¶ó¿îÁö</a>
-			<a href="blog.html" data-role="button" id="mainBlogButton">ºí·Î±×</a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">¼³Á¤</a>	
+			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">ìŠ¤í†¡</a>
+			<a href="clubList.html" data-role="button" id="mainClubButton">í´ëŸ½ë¦¬ìŠ¤íŠ¸</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">ë¼ìš´ì§€</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">ë¸”ë¡œê·¸</a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">ì„¤ì •</a>	
 		</div>		
     </footer>
 </div>
