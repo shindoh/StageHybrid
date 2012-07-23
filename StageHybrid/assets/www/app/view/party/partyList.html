@@ -1,43 +1,28 @@
 <div data-role="page" id="partyListPage">
 
-	<script id="partyItemTpl" type="text/x-jquery-tmpl">
+<script id="partyItemTpl" type="text/x-jquery-tmpl">
     <li data-messageId=${idx} id='partyItem_${idx}'>
 		<img src="${thumbnail}">
-
 		<h3>${partyName}</h3>
-			<p><strong>${location} ${clubName}</strong></p>
-			<p1 class ="orgListDate">${openDate}</p1>
-			<p class ="formListDate"></p>
-			<p><strong>${persons}</strong></p>
-		
-	</li> 
-	</script>
+		<p><strong>${location} ${clubName}</strong></p>
+		<p class ="orgListDate">${openDate}</p>
+		<p><strong>${persons}</strong></p>
+	</li>
+</script>
 
-     <script type="text/javascript">
+	<script type="text/javascript">
 		$("#partyListPage").on("pageinit", function(){
 			$.stageComponent.listview("partyList","partyItemTpl",$.stageRestPool.GET_PARTY_LIST,null,function(){
 
-
-			    //list.listview("refresh");
-				
 				$("#partyList >li").bind("tap",function() {
 					var partyIdx =$(this).attr("data-messageId");
-		
-					$.stage.component.pageMove("partyInform.html",{"partyIdx":partyIdx});		
-				});
+							$.stage.component.pageMove("partyInform.html",{"partyIdx":partyIdx});		
+			});
 				
-				/*var orgDate = $("#partyList>li>p1").text();
-				var UTCmilli = orgDate*1;
-				var today = new Date(UTCmilli);
-				var year = today.getYear()+1900;
-				var month = today.getMonth()+1;
-				var date = today.getDate();
-				var day = today.getDay();
-				var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");*/
-				
+
+				$(".orgListDate").each(function() {
 					
-					var orgDate = $("partyItem_${idx}").text();
-				
+					var orgDate = $(this).text();
 					var UTCmilli = orgDate*1;
 					var today = new Date(UTCmilli);
 					var year = today.getYear()+1900;
@@ -46,16 +31,15 @@
 					var day = today.getDay();
 					var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");
 					
-					$(".orgListDate").remove();	
-					$("partyItem_${idx}>p1").append("<strong>"+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일</strong>");
-   
-			   // alert(orgDate);
-			}, autoLoad=false);
-		});	
+					$(this).html("<strong>"+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일</strong>");
+				});
+
+		}, {autoLoad:false});
+	});	
      </script>
-  
-     
-    <header data-role="header" data-position="fixed" data-tap-toggle="false">
+
+
+	<header data-role="header" data-position="fixed" data-tap-toggle="false">
         <h1>파티 리스트</h1>
  
     </header>

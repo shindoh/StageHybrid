@@ -19,11 +19,11 @@
 
 	<script type="text/javascript">
 		$("#partyInformPage").on("pageinit", function(){
-			//alert(partyIdx);
+
 			var pageParams = $.stageComponent.pageParam();
 			var partyInformIdx = pageParams.partyIdx;
 			var partyInformUrl= $.stageRestPool.GET_PARTY_INFORM+partyInformIdx;
-			$.stageComponent.informView("partyInform","partyInformTpl",partyInformUrl,null,function(){
+			$.stageComponent.infoview("partyInform","partyInformTpl",partyInformUrl,null,function(){
 				var orgDate = $("#partyInform>li>p").text();
 
 					var UTCmilli = orgDate*1;
@@ -35,13 +35,12 @@
 					var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");
 
 					$("#date").remove();					
-				    
-				      $("#formDate").append(""+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일");
+				    $("#formDate").append(""+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일");
 
 
 					list.listview("refresh");
 			});
-			//alert(${data.poster1});
+
 			
 		});	
 		
@@ -49,6 +48,7 @@
 	</script>
 	
     <header data-role="header" data-theme="a" data-position="fixed">
+    	<a href="partyList.html" data-icon="grid" data-theme="b">뒤로</a>
         <h1>파티 상세보기</h1>
  
 		
