@@ -1,13 +1,14 @@
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta charset="UTF-8">
-<div data-role="page" id="talkSubListPage">
+<div data-role="page" id="cameraEditPage">
 	<script type="text/javascript">
-		$("#talkSubListPage").on("pageinit", function() {
+		$("#cameraEditPage").on("pageinit", function() {
 			var img_data;
+			var currentLoginId = $.stage.component.getSession();
 			getImage();
 
-			$('#loading').hide();
+			$.mobile.hidePageLoadingMsg();
 
 			$("#back").click(function() {
 				$.stageComponent.pageMove("camera.html", {});
@@ -23,15 +24,16 @@
 					var answer = confirm("삭제할까요?");
 					if (answer == true) {
 						deleteImage(this.id);
-						$('#loading').show();
+						$.mobile.showPageLoadingMsg("b", "loading...", true);
 					}
 
 				}
 			});
 			$(document).bind("flickrUploadFinish", function() {
+				var currentLoginId = $.stage.component.getSession();
 				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
 				var post_params = {
-					userId : 'pkh1022',
+					userId : currentLoginId.userId,
 					photoUrl : FI.photoURL,
 					thumnail : FI.thumbnailUrl
 				};
@@ -47,10 +49,10 @@
 			$("#space")
 					.html(
 							'<img src="gravatar.jpg" id="img_1" class=photo width="30%" height="30%" />');
-
+			var currentLoginId = $.stage.component.getSession();
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
-				userId : 'pkh1022',
+				userId : currentLoginId.userId,
 				listIndex : 0,
 				listCount : 20
 			};
@@ -67,7 +69,7 @@
 							a);
 				}
 			}, true);
-			$('#loading').hide();
+			$.mobile.hidePageLoadingMsg();
 		}
 
 		function getImageFile() {
@@ -76,7 +78,7 @@
 				var answer = confirm("사진을 올릴까요?");
 				if (answer == true) {
 					proc();
-					$('#loading').show();
+					$.mobile.showPageLoadingMsg("b", "loading...", true);
 				}
 			}, function(message) {
 				FI.imageURI = "";
@@ -96,16 +98,17 @@
 		}
 
 		function deleteImageFile(delete_idx) {
+			var currentLoginId = $.stage.component.getSession();
 			var delete_url = $.stage.restPool.DELETE_USER_PHOTO_ALBUM;
 			var idx = delete_idx;
 			delete_url += idx;
 			var delete_params = {
-				userId : 'pkh1022'
+				userId : currentLoginId.userId
 
 			};
 			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
 				alert("삭제 완료");
-				$('#loading').hide();
+				$.mobile.hidePageLoadingMsg();
 				getImage();
 			}, true);
 
@@ -147,10 +150,10 @@ img {
 	</header>
 
 	<div id="content">
-		<div id="loading">
+		<!-- <div id="loading">
 			<img id="loading-image" src="../../../libs/images/ajax-loader.gif"
 				alt="Loading..." />
-		</div>
+		</div> -->
 		<div id="space">
 			<img src="gravatar.jpg" id="img_1" class=photo width="30%"
 				height="30%" />
