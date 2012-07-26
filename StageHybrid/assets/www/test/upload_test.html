@@ -5,8 +5,8 @@
     
     <script type="text/javascript" charset="utf-8" src="../libs/jquery-1.7.1.js"></script>
 	<script type="text/javascript" charset="utf-8" src="../libs/cordova-1.8.1.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../app/common/ajax.js"></script>
-	<script type="text/javascript" charset="utf-8" src="../app/common/md5.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../app/common/framework/ajax.js"></script>
+	<script type="text/javascript" charset="utf-8" src="../app/common/framework/md5.js"></script>
     
     
     <script type="text/javascript" charset="utf-8">
@@ -23,6 +23,8 @@
             
              navigator.camera.getPicture(function(message){
           								  	 FI.imageURI = message;
+          								  	 alert(FI.imageURI);
+          								  	 alert(message);
           								  	 $("h1").text(FI.imageURI);
              							},
                                         function(message) {
