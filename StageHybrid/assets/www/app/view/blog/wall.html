@@ -3,30 +3,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta charset="UTF-8">
 
-<div data-role="page" id="CameraPage">
+<div data-role="page" id="wallPage">
 	<script type="text/javascript">
-		$("#CameraPage").on("pageinit",function() {
+		$("#wallPage").on("pageinit",function() {
 					var pageParams = $.stageComponent.pageParam();
 
 					var currentLoginId = $.stage.component.getSession();
 					console.log("userID : " + currentLoginId.userId);
 
-					getImageList();
-					
-					$("#edit").click(
-							function() {
-								$.stageComponent.pageMove("cameraEdit.html",
-										{}, currentLoginId.userId);
-							});
+					getInforList();
 
-				});
-		function getImageList() {
-			var url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
+		});
+		function getInforList(){
+			var url = $.stage.restPool.GET_USER_INFORM;
 			var currentLoginId = $.stage.component.getSession();
 			var params = {
-				userId : currentLoginId.userId,
-				listIndex : 0,
-				listCount : 20
+				userId : 'qwerim'
 			};
 			$.stage.ajax.getJson(url, params, function(data) {
 				for ( var a = 0; a < 20; a++) {
@@ -49,38 +41,19 @@
 				
 				
 			}, true);
-
 		}
 	</script>
-	<style>
-#content {
-	margin: 0;
-	padding: 0;
-}
 
-ul {
-	margin: 1%;
-	padding: 0;
-}
-
-img {
-	cursor: pointer;
-	margin: 1.5%;
-}
-</style>
 	<header data-role="header" data-position="fixed">
 		<a href="#" data-role="button" data-icon="star" id="edit">편집</a> <a
 			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
 			id="list">목록</a>
 
-		<h1>블로그_앨범</h1>
+		<h1>담벼락</h1>
 
 	</header>
 
-	<div id="content">
-		<ul id="img_space">
-		</ul>
-	</div>
+	<div id="content"></div>
 
 	<footer data-role="footer" data-position="fixed">
 		<h1>하단</h1>

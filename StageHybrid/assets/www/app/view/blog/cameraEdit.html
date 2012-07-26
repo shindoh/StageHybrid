@@ -11,7 +11,7 @@
 			$.mobile.hidePageLoadingMsg();
 
 			$("#back").click(function() {
-				$.stageComponent.pageMove("camera.html", {});
+				$.stageComponent.pageMove("camera.html", {},currentLoginId);
 			});
 
 			$("#space .photo").live("click", function() {
