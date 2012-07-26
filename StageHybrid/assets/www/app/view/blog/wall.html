@@ -7,45 +7,34 @@
 	<script type="text/javascript">
 		$("#wallPage").on("pageinit",function() {
 					var pageParams = $.stageComponent.pageParam();
-
 					var currentLoginId = $.stage.component.getSession();
+				
 					console.log("userID : " + currentLoginId.userId);
 
-					getInforList();
+				//	getInforList();
+					$("#back").click(function() {
+						$.stageComponent.pageMove("cameraEdit.html",{}, currentLoginId.userId);
+						});
 
 		});
 		function getInforList(){
-			var url = $.stage.restPool.GET_USER_INFORM;
+		/*	var url = $.stage.restPool.GET_USER_INFORM;
 			var currentLoginId = $.stage.component.getSession();
 			var params = {
-				userId : 'qwerim'
+				userId : 'testimage'
 			};
 			$.stage.ajax.getJson(url, params, function(data) {
 				for ( var a = 0; a < 20; a++) {
 					if (data.list[a] == null)
-						break;
-					$("<img>").appendTo("#img_space").attr("src",
-							data.list[a].photoUrl).attr("width", '30%').attr(
-							"height", '30%').attr("alt", "앨범" + (a + 1));
-
+						break;			
 				}
-			/*	var myPhotoSwipe = $("#img_space img").photoSwipe({
-					enableMouseWheel : false,
-					enableKeyboard : false
-		
-				console.log("여기요 : " + options.originalImages[0].src);
-*/
-				var options = {};
-				$("#img_space img").photoSwipe(options);
-				//console.log("여기요 : " + options.originalImages[0].src);
 				
-				
-			}, true);
+			}, true);*/
 		}
 	</script>
 
 	<header data-role="header" data-position="fixed">
-		<a href="#" data-role="button" data-icon="star" id="edit">편집</a> <a
+		<a href="#" data-role="button" data-icon="star" id="back">뒤로</a> <a
 			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
 			id="list">목록</a>
 
@@ -53,7 +42,13 @@
 
 	</header>
 
-	<div id="content"></div>
+	<div id="content">
+		<ul data-role="listview">
+			<li>AppleM</li>
+			<li>bbbbbb</li>
+			<li>ccccc</li>
+		</ul>
+	</div>
 
 	<footer data-role="footer" data-position="fixed">
 		<h1>하단</h1>
