@@ -26,7 +26,31 @@
 				setInforList(text);
 
 		});
-		
+		$("#content .mine").live("click", function() {
+			if(currentLoginId.userId == 'testimage' || currentLoginId.userId == this.id){
+				
+				var answer = confirm("선택한 글을 삭제할까요?");
+				if(answer==true){
+					$(this).remove();
+					deleteSeleteWall(this.id);
+				}
+			}else{
+				alert("권한이 없습니다.");
+
+			}
+		});
+		$("#content .others").live("click", function() {
+			if(currentLoginId.userId == 'testimage' || currentLoginId.userId == this.id){
+				
+				var answer = confirm("선택한 글을 삭제할까요?");
+				if(answer==true){
+					$(this).remove();
+					deleteSeleteWall(this.id);
+				}
+			}else{
+				alert("권한이 없습니다.");
+			}
+		});
 		$("#list").bind("click",function(){
 			if(currentLoginId.userId == 'testimage'){
 				var answer = confirm("모두 삭제할까요?");
@@ -36,6 +60,7 @@
 				alert("권한이 없습니다.");
 			}	
 		});
+		
 	});
 	
 		//리스트 가져오기 처음 시작할때
@@ -76,22 +101,21 @@
 					userId : writerId
 					};
 		
-			
+			var ids = information.list[count].idx+"/"+information.list[count].userId+"/"+information.list[count].writerId;
 			$.stage.ajax.getJson(inforUrl,writerParams,function(data) {
 				writerImage = data.data.thumnail;
 
 				if (currentLoginId.userId == information.list[count].writerId) {
-					console.log("mine" + count);
-					$("<li class='mine'>").appendTo("#wallList").html(
-							'<img src='+ writerImage +'>'
+				
+					$("<li class='mine' "+"id="+ids+">").appendTo("#wallList").html(
+							'<img src='+ writerImage  +' id='+information.list[count].writerId+'>'
 							+ 'WriterId: '
 							+ information.list[count].writerId
 							+ ' <br/>Comment: '
 							+ information.list[count].comment);
 					} else {
-						console.log("others" + count);
-					$("<li class='others'>").appendTo("#wallList").html(
-							'<img src='+ writerImage +'>'
+					$("<li class='others' "+"id="+ids+">").appendTo("#wallList").html(
+							'<img src='+ writerImage+'>'
 							+ 'WriterId: '
 							+ information.list[count].writerId
 							+ ' <br/>Comment: '
@@ -102,24 +126,20 @@
 				}, true);
 		
 		}
-		// 추가 해야 할것들 .... 더보기 기능 ( 밑으로 쭉내려서 작동 또는 아래 버튼 만들기)
-		// content 부분만 scroll 하기위해서는 iscroll이라는 플러그인 다운 받아서 해야함... 
-		// 페이지의 주인 따져야함.
-		// 삭제기능....
-		
-		//입력받은 것 서버에 보내기
-		function setInforList(text) {
+
+		function setInforList(content) {
 			$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var currentLoginId = $.stage.component.getSession();
 			var url = "http://specificconcept.cafe24.com/rest/userWall";
 			var params = {
 				userId : 'testimage',
 				writerId : currentLoginId.userId,
-				comment : text
+				comment : content
 			};
 			$.stage.ajax.postJson(url, params, function(data) {
 				$("#wallList").html("<li data-role='list-divider' id = 'title'></li>");
 				$("#title").html("@"+currentLoginId.userId);
+				$("#wallList").listview("refresh");
 				$("#insertText").val("");
 				getInforList(0);
 			}, true);
@@ -131,12 +151,56 @@
 			getInforList(increaseNumber);
 
 		}
-		function deleteSeleteWall(){
-			
+		function deleteSeleteWall(ids){
+			var currentLoginId = $.stage.component.getSession();
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var index = ids.split("/");
+			deleteWall(index[0],index[1],index[2]);
+			//idx userId writerId
+			$.mobile.hidePageLoadingMsg();
+		
 		}
 		function deleteAllWall(){
-			
+			var currentLoginId = $.stage.component.getSession();
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var get_url = "http://specificconcept.cafe24.com/rest/userWall/";
+			var get_params = {
+					userId : 'testimage',
+					listIndex : 0,
+					listCount : 100
+				};
+
+				$.stage.ajax.getJson(get_url,get_params,function(data) {
+				
+					for ( var a = 0; a < 100; a++) {
+						if (data.list[a] == null)
+							break;
+						deleteWall(data.list[a].idx, data.list[a].userId, data.list[a].writerId);
+						}
+						
+					}, true);
+				$.mobile.hidePageLoadingMsg();
+				var array=$("#wallList").children();
+				$(array).remove();
+				$("<li data-role='list-divider' id='title'>").appendTo("#wallList").html("@"+currentLoginId.userId);
+				$("#wallList").listview("refresh");
+
+				
 		}
+		
+		function deleteWall(id,user,writer){
+			var delete_url = "http://specificconcept.cafe24.com/rest/userWall/delete/";
+			delete_url+=id;
+			var delete_params = {
+					userId : user,
+					writerId : writer
+			};
+			
+			$.stage.ajax.postJson(delete_url,delete_params,function(data) {
+				
+			},true);
+		}
+		
 	$(window).scroll(function() {
 
 		if ($(window).scrollTop() == $(document).height()- $(window).height()) 
