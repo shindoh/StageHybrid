@@ -5,34 +5,191 @@
 
 <div data-role="page" id="wallPage">
 	<script type="text/javascript">
-		$("#wallPage").on("pageinit",function() {
-					var pageParams = $.stageComponent.pageParam();
-					var currentLoginId = $.stage.component.getSession();
-				
-					console.log("userID : " + currentLoginId.userId);
-
-				//	getInforList();
-					$("#back").click(function() {
-						$.stageComponent.pageMove("cameraEdit.html",{}, currentLoginId.userId);
-						});
+	var increaseNumber;
+	$("#wallPage").on("pageinit", function() {
+		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		
+		increaseNumber=0;
+		
+		console.log("userID : " + currentLoginId.userId);
+		$("#title").html("@"+currentLoginId.userId);
+		getInforList(0);
+			//	$("#back").click(function() {
+			//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
+			//		});
+		$("#submitButton").bind("click", function() {
+			var text = $("#insertText").val();
+			if (text == "" || text == " ")
+				;
+			else
+				setInforList(text);
 
 		});
-		function getInforList(){
-		/*	var url = $.stage.restPool.GET_USER_INFORM;
+		
+		$("#list").bind("click",function(){
+			addInforList();			
+		});
+	});
+	
+		//리스트 가져오기 처음 시작할때
+		function getInforList(start) {
+		//	$("#wallList").html(" ");
+			//$("#insertText").val("");
+			console.log("index111 : st" + start);
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
 			var currentLoginId = $.stage.component.getSession();
-			var params = {
-				userId : 'testimage'
-			};
-			$.stage.ajax.getJson(url, params, function(data) {
-				for ( var a = 0; a < 20; a++) {
-					if (data.list[a] == null)
-						break;			
-				}
-				
-			}, true);*/
-		}
-	</script>
+			var url = "http://specificconcept.cafe24.com/rest/userWall";
 
+			var params = {
+				userId : 'testimage',
+				listIndex : start,
+				listCount : 10
+			};
+
+			$.stage.ajax.getJson(url,params,function(data) {
+				console.log("index111 : getjson성공");
+				for ( var a = 0; a < 10; a++) {
+					if (data.list[a] == null)
+						break;
+					listLoad(data.list[a].writerId, a ,data);
+					
+					}
+				
+				}, true);
+			}
+		
+		//리스트 추가시키는것...
+		function listLoad(writerId,count,information){
+			console.log("index111 : "+count);
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var currentLoginId = $.stage.component.getSession();
+			var writerImage;
+			
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+			var writerParams = {
+					userId : writerId
+					};
+			/*if( count == 0){
+				$("<li data-role='list-divider'>").appendTo("#wallList").html("@" + currentLoginId.userId);
+				$("#wallList").listview("refresh");
+			}*/
+			
+			$.stage.ajax.getJson(inforUrl,writerParams,function(data) {
+				writerImage = data.data.thumnail;
+
+				if (currentLoginId.userId == information.list[count].writerId) {
+					console.log("mine" + count);
+					$("<li class='mine'>").appendTo("#wallList").html(
+							'<img src='+ writerImage +'>'
+							+ 'WriterId: '
+							+ information.list[count].writerId
+							+ ' <br/>Comment: '
+							+ information.list[count].comment);
+					} else {
+						console.log("others" + count);
+					$("<li class='others'>").appendTo("#wallList").html(
+							'<img src='+ writerImage +'>'
+							+ 'WriterId: '
+							+ information.list[count].writerId
+							+ ' <br/>Comment: '
+							+ information.list[count].comment);
+					}
+				$("#wallList").listview("refresh");
+				$.mobile.hidePageLoadingMsg();
+				}, true);
+		
+		}
+		// 추가 해야 할것들 .... 더보기 기능 ( 밑으로 쭉내려서 작동 또는 아래 버튼 만들기)
+		// content 부분만 scroll 하기위해서는 iscroll이라는 플러그인 다운 받아서 해야함... 
+		// 한번 더보기 기능 사용할때마다 10개씩 불러옴...
+		// image src경로 불러오지 못함.
+		
+		//입력받은 것 서버에 보내기
+		function setInforList(text) {
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var currentLoginId = $.stage.component.getSession();
+			var url = "http://specificconcept.cafe24.com/rest/userWall";
+			var params = {
+				userId : 'testimage',
+				writerId : currentLoginId.userId,
+				comment : text
+			};
+			$.stage.ajax.postJson(url, params, function(data) {
+				$("#wallList").html("<li data-role='list-divider' id = 'title'></li>");
+				$("#title").html("@"+currentLoginId.userId);
+				$("#insertText").val("");
+				getInforList(0);
+			}, true);
+		}
+
+		// 더보기 기능
+		function addInforList() {
+			console.log("index111 : add함수도착");
+			increaseNumber+=10;
+			getInforList(increaseNumber);
+			/*
+			var currentLoginId = $.stage.component.getSession();
+			var url = "http://specificconcept.cafe24.com/rest/userWall";
+
+			var params = {
+				userId : 'testimage',
+				listIndex : increaseNumber,
+				listCount : 10
+			};
+
+			$.stage.ajax.getJson(url,params,function(data) {
+				
+				for ( var a = increaseNumber; a < increaseNumber+10; a++) {
+					if (data.list[a] == null)
+						break;
+					console.log("111 : "+ data.list[a].writerId);
+					listLoad(data.list[a].writerId, a ,data);
+					}
+				}, true);
+			
+			$.mobile.hidePageLoadingMsg();*/
+			
+		}
+		
+/*	$(window).scroll(function() {
+
+		if ($(window).scrollTop() == $(document).height()- $(window).height()) 
+		{
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			addInforList();
+			}
+		});*/
+	</script>
+	
+	
+	<style>
+#textInsert {
+	
+}
+
+#content {
+	
+}
+
+.others {
+	text-align: left;
+}
+
+.mine {
+	text-align: right;
+}
+
+#insertText {
+	display: inline;
+	width: 70%;
+	size: 70%;
+}
+
+#submitButton {
+	display: inline;
+}
+</style>
 	<header data-role="header" data-position="fixed">
 		<a href="#" data-role="button" data-icon="star" id="back">뒤로</a> <a
 			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
@@ -43,14 +200,14 @@
 	</header>
 
 	<div id="content">
-		<ul data-role="listview">
-			<li>AppleM</li>
-			<li>bbbbbb</li>
-			<li>ccccc</li>
+		<ul data-role="listview" id="wallList">
+			<li data-role='list-divider' id = "title"></li>
 		</ul>
 	</div>
 
 	<footer data-role="footer" data-position="fixed">
+		<input type="text" id="insertText" value="" />
+		 <input type="button" id="submitButton" value="전송" />
 		<h1>하단</h1>
 	</footer>
 
