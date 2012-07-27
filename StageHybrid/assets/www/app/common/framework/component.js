@@ -16,7 +16,9 @@ $.stage.component = {};
  *              -autoLoad  (default true)
  *             
  */
-$.stage.component.listview = function(eleId,tmpId,url,params,func,options)
+$.stage.component.listview = function(
+		
+		eleId,tmpId,url,params,func,options)
 {
 	var listIndex = 0;
 	var listCount = 25;
@@ -163,6 +165,7 @@ $.stage.component.pageParam = function(jsonParams)
  */ 
 $.stage.component.pageMove = function(page,jsonParams,doSessionCheck,options)
 {
+	console.log("pageMove doSessionCheck : "+doSessionCheck);
 	if(doSessionCheck && !$.stage.component.hasSession())
 	{
 		$.mobile.changePage("../session/login.html");
@@ -173,8 +176,6 @@ $.stage.component.pageMove = function(page,jsonParams,doSessionCheck,options)
 	{
 		localStorage.setItem("pageParams",JSON.stringify(jsonParams));		
 	}		
-
-
 
 	$.mobile.changePage(page,options);
 }

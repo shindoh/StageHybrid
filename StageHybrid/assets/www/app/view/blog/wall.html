@@ -28,7 +28,13 @@
 		});
 		
 		$("#list").bind("click",function(){
-			addInforList();			
+			if(currentLoginId.userId == 'testimage'){
+				var answer = confirm("모두 삭제할까요?");
+				if(answer==true)
+					deleteAllWall();
+			}else{
+				alert("권한이 없습니다.");
+			}	
 		});
 	});
 	
@@ -125,7 +131,10 @@
 			getInforList(increaseNumber);
 
 		}
-		function deleteWall(){
+		function deleteSeleteWall(){
+			
+		}
+		function deleteAllWall(){
 			
 		}
 	$(window).scroll(function() {

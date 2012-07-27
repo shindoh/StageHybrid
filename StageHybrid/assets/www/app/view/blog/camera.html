@@ -6,18 +6,16 @@
 <div data-role="page" id="CameraPage">
 	<script type="text/javascript">
 		$("#CameraPage").on("pageinit",function() {
-					var pageParams = $.stageComponent.pageParam();
+			var pageParams = $.stageComponent.pageParam();
 
-					var currentLoginId = $.stage.component.getSession();
-					console.log("userID : " + currentLoginId.userId);
+			var currentLoginId = $.stage.component.getSession();
+			console.log("userID : " + currentLoginId.userId);
 
-					getImageList();
+			getImageList();
 					
-					$("#edit").click(
-							function() {
-								$.stageComponent.pageMove("cameraEdit.html",
-										{}, currentLoginId.userId);
-							});
+			$("#edit").click(function() {
+					$.stageComponent.pageMove("cameraEdit.html",{}, currentLoginId.userId);
+					});
 
 				});
 		function getImageList() {
@@ -37,16 +35,9 @@
 							"height", '30%').attr("alt", "앨범" + (a + 1));
 
 				}
-			/*	var myPhotoSwipe = $("#img_space img").photoSwipe({
-					enableMouseWheel : false,
-					enableKeyboard : false
-		
-				console.log("여기요 : " + options.originalImages[0].src);
-*/
 				var options = {};
 				$("#img_space img").photoSwipe(options);
 				//console.log("여기요 : " + options.originalImages[0].src);
-				
 				
 			}, true);
 

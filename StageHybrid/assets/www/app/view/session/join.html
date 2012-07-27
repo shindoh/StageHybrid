@@ -2,15 +2,15 @@
 	<script type="text/javascript">
 		$.isNull = function(){
 			if($("#id").val()==""){
-				alert("ID가 비었습니다.");
+				alert("ID媛�鍮꾩뿀�듬땲��");
 				$("#id").focus();
 				return false;
 			}else if($("#code").val()==""){
-				alert("CODE가 비었습니다.");
+				alert("CODE媛�鍮꾩뿀�듬땲��");
 				$("#code").focus();
 				return false;
 			}else if($("#mail").val()==""){
-				alert("MAIL이 비었습니다.");
+				alert("MAIL��鍮꾩뿀�듬땲��");
 				$("#mail").focus();
 				return false;
 			}else{
@@ -37,7 +37,7 @@
 					$.stageAjax.postJson($.stageRestPool.LOGIN_USER,params,function(result){
 						var infoData = result.data;
 						if(infoData == null){
-							alert('ID 또는 CODE가 잘못 되었습니다');
+							alert('ID �먮뒗 CODE媛��섎せ �섏뿀�듬땲��);
 						}else{
 							$.stage.component.setSession(params.id,params.pass);
 							$.mobile.changePage("../talk/talkList.html");
@@ -55,7 +55,7 @@
 
 
  	<header data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>가입</h1>
+        <h1>媛�엯</h1>
     </header>
     
     <section data-role="content">
@@ -84,11 +84,11 @@
     
     <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
 		<div data-role="navbar">
-			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">톡톡</a>
-			<a href="../party/partyList.html" data-role="button" id="mainClubButton">스테이지</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
-			<a href="../blog/blog.html" data-role="button" id="mainBlogButton">블로그</a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">셋팅</a>	
+			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">�≫넚</a>
+			<a href="../party/partyList.html" data-role="button" id="mainClubButton">�ㅽ뀒�댁�</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">�쇱슫吏�/a>
+			<a href="../blog/camera.html" data-role="button" id="mainBlogButton">釉붾줈洹�/a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">�뗮똿</a>	
 		</div>		
     </footer>
 </div>
