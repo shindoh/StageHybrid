@@ -5,67 +5,82 @@
 
 <div data-role="page" id="wallPage">
 	<script type="text/javascript">
-	var increaseNumber;
-	$("#wallPage").on("pageinit", function() {
-		var pageParams = $.stageComponent.pageParam();
-		var currentLoginId = $.stage.component.getSession();
-		
-		increaseNumber=0;
-		
-		console.log("userID : " + currentLoginId.userId);
-		$("#title").html("@"+currentLoginId.userId);
-		getInforList(0);
-			//	$("#back").click(function() {
-			//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
-			//		});
-		$("#submitButton").bind("click", function() {
-			var text = $("#insertText").val();
-			if (text == "" || text == " ")
-				;
-			else
-				setInforList(text);
+		var increaseNumber;
+		var pageMaster;
+		$("#wallPage").on(
+				"pageinit",
+				function() {
+					var pageParams = $.stageComponent.pageParam();
+					var currentLoginId = $.stage.component.getSession();
 
-		});
-		$("#content .mine").live("click", function() {
-			if(currentLoginId.userId == 'testimage' || currentLoginId.userId == this.id){
-				
-				var answer = confirm("선택한 글을 삭제할까요?");
-				if(answer==true){
-					$(this).remove();
-					deleteSeleteWall(this.id);
-				}
-			}else{
-				alert("권한이 없습니다.");
+					increaseNumber = 0;
+					pageMaster = "testimage";
+					console.log("userID : " + currentLoginId.userId);
 
-			}
-		});
-		$("#content .others").live("click", function() {
-			if(currentLoginId.userId == 'testimage' || currentLoginId.userId == this.id){
-				
-				var answer = confirm("선택한 글을 삭제할까요?");
-				if(answer==true){
-					$(this).remove();
-					deleteSeleteWall(this.id);
-				}
-			}else{
-				alert("권한이 없습니다.");
-			}
-		});
-		$("#list").bind("click",function(){
-			if(currentLoginId.userId == 'testimage'){
-				var answer = confirm("모두 삭제할까요?");
-				if(answer==true)
-					deleteAllWall();
-			}else{
-				alert("권한이 없습니다.");
-			}	
-		});
-		
-	});
-	
+					$("#title").html("@" + pageMaster);
+					getInforList(0);
+					//	$("#back").click(function() {
+					//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
+					//		});
+					$("#submitButton").bind("click", function() {
+						var text = $("#insertText").val();
+						if (text == "" || text == " ")
+							;
+						else
+							setInforList(text);
+
+					});
+					$("#content .mine").live(
+							"click",
+							function() {
+								var id = this.id;
+								var index = id.split("/");
+								if (currentLoginId.userId == 'testimage'
+										|| currentLoginId.userId == index[2]) {
+
+									var answer = confirm("선택한 글을 삭제할까요?");
+									if (answer == true) {
+										$(this).remove();
+										deleteSeleteWall(this.id);
+									}
+								} else {
+									alert("권한이 없습니다.");
+
+								}
+							});
+					$("#content .others").live(
+							"click",
+							function() {
+								var id = this.id;
+								var index = id.split("/");
+
+								if (currentLoginId.userId == 'testimage'
+										|| currentLoginId.userId == index[2]) {
+
+									var answer = confirm("선택한 글을 삭제할까요?");
+									if (answer == true) {
+										$(this).remove();
+										deleteSeleteWall(this.id);
+									}
+								} else {
+									alert("권한이 없습니다.");
+								}
+							});
+					$("#list").bind("click", function() {
+						if (currentLoginId.userId == 'testimage') {
+							var answer = confirm("모두 삭제할까요?");
+							if (answer == true)
+								deleteAllWall();
+						} else {
+							alert("권한이 없습니다.");
+						}
+					});
+
+				});
+
 		//리스트 가져오기 처음 시작할때
 		function getInforList(start) {
-			
+
 			var inforUrl = $.stage.restPool.GET_USER_INFORM;
 			var currentLoginId = $.stage.component.getSession();
 			var url = "http://specificconcept.cafe24.com/rest/userWall";
@@ -76,55 +91,57 @@
 				listCount : 10
 			};
 
-			$.stage.ajax.getJson(url,params,function(data) {
-			
+			$.stage.ajax.getJson(url, params, function(data) {
+
 				for ( var a = 0; a < 10; a++) {
 					if (data.list[a] == null)
 						break;
-					listLoad(data.list[a].writerId, a ,data);
-					
-					}
-				
-				}, true);
+					listLoad(data.list[a].writerId, a, data);
+
+				}
+
+			}, true);
 			$.mobile.hidePageLoadingMsg();
-			}
-		
+		}
+
 		//리스트 추가시키는것...
-		function listLoad(writerId,count,information){
-		
+		function listLoad(writerId, count, information) {
+
 			$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var currentLoginId = $.stage.component.getSession();
 			var writerImage;
-			
+
 			var inforUrl = $.stage.restPool.GET_USER_INFORM;
 			var writerParams = {
-					userId : writerId
-					};
-		
-			var ids = information.list[count].idx+"/"+information.list[count].userId+"/"+information.list[count].writerId;
-			$.stage.ajax.getJson(inforUrl,writerParams,function(data) {
+				userId : writerId
+			};
+
+			var ids = information.list[count].idx + "/"
+					+ information.list[count].userId + "/"
+					+ information.list[count].writerId;
+			$.stage.ajax.getJson(inforUrl, writerParams, function(data) {
 				writerImage = data.data.thumnail;
 
 				if (currentLoginId.userId == information.list[count].writerId) {
-				
-					$("<li class='mine' "+"id="+ids+">").appendTo("#wallList").html(
-							'<img src='+ writerImage  +' id='+information.list[count].writerId+'>'
-							+ 'WriterId: '
-							+ information.list[count].writerId
-							+ ' <br/>Comment: '
-							+ information.list[count].comment);
-					} else {
-					$("<li class='others' "+"id="+ids+">").appendTo("#wallList").html(
-							'<img src='+ writerImage+'>'
-							+ 'WriterId: '
-							+ information.list[count].writerId
-							+ ' <br/>Comment: '
-							+ information.list[count].comment);
-					}
+					$("<li class='mine' "+"id="+ids+">").appendTo("#wallList")
+							.html('<img src='+ writerImage+'>'+ '<font id="ID">ID: </font>'
+											+ information.list[count].writerId
+											+ ' <br/>Comment: '
+											+ information.list[count].comment);
+
+				} else {
+					$("<li class='others' "+"id="+ids+">")
+							.appendTo("#wallList").html(
+									'<img src='+ writerImage+'>'
+											+ '<font id="ID">ID: </font>'
+											+ information.list[count].writerId
+											+ ' <br/>Comment: '
+											+ information.list[count].comment);
+				}
 				$("#wallList").listview("refresh");
 				$.mobile.hidePageLoadingMsg();
-				}, true);
-		
+			}, true);
+
 		}
 
 		function setInforList(content) {
@@ -137,8 +154,9 @@
 				comment : content
 			};
 			$.stage.ajax.postJson(url, params, function(data) {
-				$("#wallList").html("<li data-role='list-divider' id = 'title'></li>");
-				$("#title").html("@"+currentLoginId.userId);
+				$("#wallList").html(
+						"<li data-role='list-divider' id = 'title'></li>");
+				$("#title").html("@" + currentLoginId.userId);
 				$("#wallList").listview("refresh");
 				$("#insertText").val("");
 				getInforList(0);
@@ -147,99 +165,209 @@
 
 		// 더보기 기능
 		function addInforList() {
-			increaseNumber+=10;
+			increaseNumber += 10;
 			getInforList(increaseNumber);
 
 		}
-		function deleteSeleteWall(ids){
+		function deleteSeleteWall(ids) {
 			var currentLoginId = $.stage.component.getSession();
 			$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var index = ids.split("/");
-			deleteWall(index[0],index[1],index[2]);
+			deleteWall(index[0], index[1], index[2]);
 			//idx userId writerId
 			$.mobile.hidePageLoadingMsg();
-		
+
 		}
-		function deleteAllWall(){
+		function deleteAllWall() {
 			var currentLoginId = $.stage.component.getSession();
 			$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var get_url = "http://specificconcept.cafe24.com/rest/userWall/";
 			var get_params = {
-					userId : 'testimage',
-					listIndex : 0,
-					listCount : 100
-				};
-
-				$.stage.ajax.getJson(get_url,get_params,function(data) {
-				
-					for ( var a = 0; a < 100; a++) {
-						if (data.list[a] == null)
-							break;
-						deleteWall(data.list[a].idx, data.list[a].userId, data.list[a].writerId);
-						}
-						
-					}, true);
-				$.mobile.hidePageLoadingMsg();
-				var array=$("#wallList").children();
-				$(array).remove();
-				$("<li data-role='list-divider' id='title'>").appendTo("#wallList").html("@"+currentLoginId.userId);
-				$("#wallList").listview("refresh");
-
-				
-		}
-		
-		function deleteWall(id,user,writer){
-			var delete_url = "http://specificconcept.cafe24.com/rest/userWall/delete/";
-			delete_url+=id;
-			var delete_params = {
-					userId : user,
-					writerId : writer
+				userId : 'testimage',
+				listIndex : 0,
+				listCount : 100
 			};
-			
-			$.stage.ajax.postJson(delete_url,delete_params,function(data) {
-				
-			},true);
-		}
-		
-	$(window).scroll(function() {
 
-		if ($(window).scrollTop() == $(document).height()- $(window).height()) 
-		{
-			$.mobile.showPageLoadingMsg("b", "loading...", true);
-			addInforList();
-			}
-		});
+			$.stage.ajax.getJson(get_url, get_params, function(data) {
+
+				for ( var a = 0; a < 100; a++) {
+					if (data.list[a] == null)
+						break;
+					deleteWall(data.list[a].idx, data.list[a].userId,
+							data.list[a].writerId);
+				}
+
+			}, true);
+			$.mobile.hidePageLoadingMsg();
+			var array = $("#wallList").children();
+			$(array).remove();
+			$("<li data-role='list-divider' id='title'>").appendTo("#wallList")
+					.html("@" + currentLoginId.userId);
+			$("#wallList").listview("refresh");
+
+		}
+
+		function deleteWall(id, user, writer) {
+			var delete_url = "http://specificconcept.cafe24.com/rest/userWall/delete/";
+			delete_url += id;
+			var delete_params = {
+				userId : user,
+				writerId : writer
+			};
+
+			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
+
+			}, true);
+		}
+
+		$(window).scroll(
+				function() {
+
+					if ($(window).scrollTop() == $(document).height()
+							- $(window).height()) {
+						$.mobile.showPageLoadingMsg("b", "loading...", true);
+						addInforList();
+					}
+				});
 	</script>
 
 
 	<style>
-#textInsert {
-	
+#wallPage {
+	background-image: url(cssimage/back_bg.png);
+}
+
+#header {
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
 }
 
 #content {
 	
 }
 
+#title {
+	text-align: center;
+}
+
 .others {
 	text-align: left;
+}
+#others{
+	
+}
+.others img {
+	background-image: url(cssimage/tap_bg.png);
 }
 
 .mine {
 	text-align: right;
 }
 
+#mine {
+	margin: 1.5%;
+	float : right;
+	width: 25%;
+	height: 18%
+}
+
+#ID {
+	color: red;
+}
+
+
 #insertText {
+	margin: 0;
 	display: inline;
-	width: 70%;
-	size: 70%;
+	width: 80%;
+	size: 80%;
+	margin-left: 2%;
+	display: inline;
 }
 
 #submitButton {
-	display: inline;
+	margin: 0;
+	width: 12%;
+	height: 7%;
+	float: right;
+}
+
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
 }
 </style>
-	<header data-role="header" data-position="fixed">
+	<header data-role="header" data-position="fixed" id="header">
 		<a href="#" data-role="button" data-icon="star" id="back">뒤로</a> <a
 			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
 			id="list">목록</a>
@@ -248,16 +376,28 @@
 
 	</header>
 
-	<div id="content">
+	<section data-role="content" data-role="fieldcontain" id="content">
+		<!-- <img src="" id="mePicture"> -->
+		<input type="text" id="insertText" value="" />
+		<!-- <input type="button" id="submitButton" value="전송" /> -->
+
+		<img src="cssimage/write_btn.png" id="submitButton">
 		<ul data-role="listview" id="wallList">
 			<li data-role='list-divider' id="title"></li>
 		</ul>
-	</div>
 
-	<footer data-role="footer" data-position="fixed">
-		<input type="text" id="insertText" value="" /> <input type="button"
-			id="submitButton" value="전송" />
-		<h1>하단</h1>
+	</section>
+	
+	<footer data-role="footer" id="footer" data-position="fixed"
+		data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="clubList.html" id="mainBlogButton"></a></li>
+			<li><a href="lounge.html" id="mainPartyButton"></a></li>
+			<li><a href="blog.html" id="mainLoungeButton"></a></li>
+			<li><a href="setting.html" id="mainSettingButton"></a></li>
+		</ul>
+
 	</footer>
 
 </div>

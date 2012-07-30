@@ -6,14 +6,15 @@
 		$("#cameraEditPage").on("pageinit", function() {
 			var img_data;
 			var currentLoginId = $.stage.component.getSession();
+			
 			getImage();
-
+			$("#id_header").html("@testimage");
 			$.mobile.hidePageLoadingMsg();
 
 			$("#back").click(function() {
 				$.stageComponent.pageMove("camera.html", {},currentLoginId);
 			});
-
+			
 			$("#space .photo").live("click", function() {
 				$(this).unbind('click'); // 중복클릭 막기.
 				$(this).unbind('click'); // 중복클릭 막기.
@@ -45,10 +46,10 @@
 			});
 		});
 		function getImage() {
-
+		
 			$("#space")
 					.html(
-							'<img src="gravatar.jpg" id="img_1" class=photo width="30%" height="30%" />');
+							'<img src=cssimage/pic_upload_btn.png id="img_1" class=photo width="30%" height="20%" />');
 			var currentLoginId = $.stage.component.getSession();
 			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var get_params = {
@@ -65,7 +66,7 @@
 					}
 					$("<img>").appendTo("#space").attr("src",
 							data.list[a].photoUrl).attr("width", '30%').attr(
-							"height", '30%').attr('class', 'photo').attr('id',
+							"height", '20%').attr('class', 'photo').attr('id',
 							a);
 				}
 			}, true);
@@ -115,13 +116,106 @@
 		}
 	</script>
 	<style>
+#cameraEditPage {
+	background-image: url(cssimage/back_bg.png);
+}
+
+#header {
+	text-align:center;
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
+	margin: 0;
+}
+
+#id_header {
+	height:4%;
+	text-align: center;
+	background-color: gray;
+}
+
 #content {
+	margin: 0;
 	padding: 1%;
 }
 
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
+}
+
 img {
-	cursor: pointer;
-	margin: 1.5%;
+	margin: 1.7%;
+	border-radius: 10px;
 }
 
 #loading {
@@ -143,26 +237,52 @@ img {
 	left: 40%;
 	z-index: 100;
 }
-</style>
-	<header data-role="header" data-position="fixed">
-		<a href="#" data-role="button" data-icon="forward" id="back">뒤로</a>
-		<h1>블로그_편집</h1>
-	</header>
+#back {
+	shadow: false;
+	margin:0;
+	background-image: url(cssimage/back_btn_de.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	border:none;
+	width: 17%;
+	height: 100%;
+}
 
-	<div id="content">
+font {
+	text-align: center;
+}
+
+</style>
+	<header data-role="header" data-position="fixed" id="header">
+	
+		<a href="#" data-role="button" id="back"></a>
+		<h1>블로그_편집</h1>
+	
+	</header>
+	<div id="id_header"></div>
+	
+	<section data-role="content" data-role="fieldcontain" id="content">
 		<!-- <div id="loading">
 			<img id="loading-image" src="../../../libs/images/ajax-loader.gif"
 				alt="Loading..." />
 		</div> -->
 		<div id="space">
-			<img src="gravatar.jpg" id="img_1" class=photo width="30%"
-				height="30%" />
+			<img src="pic_upload_btn.png" id="img_1" class=photo width="30%"
+				height="20%" />
 
 		</div>
-	</div>
+	</section>
 
-	<footer data-role="footer" data-position="fixed">
-		<h1>하단</h1>
+	<footer data-role="footer" id="footer" 
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="clubList.html" id="mainBlogButton"></a></li>
+			<li><a href="lounge.html" id="mainPartyButton"></a></li>
+			<li><a href="blog.html" id="mainLoungeButton"></a></li>
+			<li><a href="setting.html" id="mainSettingButton"></a></li>
+		</ul>
+		
 	</footer>
 
 </div>

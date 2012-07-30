@@ -1,24 +1,29 @@
 <meta name="viewport"
-	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta charset="UTF-8">
 
-<div data-role="page" id="CameraPage">
+<div data-role="page" id="CameraPage" class="Camera">
 	<script type="text/javascript">
-		$("#CameraPage").on("pageinit",function() {
-			var pageParams = $.stageComponent.pageParam();
+		$("#CameraPage").on(
+				"pageinit",
+				function() {
+					var pageParams = $.stageComponent.pageParam();
+					var currentLoginId = $.stage.component.getSession();
+					console.log("userID : " + currentLoginId.userId);
 
-			var currentLoginId = $.stage.component.getSession();
-			console.log("userID : " + currentLoginId.userId);
-
-			getImageList();
-					
-			$("#edit").click(function() {
-					$.stageComponent.pageMove("cameraEdit.html",{}, currentLoginId.userId);
-					});
+					getImageList();
+					$("#id_header").html("@testimage");
+					$("#edit").click(
+							function() {
+								$.stageComponent.pageMove("cameraEdit.html",
+										{}, currentLoginId.userId);
+							});
 
 				});
+
 		function getImageList() {
+
 			var url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
 			var currentLoginId = $.stage.component.getSession();
 			var params = {
@@ -30,51 +35,207 @@
 				for ( var a = 0; a < 20; a++) {
 					if (data.list[a] == null)
 						break;
+
 					$("<img>").appendTo("#img_space").attr("src",
 							data.list[a].photoUrl).attr("width", '30%').attr(
-							"height", '30%').attr("alt", "앨범" + (a + 1));
+							"height", '20%').attr("alt", "앨범" + (a + 1));
+					//$("<li>").appendTo("#img_space").html("<a href="+data.list[a].photoUrl+" rel='external'><img src="+data.list[a].photoUrl+" width='30%' height='30%' alt="+a+"></a>");
 
 				}
-				var options = {};
-				$("#img_space img").photoSwipe(options);
+				//var options = {};
+				//$("#img_space img").photoSwipe(options);
 				//console.log("여기요 : " + options.originalImages[0].src);
-				
+
 			}, true);
 
 		}
 	</script>
 	<style>
+#CameraPage {
+	background-image: url(cssimage/back_bg.png);
+}
+
+#header {
+	text-align: center;
+	vertical-align:text-bottom;
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
+	margin: 0;
+	padding: 0;
+	height: 10%;
+}
+
+#id_header {
+	height: 4%;
+	text-align: center;
+	background-color: gray;
+}
+
 #content {
+	overflow: auto;
+	margin: 0;
+	padding: 1%;
+}
+
+}
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
+}
+
+#edit{
+	shadow: false;
+	margin:0;
+	background-image: url(cssimage/edit_btn.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	border:none;
+	width: 17%;
+	height: 100%;
+}
+
+
+#list{
+	shadow: false;
+	margin:0;
+	background-image: url(cssimage/category_btn.png);
+	background-color: transparent;
+	background-repeat:no-repeat;
+	border:none;
+	width: 17%;
+	height: 100%;
+}
+/*
+#edit {
+	float: left;
+	width: 15%;
+	height: 85%;
+	border-radius: 0;
+}
+*/
+font {
+	text-align: center;
+}
+
+#test {
+	margin-top: 3.5%;
+	float: right;
+	border-radius: 0;
+}
+p{
+	text-align: left;
+}
+ul {
 	margin: 0;
 	padding: 0;
 }
 
-ul {
-	margin: 1%;
-	padding: 0;
-}
-
 img {
-	cursor: pointer;
-	margin: 1.5%;
+	margin: 1.7%;
+	border-radius: 10px;
+}
+h1{
+	font-size: 25px;
 }
 </style>
-	<header data-role="header" data-position="fixed">
-		<a href="#" data-role="button" data-icon="star" id="edit">편집</a> <a
-			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
-			id="list">목록</a>
+	<header data-role="header" data-position="fixed" id="header">
+		<!--<img src="cssimage/edit_btn.png" id="edit">-->
 
+		<a href="#" data-role="button" id="edit" ></a> 
+		<a href="#" data-role="button" data-iconpos="notext" id="list">목록</a>
+
+		<!--<font size="5">블로그_앨범</font> -->
 		<h1>블로그_앨범</h1>
+		<!-- <img src="cssimage/category_btn.png" id="test"> -->
 
 	</header>
-
-	<div id="content">
-		<ul id="img_space">
+	<div id="id_header"></div>
+	
+	<section data-role="content" data-role="fieldcontain" id="content">
+		<ul id="img_space" class="imgSpace">
 		</ul>
-	</div>
 
-	<footer data-role="footer" data-position="fixed">
-		<h1>하단</h1>
+	</section>
+
+	<footer data-role="footer" id="footer" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="clubList.html" id="mainBlogButton"></a></li>
+			<li><a href="lounge.html" id="mainPartyButton"></a></li>
+			<li><a href="blog.html" id="mainLoungeButton"></a></li>
+			<li><a href="setting.html" id="mainSettingButton"></a></li>
+		</ul>
+		
 	</footer>
 
 </div>
