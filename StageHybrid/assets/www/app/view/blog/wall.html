@@ -17,7 +17,7 @@
 					pageMaster = "testimage";
 					console.log("userID : " + currentLoginId.userId);
 
-					$("#title").html("@" + pageMaster);
+					$("#id_header").html("@" + pageMaster);
 					getInforList(0);
 					//	$("#back").click(function() {
 					//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
@@ -43,9 +43,6 @@
 										$(this).remove();
 										deleteSeleteWall(this.id);
 									}
-								} else {
-									alert("권한이 없습니다.");
-
 								}
 							});
 					$("#content .others").live(
@@ -62,18 +59,10 @@
 										$(this).remove();
 										deleteSeleteWall(this.id);
 									}
-								} else {
-									alert("권한이 없습니다.");
 								}
 							});
 					$("#list").bind("click", function() {
-						if (currentLoginId.userId == 'testimage') {
-							var answer = confirm("모두 삭제할까요?");
-							if (answer == true)
-								deleteAllWall();
-						} else {
-							alert("권한이 없습니다.");
-						}
+
 					});
 
 				});
@@ -119,28 +108,40 @@
 			var ids = information.list[count].idx + "/"
 					+ information.list[count].userId + "/"
 					+ information.list[count].writerId;
-			$.stage.ajax.getJson(inforUrl, writerParams, function(data) {
-				writerImage = data.data.thumnail;
+			$.stage.ajax
+					.getJson(
+							inforUrl,
+							writerParams,
+							function(data) {
+								writerImage = data.data.thumnail;
+								if (writerImage == null)
+									writerImage = "gravatar.jpg";
+								if (currentLoginId.userId == information.list[count].writerId) {
+									$("<div class='mine' "+"id="+ids+">")
+											.appendTo("#wallList")
+											.html(
+													'<div id="mine_text">'
+															+ '<font id="ID"><b>ID: </b>'
+															+ information.list[count].writerId
+															+ '</font><br/><b>Comment: </b>'
+															+ information.list[count].comment
+															+ '</div><img src='+ writerImage+' id="mine_img">');
 
-				if (currentLoginId.userId == information.list[count].writerId) {
-					$("<li class='mine' "+"id="+ids+">").appendTo("#wallList")
-							.html('<img src='+ writerImage+'>'+ '<font id="ID">ID: </font>'
-											+ information.list[count].writerId
-											+ ' <br/>Comment: '
-											+ information.list[count].comment);
+								} else {
+									$("<div class='others' "+"id="+ids+">")
+											.appendTo("#wallList")
+											.html(
+													'<div id="others_text">'
+															+ '<font id="ID">ID: '
+															+ information.list[count].writerId
+															+ '</font><br/>Comment: '
+															+ information.list[count].comment
+															+ '</div><img src='+ writerImage+' id="others_img">');
 
-				} else {
-					$("<li class='others' "+"id="+ids+">")
-							.appendTo("#wallList").html(
-									'<img src='+ writerImage+'>'
-											+ '<font id="ID">ID: </font>'
-											+ information.list[count].writerId
-											+ ' <br/>Comment: '
-											+ information.list[count].comment);
-				}
-				$("#wallList").listview("refresh");
-				$.mobile.hidePageLoadingMsg();
-			}, true);
+								}
+								//	$("#wallList").listview("refresh");
+								$.mobile.hidePageLoadingMsg();
+							}, true);
 
 		}
 
@@ -154,10 +155,7 @@
 				comment : content
 			};
 			$.stage.ajax.postJson(url, params, function(data) {
-				$("#wallList").html(
-						"<li data-role='list-divider' id = 'title'></li>");
-				$("#title").html("@" + currentLoginId.userId);
-				$("#wallList").listview("refresh");
+				$("#wallList").html("");
 				$("#insertText").val("");
 				getInforList(0);
 			}, true);
@@ -176,34 +174,6 @@
 			deleteWall(index[0], index[1], index[2]);
 			//idx userId writerId
 			$.mobile.hidePageLoadingMsg();
-
-		}
-		function deleteAllWall() {
-			var currentLoginId = $.stage.component.getSession();
-			$.mobile.showPageLoadingMsg("b", "loading...", true);
-			var get_url = "http://specificconcept.cafe24.com/rest/userWall/";
-			var get_params = {
-				userId : 'testimage',
-				listIndex : 0,
-				listCount : 100
-			};
-
-			$.stage.ajax.getJson(get_url, get_params, function(data) {
-
-				for ( var a = 0; a < 100; a++) {
-					if (data.list[a] == null)
-						break;
-					deleteWall(data.list[a].idx, data.list[a].userId,
-							data.list[a].writerId);
-				}
-
-			}, true);
-			$.mobile.hidePageLoadingMsg();
-			var array = $("#wallList").children();
-			$(array).remove();
-			$("<li data-role='list-divider' id='title'>").appendTo("#wallList")
-					.html("@" + currentLoginId.userId);
-			$("#wallList").listview("refresh");
 
 		}
 
@@ -240,6 +210,7 @@
 #header {
 	height: 10%;
 	background-image: url(cssimage/header_bg.png);
+	text-align: center;
 }
 
 #content {
@@ -251,45 +222,66 @@
 }
 
 .others {
+	overflow: auto;
+	height: 14%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+#others_text {
+	margin: 2%;
+	margin-top: 2.5%;
+	margin-right: 4%;
+	padding: 2%;
+	width: 60%;
 	text-align: left;
+	float: right;
+	background-color: gray;
+	opacity: 0.6;
+	border-radius: 6px;
+	box-shadow: inset -2% -2% 2% 2% black;
 }
-#others{
-	
-}
-.others img {
-	background-image: url(cssimage/tap_bg.png);
+
+#others_img {
+	overflow: auto;
+	margin: 2%;
+	margin-top: 2.5%;
+	margin-left: 4%;
+	border-radius: 10px;
 }
 
 .mine {
-	text-align: right;
+	overflow: auto;
+	height: 14%;
+	margin-top: 1%;
+	margin-bottom: 1%;
 }
 
-#mine {
-	margin: 1.5%;
-	float : right;
-	width: 25%;
-	height: 18%
+#mine_text {
+	margin: 2%;
+	margin-top: 2.5%;
+	margin-left: 4%;
+	padding: 2%;
+	width: 60%;
+	text-align: left;
+	float: left;
+	background-color: gray;
+	opacity: 0.6;
+	border-radius: 6px;
+	box-shadow: inset -5% -5% 5% 5% black;
+}
+
+#mine_img {
+	float: right;
+	margin: 2%;
+	margin-top: 2.5%;
+	margin-left: 0;
+	margin-right: 4%;
+	border-radius: 10px;
 }
 
 #ID {
 	color: red;
-}
-
-
-#insertText {
-	margin: 0;
-	display: inline;
-	width: 80%;
-	size: 80%;
-	margin-left: 2%;
-	display: inline;
-}
-
-#submitButton {
-	margin: 0;
-	width: 12%;
-	height: 7%;
-	float: right;
 }
 
 #footer {
@@ -366,28 +358,122 @@
 #footer ul li #mainSettingButton:hover {
 	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
 }
+
+#id_header {
+	text-align: center;
+	background-color: gray;
+	opacity: 0.6;
+	margin: 0;
+	width: 100%;
+	font-size: 25px;
+	color: black;
+}
+
+#list {
+	shadow: false;
+	margin: 0;
+	border: none;
+	width: 17%;
+	height: 100%;
+	float: right;
+}
+
+#list img {
+	margin-top: 25%;
+	widows: 45%;
+	height: 45%;
+	margin-left: 6%;
+	border-radius: 0;
+}
+
+#line_right {
+	padding: 0;
+	margin-top: 0;
+	margin-right: 4%;
+	height: 90%;
+	width: 5%;
+	float: left;
+	background-image: url(cssimage/header_line.png);
+}
+
+#back {
+	shadow: false;
+	margin: 0;
+	padding: 0;
+	margin-top: 3.5%;
+	border: none;
+	width: 17%;
+	height: 100%;
+}
+
+#line_left {
+	padding: 0;
+	margin: 0;
+	height: 90%;
+	width: 5%;
+	float: right;
+	background-image: url(cssimage/header_line.png);
+}
+
+#back img {
+	margin-top: 10%;
+	height: 70%;
+	border-radius: 0;
+}
+
+#header_title {
+	margin-top: 15%;
+	font-size: 30px;
+}
+
+#insertText {
+	margin: 0;
+	display: inline;
+	width: 80%;
+	size: 80%;
+	display: inline;
+}
+
+#submitButton {
+	margin: 0;
+	margin-right: 1.5%;
+	width: 13%;
+	height: 8%;
+	background-color: #fff8dc;
+	opacity: 0.8;
+	display: inline;
+	float: right;
+}
 </style>
 	<header data-role="header" data-position="fixed" id="header">
-		<a href="#" data-role="button" data-icon="star" id="back">뒤로</a> <a
-			href="#" data-role="button" data-icon="arrow-d" data-iconpos="notext"
-			id="list">목록</a>
+		<div id="back" class="ui-btn-left">
+			<img src="cssimage/back_btn.png">
+			<div id="line_left"></div>
+		</div>
 
 		<h1>담벼락</h1>
 
+		<div id="list" class="ui-btn-right">
+			<div id="line_right"></div>
+			<img src="cssimage/category_btn.png">
+		</div>
+
 	</header>
 
-	<section data-role="content" data-role="fieldcontain" id="content">
-		<!-- <img src="" id="mePicture"> -->
-		<input type="text" id="insertText" value="" />
-		<!-- <input type="button" id="submitButton" value="전송" /> -->
+	<div id="id_header"></div>
 
-		<img src="cssimage/write_btn.png" id="submitButton">
+	<section data-role="content" data-role="fieldcontain" id="content">
+
 		<ul data-role="listview" id="wallList">
-			<li data-role='list-divider' id="title"></li>
 		</ul>
 
 	</section>
-	
+
+	<div id="input_text">
+		<input type="text" id="insertText" value="" /> <img
+			src="cssimage/blog_write_btn.png" id="submitButton">
+
+	</div>
 	<footer data-role="footer" id="footer" data-position="fixed"
 		data-tap-toggle="false">
 		<ul>
