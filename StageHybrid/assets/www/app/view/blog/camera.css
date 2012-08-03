@@ -142,10 +142,10 @@ h1 {
 }
 
 #edit img {
-	margin-top: 10%;
+	margin-top: 15%;
 	border-radius: 0;
-	width: 70%;
-	height: 70%;
+	width: 60%;
+	height: 60%;
 }
 
 #line_left {
@@ -167,9 +167,9 @@ h1 {
 }
 
 #list img {
-	margin-top: 25%;
-	widows: 45%;
-	height: 45%;
+	margin-top: 30%;
+	widows: 30%;
+	height: 30%;
 	margin-left: 6%;
 	border-radius: 0;
 }
