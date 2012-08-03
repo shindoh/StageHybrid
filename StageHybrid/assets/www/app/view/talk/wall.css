@@ -1,0 +1,289 @@
+@CHARSET "EUC-KR";
+
+#wallPage {
+	background-image: url(cssimage/back_bg.png);
+}
+
+#header {
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
+	text-align: center;
+}
+
+#content {
+	
+}
+
+#title {
+	text-align: center;
+}
+
+.others {
+	overflow: auto;
+	height: 14%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+#others_text {
+	margin: 2%;
+	margin-top: 2.5%;
+	margin-right: 4%;
+	padding: 2%;
+	width: 60%;
+	text-align: left;
+	float: right;
+	background-color: #E0E0E0;
+	opacity: 0.6;
+	border-radius: 6px;
+	box-shadow: 6px 6px 6px #878787;
+	-moz-box-shadow: 6px 6px 6px #878787;
+	-webkit-box-shadow: 6px 6px 6px #878787;
+}
+
+#others_text font {
+	opacity: 1;
+}
+
+#others_img {
+	margin-top: 6%;
+	border-radius: 10px;
+}
+
+#img_bg_others {
+	float: left;
+	margin-top: 1.8%;
+	margin-left: 3%;
+	margin-bottom: 3%;
+	padding-left: 0.5%;
+	text-align: center;
+	background-color: #CAC9C9;
+	width: 24.5%;
+	border-radius: 10px;
+	box-shadow: 2px 2px 2px #878787;
+	-moz-box-shadow: 2px 2px 2px #878787;
+	-webkit-box-shadow: 2px 2px 2px #878787;
+}
+
+.mine {
+	overflow: auto;
+	height: 16%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+#mine_text {
+	margin: 2%;
+	margin-top: 1.5%;
+	margin-left: 4%;
+	margin-bottom: 4%;
+	padding: 2%;
+	width: 60%;
+	text-align: left;
+	float: left;
+	background-color: #E0E0E0;
+	opacity: 0.6;
+	border-radius: 6px;
+	box-shadow: 6px 6px 6px #878787;
+	-moz-box-shadow: 6px 6px 6px #878787;
+	-webkit-box-shadow: 6px 6px 6px #878787;
+}
+
+#mine_text font {
+	opacity: 1;
+}
+
+#mine_img {
+	margin-top: 4%;
+	border-radius: 10px;
+}
+
+#img_bg_mine {
+	margin-top: 1.8%;
+	margin-right: 3%;
+	margin-bottom: 3%;
+	padding-left: 0.5%;
+	text-align: center;
+	float: right;
+	background-color: #CAC9C9;
+	width: 24.5%;
+	border-radius: 10px;
+	box-shadow: 2px 2px 2px #878787;
+	-moz-box-shadow: 2px 2px 2px #878787;
+	-webkit-box-shadow: 2px 2px 2px #878787;
+}
+
+#ID {
+	color: red;
+}
+
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
+}
+
+#id_header {
+	text-align: center;
+	background-color: gray;
+	opacity: 0.6;
+	margin: 0;
+	width: 100%;
+	font-size: 25px;
+	color: black;
+}
+
+#list {
+	shadow: false;
+	margin: 0;
+	border: none;
+	width: 17%;
+	height: 100%;
+	float: right;
+}
+
+#list img {
+	margin-top: 25%;
+	widows: 45%;
+	height: 45%;
+	margin-left: 6%;
+	border-radius: 0;
+}
+
+#line_right {
+	padding: 0;
+	margin-top: 0;
+	margin-right: 4%;
+	height: 90%;
+	width: 5%;
+	float: left;
+	background-image: url(cssimage/header_line.png);
+}
+
+#back {
+	shadow: false;
+	margin: 0;
+	padding: 0;
+	margin-top: 3.5%;
+	border: none;
+	width: 17%;
+	height: 100%;
+}
+
+#line_left {
+	padding: 0;
+	margin: 0;
+	height: 90%;
+	width: 5%;
+	float: right;
+	background-image: url(cssimage/header_line.png);
+}
+
+#back img {
+	margin-top: 10%;
+	height: 70%;
+	border-radius: 0;
+}
+
+#header_title {
+	margin-top: 15%;
+	font-size: 30px;
+}
+
+#input_text {
+	border-radius: 5px;
+	width: 95%;
+	height: 13%;
+	margin-left: 3%;
+	margin-bottom: 1.5%;
+	background-color: #E7E7E7;
+}
+
+#input_img {
+	border-radius: 5px;
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 13%;
+	float: left;
+}
+
+#insertText {
+	margin-top: 2%;
+	width: 62%;
+}
+
+#submitButton {
+	margin-right: 1.5%;
+	width: 15%;
+	height: 63.5%;
+	float: right;
+}

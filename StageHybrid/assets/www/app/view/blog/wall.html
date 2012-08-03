@@ -2,6 +2,7 @@
 	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="wall.css" />
 
 <div data-role="page" id="wallPage">
 	<script type="text/javascript">
@@ -19,6 +20,8 @@
 
 					$("#id_header").html("@" + pageMaster);
 					getInforList(0);
+					getthumnail();
+
 					//	$("#back").click(function() {
 					//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
 					//		});
@@ -66,7 +69,20 @@
 					});
 
 				});
+		function getthumnail() {
+			var currentLoginId = $.stage.component.getSession();
 
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+
+			var writerParams = {
+				userId : currentLoginId.userId
+			};
+
+			$.stage.ajax.getJson(inforUrl, writerParams, function(data) {
+				$("#input_img").attr("src", data.data.thumnail);
+
+			}, true);
+		}
 		//리스트 가져오기 처음 시작할때
 		function getInforList(start) {
 
@@ -125,7 +141,7 @@
 															+ information.list[count].writerId
 															+ '</font><br/><b>Comment: </b>'
 															+ information.list[count].comment
-															+ '</div><img src='+ writerImage+' id="mine_img">');
+															+ '</div><div id="img_bg_mine"><img src='+ writerImage+' id="mine_img"></div>');
 
 								} else {
 									$("<div class='others' "+"id="+ids+">")
@@ -136,7 +152,7 @@
 															+ information.list[count].writerId
 															+ '</font><br/>Comment: '
 															+ information.list[count].comment
-															+ '</div><img src='+ writerImage+' id="others_img">');
+															+ '</div><div id="img_bg_others"><img src='+ writerImage+' id="others_img"></div>');
 
 								}
 								//	$("#wallList").listview("refresh");
@@ -202,249 +218,7 @@
 	</script>
 
 
-	<style>
-#wallPage {
-	background-image: url(cssimage/back_bg.png);
-}
 
-#header {
-	height: 10%;
-	background-image: url(cssimage/header_bg.png);
-	text-align: center;
-}
-
-#content {
-	
-}
-
-#title {
-	text-align: center;
-}
-
-.others {
-	overflow: auto;
-	height: 14%;
-	margin-top: 1%;
-	margin-bottom: 1%;
-}
-
-#others_text {
-	margin: 2%;
-	margin-top: 2.5%;
-	margin-right: 4%;
-	padding: 2%;
-	width: 60%;
-	text-align: left;
-	float: right;
-	background-color: gray;
-	opacity: 0.6;
-	border-radius: 6px;
-	box-shadow: inset -2% -2% 2% 2% black;
-}
-
-#others_img {
-	overflow: auto;
-	margin: 2%;
-	margin-top: 2.5%;
-	margin-left: 4%;
-	border-radius: 10px;
-}
-
-.mine {
-	overflow: auto;
-	height: 14%;
-	margin-top: 1%;
-	margin-bottom: 1%;
-}
-
-#mine_text {
-	margin: 2%;
-	margin-top: 2.5%;
-	margin-left: 4%;
-	padding: 2%;
-	width: 60%;
-	text-align: left;
-	float: left;
-	background-color: gray;
-	opacity: 0.6;
-	border-radius: 6px;
-	box-shadow: inset -5% -5% 5% 5% black;
-}
-
-#mine_img {
-	float: right;
-	margin: 2%;
-	margin-top: 2.5%;
-	margin-left: 0;
-	margin-right: 4%;
-	border-radius: 10px;
-}
-
-#ID {
-	color: red;
-}
-
-#footer {
-	background-image: url(cssimage/header_bg.png);
-	height: 11%;
-}
-
-#footer ul {
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-#footer ul li {
-	height: 100%;
-}
-
-#footer ul li #mainStalkButton {
-	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainStalkButton:hover {
-	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainBlogButton {
-	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainBlogButton:hover {
-	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainPartyButton {
-	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainPartyButton:hover {
-	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainLoungeButton {
-	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainLoungeButton:hover {
-	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainSettingButton {
-	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainSettingButton:hover {
-	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
-}
-
-#id_header {
-	text-align: center;
-	background-color: gray;
-	opacity: 0.6;
-	margin: 0;
-	width: 100%;
-	font-size: 25px;
-	color: black;
-}
-
-#list {
-	shadow: false;
-	margin: 0;
-	border: none;
-	width: 17%;
-	height: 100%;
-	float: right;
-}
-
-#list img {
-	margin-top: 25%;
-	widows: 45%;
-	height: 45%;
-	margin-left: 6%;
-	border-radius: 0;
-}
-
-#line_right {
-	padding: 0;
-	margin-top: 0;
-	margin-right: 4%;
-	height: 90%;
-	width: 5%;
-	float: left;
-	background-image: url(cssimage/header_line.png);
-}
-
-#back {
-	shadow: false;
-	margin: 0;
-	padding: 0;
-	margin-top: 3.5%;
-	border: none;
-	width: 17%;
-	height: 100%;
-}
-
-#line_left {
-	padding: 0;
-	margin: 0;
-	height: 90%;
-	width: 5%;
-	float: right;
-	background-image: url(cssimage/header_line.png);
-}
-
-#back img {
-	margin-top: 10%;
-	height: 70%;
-	border-radius: 0;
-}
-
-#header_title {
-	margin-top: 15%;
-	font-size: 30px;
-}
-
-#insertText {
-	margin: 0;
-	display: inline;
-	width: 80%;
-	size: 80%;
-	display: inline;
-}
-
-#submitButton {
-	margin: 0;
-	margin-right: 1.5%;
-	width: 13%;
-	height: 8%;
-	background-color: #fff8dc;
-	opacity: 0.8;
-	display: inline;
-	float: right;
-}
-</style>
 	<header data-role="header" data-position="fixed" id="header">
 		<div id="back" class="ui-btn-left">
 			<img src="cssimage/back_btn.png">
@@ -470,10 +244,13 @@
 	</section>
 
 	<div id="input_text">
-		<input type="text" id="insertText" value="" /> <img
-			src="cssimage/blog_write_btn.png" id="submitButton">
+		<img src="" id="input_img"> <img
+			src="cssimage/blog_write_btn.png" id="submitButton"> <input
+			type="text" id="insertText" value="" />
+
 
 	</div>
+
 	<footer data-role="footer" id="footer" data-position="fixed"
 		data-tap-toggle="false">
 		<ul>

@@ -1,6 +1,8 @@
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="cameraEdit.css" />
+
 <div data-role="page" id="cameraEditPage">
 	<script type="text/javascript">
 		$("#cameraEditPage").on("pageinit", function() {
@@ -115,162 +117,15 @@
 
 		}
 	</script>
-	<style>
-#cameraEditPage {
-	background-image: url(cssimage/back_bg.png);
-}
 
-#header {
-	text-align:center;
-	height: 10%;
-	background-image: url(cssimage/header_bg.png);
-	margin: 0;
-}
-
-
-#content {
-	margin: 0;
-	padding: 1%;
-}
-
-#footer {
-	background-image: url(cssimage/header_bg.png);
-	height: 11%;
-}
-
-#footer ul {
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-#footer ul li {
-	height: 100%;
-}
-
-#footer ul li #mainStalkButton {
-	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainStalkButton:hover {
-	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainBlogButton {
-	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainBlogButton:hover {
-	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainPartyButton {
-	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainPartyButton:hover {
-	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainLoungeButton {
-	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainLoungeButton:hover {
-	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
-}
-
-#footer ul li #mainSettingButton {
-	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
-	width: 64px;
-	height: 55px;
-	float: left;
-	background-size: 92%;
-}
-
-#footer ul li #mainSettingButton:hover {
-	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
-}
-
-img {
-	margin: 1.7%;
-	border-radius: 10px;
-}
-
-#loading {
-	width: 100%;
-	height: 100%;
-	top: 0px;
-	left: 0px;
-	position: fixed;
-	display: block;
-	opacity: 0.7;
-	background-color: #fff;
-	z-index: 99;
-	text-align: center;
-}
-
-#loading-image {
-	position: absolute;
-	top: 40%;
-	left: 40%;
-	z-index: 100;
-}
-#back {
-	shadow: false;
-	margin: 0;
-	padding:0;
-	margin-top:3.5%;
-	border: none;
-	width: 17%;
-	height: 100%;
-}
-#line_left {
-	padding: 0;
-	margin: 0;
-	height: 90%;
-	width: 5%;
-	float: right;
-	background-image: url(cssimage/header_line.png);
-}
-#back img{
-	margin-top: 10%;
-	height: 70%;
-	border-radius: 0;
-}
-font {
-	text-align: center;
-}
-#header_title{
-	margin-top: 2%;
-	font-size: 30px;
-}
-
-</style>
 	<header data-role="header" data-position="fixed" id="header">
-	
+
 		<div id="back" class="ui-btn-left">
 			<img src="cssimage/back_btn.png">
 			<div id="line_left"></div>
 		</div>
-		<h1> 블로그_편집</h1>
-	
+		<h1>블로그_편집</h1>
+
 	</header>
 	<section data-role="content" data-role="fieldcontain" id="content">
 		<!-- <div id="loading">
@@ -284,8 +139,8 @@ font {
 		</div>
 	</section>
 
-	<footer data-role="footer" id="footer" 
-		data-position="fixed" data-tap-toggle="false">
+	<footer data-role="footer" id="footer" data-position="fixed"
+		data-tap-toggle="false">
 		<ul>
 			<li><a href="talkList.html" id="mainStalkButton"></a></li>
 			<li><a href="clubList.html" id="mainBlogButton"></a></li>
@@ -293,7 +148,7 @@ font {
 			<li><a href="blog.html" id="mainLoungeButton"></a></li>
 			<li><a href="setting.html" id="mainSettingButton"></a></li>
 		</ul>
-		
+
 	</footer>
 
 </div>

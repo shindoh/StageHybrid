@@ -1,0 +1,185 @@
+@CHARSET "EUC-KR";
+
+#CameraPage {
+	background-image: url(cssimage/back_bg.png);
+}
+
+#header {
+	text-align: center;
+	vertical-align: text-bottom;
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
+	margin: 0;
+	padding: 0;
+	height: 10%;
+}
+
+#id_header {
+	text-align: center;
+	background-color: gray;
+	opacity: 0.6;
+	margin: 0;
+	width: 100%;
+	font-size: 25px;
+	color: black;
+}
+
+#content {
+	overflow: auto;
+	margin: 0;
+	padding: 1%;
+}
+
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
+}
+
+font {
+	text-align: center;
+}
+
+#test {
+	margin-top: 3.5%;
+	float: right;
+	border-radius: 0;
+}
+
+p {
+	text-align: left;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	margin: 1.7%;
+	border-radius: 10px;
+}
+
+h1 {
+	font-size: 25px;
+}
+
+#edit {
+	shadow: false;
+	margin: 0;
+	border: none;
+	width: 17%;
+	height: 100%;
+}
+
+#edit img {
+	margin-top: 10%;
+	border-radius: 0;
+	width: 70%;
+	height: 70%;
+}
+
+#line_left {
+	padding: 0;
+	margin-top: 0;
+	height: 90%;
+	width: 5%;
+	float: right;
+	background-image: url(cssimage/header_line.png);
+}
+
+#list {
+	shadow: false;
+	margin: 0;
+	border: none;
+	width: 17%;
+	height: 100%;
+	float: right;
+}
+
+#list img {
+	margin-top: 25%;
+	widows: 45%;
+	height: 45%;
+	margin-left: 6%;
+	border-radius: 0;
+}
+
+#line_right {
+	padding: 0;
+	margin-top: 0;
+	margin-right: 4%;
+	height: 90%;
+	width: 5%;
+	float: left;
+	background-image: url(cssimage/header_line.png);
+}
