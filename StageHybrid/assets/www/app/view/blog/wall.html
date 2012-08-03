@@ -9,12 +9,14 @@
 	<script type="text/javascript">
 		var increaseNumber;
 		var pageMaster;
-		$("#wallPage").on(
-				"pageinit",
-				function() {
+		$("#wallPage").on("pageinit",function() {
+			
 					var pageParams = $.stageComponent.pageParam();
 					var currentLoginId = $.stage.component.getSession();
-
+					if(currentLoginId.userId == null){
+						alert("로그인 해주세요!");
+						$.stageComponent.pageMove("../session/login.html",{});
+					}
 					increaseNumber = 0;
 					pageMaster = "testimage";
 					console.log("userID : " + currentLoginId.userId);
@@ -23,9 +25,10 @@
 					getInforList(0);
 					getthumnail();
 
-					//	$("#back").click(function() {
-					//		$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
-					//		});
+					$("#back").click(function() {
+							$.stageComponent.pageMove("../talk/talkList.html",{}, currentLoginId.userId);
+					});
+					
 					$("#submitButton").bind("click", function() {
 						var text = $("#insertText").val();
 						if (text == "" || text == " ")
@@ -65,11 +68,18 @@
 									}
 								}
 							});
+		
 					$("#list").bind("click", function() {
 
 					});
 
 				});
+		function hide_footer(){
+			//$("#footer").hide();
+		}
+		function show_footer(){
+			$("#footer").show();
+		}
 		function getthumnail() {
 			var currentLoginId = $.stage.component.getSession();
 
@@ -247,9 +257,7 @@
 	<div id="input_text">
 		<img src="" id="input_img">
 		<img src="cssimage/blog_write_btn.png" id="submitButton">
-		<input type="text" id="insertText" value="" />
-
-
+		<input type="text" id="insertText" value="" onfocus="hide_footer()" onblur="show_footer()">
 	</div>
 
 	<footer data-role="footer" id="footer" data-position="fixed"
