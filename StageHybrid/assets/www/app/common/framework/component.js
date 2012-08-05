@@ -47,7 +47,11 @@ $.stage.component.listview = function(
 		var listData = result.list;
 		var list = $('#'+eleId);
 		$('#'+tmpId).tmpl(listData).appendTo(list);
-		list.listview("refresh");
+
+		if(list && (list.attr('data-role')=='listview'))
+		{
+			list.listview("refresh");
+		}
 		func();
 		$.mobile.hidePageLoadingMsg();
 	},true);
@@ -67,7 +71,11 @@ $.stage.component.listview = function(
 					var list = $('#'+eleId);
 						
 					$('#'+tmpId).tmpl(listData).appendTo(list);
-					list.listview("refresh");
+					if(list && (list.attr('data-role')=='listview'))
+					{
+						list.listview("refresh");
+					}
+		
 					func();
 					$.mobile.hidePageLoadingMsg();
 				},true);
@@ -109,8 +117,13 @@ $.stage.component.infoview = function(eleId,tmpId,url,params,func)
 		var infoData = result.data;
 		var info = $('#'+eleId);
 		$('#'+tmpId).tmpl(infoData).appendTo(info);
-		if(info.listview);
-			info.listview("refresh"); //由ъ뒪�몃럭瑜��꾪븳 援щЦ
+		
+		if(info && (info.attr('data-role')=='listview'))
+		{
+			info.listview("refresh");
+		}
+		
+		
 		func();
 		$.mobile.hidePageLoadingMsg();
 

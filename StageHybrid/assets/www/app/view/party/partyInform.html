@@ -1,32 +1,41 @@
 <meta charset="UTF-8">
 <div data-role="page" id="partyInformPage">	
-
+ <link rel = "stylesheet" type = "text/css" href="partyInform.css">
 	<script id="partyInformTpl" type="text/x-jquery-tmpl">
-	<li>파티명: ${partyName}</li>
-	<li id ="location"><strong>장소: ${location} ${clubName}</strong></li>
+	<div id ="textSection">
+	<li><div class="miniArrow"></div><div class="headText">파티 명</div><div class="contentLine"></div><div class="bodyText">${partyName}</div></li>
+	<li><div class="miniArrow"></div><div class="headText">장소</div><div class="contentLine"></div><div class="bodyText">${location} ${clubName}</div></li>
 	<li id = "date"><p>${openDate}</p></li>
-	<li id = "formDate">날짜: </li>
-	<li>인원: ${persons}</li>	
-	<li>안내 사항: ${comment}</li>
-	<li id="posterView">▼ 파티 포스터 보기 ▼</li>
+	<li id = "formDate"><div class="miniArrow"></div><div class="headText">날짜</div><div class="contentLine"></div></li>
+	<li><div class="miniArrow"></div><div class="headText">인원</div><div class="contentLine"></div><div class="bodyText">${persons}</div></li>	
+	<li><div class="miniArrow"></div><div class="headText">안내 사항</div><div class="contentLine"></div><div class="bodyText">${comment}</div></li>
+	</div>
+
+	<div id="imgSection">
 	<img src="${poster1}" width="100%">
 	<img src="${poster2}" width="100%">
 	<img src="${poster3}" width="100%">
-	<img src="${poster4}" width="100%"
+	<img src="${poster4}" width="100%">
 	<img src="${poster5}" width="100%">
+	</div>
 
 	</script>
 
 
 	<script type="text/javascript">
+	
+	
 		$("#partyInformPage").on("pageinit", function(){
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
 
 			var pageParams = $.stageComponent.pageParam();
 			var partyInformIdx = pageParams.partyIdx;
 			var partyInformUrl= $.stageRestPool.GET_PARTY_INFORM+partyInformIdx;
+			
+			
+			
 			$.stageComponent.infoview("partyInform","partyInformTpl",partyInformUrl,null,function(){
-				var orgDate = $("#partyInform>li>p").text();
-
+				var orgDate = $("#textSection>li>p").text();
 					var UTCmilli = orgDate*1;
 					var today = new Date(UTCmilli);
 					var year = today.getYear()+1900;
@@ -36,7 +45,7 @@
 					var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");
 
 					$("#date").remove();					
-				    $("#formDate").append(""+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일");
+				    $("#formDate").append("<div class='bodyText'>"+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일</div>");
 
 
 					list.listview("refresh");
@@ -45,28 +54,37 @@
 			
 		});	
 		
+		$("#backArea").bind("tap", function() {
+			
+			$.stage.component.pageMove("partyList.html");
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			
+			
+		});
 		
 	</script>
 	
-    <header data-role="header" data-theme="a" data-position="fixed">
-    	<a href="partyList.html" data-icon="grid" data-theme="b">뒤로</a>
-        <h1>파티 상세보기</h1>
- 
-		
+    <header data-role="header" id="piHeader" data-position="fixed">
+    	<div id="backArea">
+	        <div id="backBtn"></div>
+	        <div id="backBtnLine"></div>
+	    </div>
+       <span>파티 상세보기</span>
     </header>
 
-    <section data-role="content">
-		<ul data-role="listview" id="partyInform">
+    <section data-role="content" class="content">
+		<ul data-role="none"  id="partyInform">
 		</ul>
     </section>
 
-    <footer data-role="footer" data-theme="a" data-position="fixed" >
-		<div data-role="navbar">
-			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">스톡</a>
-			<a href="clubList.html" data-role="button" id="mainClubButton">클럽리스트</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
-			<a href="blog.html" data-role="button" id="mainBlogButton">블로그</a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">설정</a>	
+    <footer data-role="footer" id="footer" data-position="fixed" data-tap-toggle="false">
+			<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+     	    <li><a href="../blog/wall.html" id="mainBlogButton"></a></li>
+    	    <li><a href="partyList.html" id="mainPartyButton"></a></li>
+     	    <li><a href="lounge.html" id="mainLoungeButton"></a></li>
+      	 <li><a href="setting.html" id="mainSettingButton"></a>  </li>
+			</ul>
 		</div>		
     </footer>
 </div>

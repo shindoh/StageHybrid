@@ -1,0 +1,132 @@
+@CHARSET "EUC-KR";#piHeader {
+  background: url(images/header_bg.png) repeat-x;
+  height: 50px; }
+  #piHeader #backBtn {
+    float: left;
+    margin: 0px 0px 0px 6%;
+    padding: 0px;
+    background: url(images/back_btn.png) 0% 65% no-repeat;
+    width: 35px;
+    height: 45px;
+    background-size: 50%; }
+  #piHeader #backBtnLine {
+    float: left;
+    margin: 0px 0px 0px 2%;
+    padding: 0px;
+    background: url(images/header_line.png) 0% 0% no-repeat;
+    width: 2px;
+    height: 50px;
+    background-size: 100%; }
+  #piHeader span {
+    padding: 13px 0px 0px 14%;
+    float: left;
+    font-size: 23px;
+    text-align: center; }
+
+.content {
+  padding: 0px;
+  margin: 0px;
+  background-image: url(images/back_bg.png);
+  background-repeat: repeat;
+  background-attachment: scroll; }
+
+#partyInform {
+  margin: 0px;
+  padding: 2% 2% 0 2%;
+  list-style-type: none; }
+  #partyInform #textSection {
+    float: left;
+    margin: 0px;
+    padding: 5% 3% 5% 3%;
+    width: 94%;
+    font-size: 15px;
+    border-radius: 7px;
+    background-color: rgba(229, 229, 229, 0.8);
+    color: #525252;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0px 2px 3px 1px rgba(91, 91, 91, 0.2);
+    box-shadow: 0px 2px 3px 1px rgba(91, 91, 91, 0.2); }
+    #partyInform #textSection li {
+      width: 98%;
+      padding-bottom: 13px;
+      line-height: 18px; }
+      #partyInform #textSection li .miniArrow {
+        margin: 0px 3px 0px 0px;
+        float: left;
+        background: url(images/mini_arrow.png) 0% 0% no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 90%; }
+      #partyInform #textSection li .contentLine {
+        float: left;
+        background: url(images/content_line.png) 0% 0% no-repeat;
+        width: 2px;
+        height: 20px;
+        background-size: 100%;
+        margin: 0px 8px 0px 0px; }
+      #partyInform #textSection li .headText {
+        float: left;
+        font-weight: bold;
+        color: #861f1f;
+        text-align: right;
+        width: 20%;
+        margin: 3px 3px 0px 0px; }
+      #partyInform #textSection li .bodyText {
+        float: 1eft;
+        width: 72%;
+        padding: 3px 0px 0px 32%;
+        line-height: 18px; }
+  #partyInform #imgSection {
+    padding: 0px;
+    margin: 0px;
+    width: 100%; }
+
+#footer {
+  background: url(images/header_bg.png) repeat-x;
+  height: 55px; }
+  #footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px; }
+    #footer ul li {
+      height: 100%; }
+      #footer ul li #mainStalkButton {
+        background: url(images/stalk_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainStalkButton:hover {
+          background: url(images/tap_stalk_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainBlogButton {
+        background: url(images/blog_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainBlogButton:hover {
+          background: url(images/tap_blog_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainPartyButton {
+        background: url(images/party_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainPartyButton:hover {
+          background: url(images/tap_party_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainLoungeButton {
+        background: url(images/lounge_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainLoungeButton:hover {
+          background: url(images/tap_lounge_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainSettingButton {
+        background: url(images/setting_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainSettingButton:hover {
+          background: url(images/tap_setting_icon.png) 50% 50% no-repeat; }
