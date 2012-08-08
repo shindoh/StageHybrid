@@ -1,0 +1,78 @@
+<meta charset="UTF-8">
+<div data-role="page" id="userFriend">
+
+	<script id="userFriendTpl" type="text/x-jquery-tmpl">
+	<li data-messageId="${idx}" friendId="${otherId}" id='talkItem_${idx}'>
+		<h3>${otherId}</h3>
+		<img src="${otherThumnail}">
+		<div class="ui-li-aside">
+			<p><strong>${regDate}</strong></p>
+		</div>
+			<p>${otherSex}</p>
+			<p>${otherFrontComment}</p>
+			<input type="button" value="button" id="testbutton" class=${state}> 
+	</li>
+	</script>
+	
+	<script type="text/javascript">
+		$("#userFriend").on("pageinit", function(){
+				var params={};
+				params.userId = $('#name').val();
+				var options={};
+				options.autoLoad = false;
+				
+				$('#button').bind("click",function (){
+					$("#friendList").empty();
+					$.stageComponent.listview("friendList","userFriendTpl",$.stageRestPool.USER_FRIEND_LIST,
+							params,function(){
+						$("#friendList >li").bind("tap",function(){  //탭 클릭시
+							
+							var userId =$(this).attr("friendId");
+							$.stage.component.pageMove("userInfo.html",{userId:userId});		
+						});
+					$("#friendList .R").val("친구 수락");
+					$("#friendList .F").val("친구 삭제");
+					
+					$("#friendList .R").bind("click",function (){
+						event.cancelBubble=true;
+						alert("요청 수락");
+					
+					});
+					},options); //리스트가 25이하인 경우에 무한 로딩??
+					
+				});
+				
+				
+		});		
+     </script>
+	
+	<header data-role="header" data-position="fixed" data-tap-toggle="false">
+        <h1>User Friend list</h1>
+        <a href="#" data-rel="back" data-icon="grid" data-theme="b">Back</a>
+    </header>
+    
+    <section data-role="content">
+    	<div data-role="fieldcontain">
+    	
+    		<label for="ID">ID :</label>
+    		
+   		 	<input type="text" name="name" id="name" value="test46" />
+   		 	
+   		 	<a href="" id="button" data-role="button">Search</a>
+   		 		
+		</div>	
+		<ul data-role="listview" id="friendList">
+		</ul>
+    </section>
+	
+	
+	<footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar">
+			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">talklist</a>
+			<a href="clubList.html" data-role="button" id="mainClubButton">clublist</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">lounge</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">blog</a>	
+			<a href="setting.html" data-role="button" id="mainSettingButton">setting</a>	
+		</div>		
+    </footer>
+</div>

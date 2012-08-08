@@ -1,0 +1,157 @@
+
+<div data-role="page" id="userInfo">
+	<link rel="stylesheet" type="text/css" href="footer.css" />
+	<link rel="stylesheet" type="text/css" href="total.css" />
+	<script id="userInfoTpl" type="text/x-jquery-tmpl">
+	<div id="summary">
+		<div ><img id="image" src="${frontPhoto}"></div>
+		<div id="profile"><h5>ID : ${id}</h5><h5>최근 상태 : ${frontComment}</h5></div>
+	</div>
+	<div id="detail">
+		<p>나이 : ${age}</p>
+		<p>성별 : ${sex}</p>
+		<p>이메일 : ${mail}</p>
+		<p>관심사 : ${lookingFor}</p>
+		<p>직장 : ${work}</p>
+		<p>매력도 : ${awesomePoint}</p>
+	</div>
+	</script>
+
+	<script type="text/javascript">
+		$("#userInfo").on("pageinit", function(){
+			var currentLoginId = $.stage.component.getSession();
+			console.log("userID : " + currentLoginId.userId);
+		
+			/* 페이지이동시 사용할 구문. userId도 넘겨야 함.
+			var userId =$(this).children("h3").text(); //암기
+			$.stage.component.pageMove("../blog/blog.html",{userId:userId});
+			*/
+			
+			//페이지 파라미터에서 id값 추출
+			var pageParams = $.stage.component.pageParam();
+			var session = null;
+			var state = null;
+			
+			
+			if($.stage.component.hasSession()){ //세션을 가지고 있다면
+				//세션값 추출
+				session = $.stage.component.getSession();
+				
+				console.log("session.userId : "+session.userId);
+				console.log("pageParams.userId : "+pageParams.userId); // undefined로 받아옴..
+				
+				//비교 결과 가져오기
+				if('testimage' == session.userId){//세션id와 페이지 id가 같으면
+					state = $.stageRestPool.MYSELF_RELATION;
+				}else{//세션id와 페이지 id가 다르면
+					var params = {};
+					params.userId1 = session.userId;
+					params.userId2 = pageParams.userId;
+					$.stageAjax.getJson($.stageRestPool.USER1_RELATION_WITH_USER2,params,function(result){
+						var infoData = result.data; 
+						
+						if((infoData == null)||(infoData.state == $.stageRestPool.NONE_RELATION)){//두 아이디가 관계가 없다면
+							state = $.stageRestPool.NONE_RELATION;
+						}else if(infoData.state == $.stageRestPool.DENY_RELATION){
+							state = $.stageRestPool.DENY_RELATION;
+						}else if(infoData.state == $.stageRestPool.REQUEST_RELATION){
+							state = $.stageRestPool.REQUEST_RELATION;
+						}else if(infoData.state == $.stageRestPool.FRIEND_RELATION){
+							state = $.stageRestPool.FRIEND_RELATION;
+						}else if(infoData.state == $.stageRestPool.BLOCK_RELATION){
+							state = $.stageRestPool.BLOCK_RELATION;
+						}
+						/////////////////////
+						switch(state){
+						case $.stageRestPool.FRIEND_RELATION : //친구일 경우
+						case $.stageRestPool.REQUEST_RELATION : //친구 요청만 들어간 경우
+							$("#dynamic").hide();
+							break;
+						
+						case $.stageRestPool.DENY_RELATION : //친구 요청이 거절된 경우
+						case $.stageRestPool.NONE_RELATION : //아무 관계가 없을 경우
+							$("#dynamic").text("친구요청");
+							$("#dynamic").bind("click",function (){
+								var relation = confirm('친구 요청을 하시겠습니까?');
+								if(relation){
+									//파라미터 생성
+									var params = {};
+										params.fromId = session.userId;
+									params.toId = pageParams.userId;
+									//친구 요청을 yes 하면, post로 request로 변환하는 함수 날릴것.
+									$.stage.ajax.postJson($.stageRestPool.POST_USER_RELATION_SET_STATE+$.stageRestPool.REQUEST_RELATION,params,function(result){
+									var infoData = result.data;
+									if(infoData == -1){
+										alert('요청과정 중 오류가 발생하였습니다.');
+									}else{
+										//요청이 처리됨을 알림
+										alert('요청이 처리되었습니다.');
+										// 요청버튼을 삭제
+										$("#dynamic").hide();
+									}
+								},true);
+							}
+						});
+						break;
+					case $.stageRestPool.BLOCK_RELATION : break;//블락된 상태일 경우(사용안함)
+					}
+					
+					
+					},true);
+						
+				}
+				switch(state){
+					case $.stageRestPool.MYSELF_RELATION : // 내 자신인 경우
+						$("#dynamic").text("정보수정");
+						$("#dynamic").bind("click",function (){
+							//사용자의 정보수정 페이지로 이동 (미완)
+							var userId = $(this).children("h3").text(); //암기
+							$.stage.component.pageMove("../blog/blog.html",{userId:userId});
+						
+						});
+						break;
+					
+			}
+				
+			}else{//세션이 없다면 로그인 창 출력...
+				$("#dynamic").text("친구요청");
+				$("#dynamic").bind("click",function (){
+					//기능은 로그인 페이지로 이동
+					$.stage.component.pageMove("../session/login.html");
+				});
+			}
+			//페이지 id값에서 정보 가져오기
+			$.stageComponent.infoview("userInfoList","userInfoTpl",$.stageRestPool.GET_USER_INFORM,pageParams,function(){
+			});
+			
+		});		
+		
+     </script>
+
+	<header data-role="header" id="header" data-position="fixed"
+		data-tap-toggle="false">
+		<h1>블로그</h1>
+		<div id="category" class="ui-btn-right"></div>
+	</header>
+
+	<section data-role="content">
+		<span id="userInfoList"> </span>
+		<br> 
+		<a id="dynamic" data-role="button"></a> 
+		<a href="searchFriend.html" data-role="button">Search Friends</a> 
+		<a href="userFriendlist.html" data-role="button">User's friend</a>
+		
+	</section>
+
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainBlogButton"></a></li>
+			<li><a href="lounge.html" id="mainPartyButton"></a></li>
+			<li><a href="../blog/blog.html" id="mainLoungeButton"></a></li>
+			<li><a href="setting.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
+</div>

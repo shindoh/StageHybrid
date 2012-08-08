@@ -9,7 +9,10 @@
 	background-image: url(cssimage/header_bg.png);
 	text-align: center;
 }
-
+#header h1{
+	font-size: 23px;
+	text-align: center;
+}
 #content {
 	
 }

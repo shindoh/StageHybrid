@@ -46,21 +46,6 @@ RestPool = function(){
 		
 		/*
 		 * method : post
-		 * params : talkIdx (require)
-		 * 			userId (required) 
-		 * 			comment (required) 
-		 * 			imgUrl  
-		 */				
-		this.MODIFY_TALK = this.STAGE_REST + "/talkUpdate";
-		
-		/*
-		 * method : post
-		 * params : talkIdx (require)
-		 * 			userId (required) 
-		 */				
-		this.DELETE_TALK = this.STAGE_REST + "/talkDelete";	
-		/*
-		 * method : post
 		 * params : userId (required) 
 		 * 			comment (required)
 		 * 			imgUrl (required) default = ""
@@ -151,7 +136,45 @@ RestPool = function(){
 		 * params : userId (required)
 		 * 			photoIdx (path)
 		 */		
-		this.DELETE_USER_PHOTO_ALBUM = this.STAGE_REST + "/user/photoAlbum/delete/";		
+		this.DELETE_USER_PHOTO_ALBUM = this.STAGE_REST + "/user/photoAlbum/delete/";
+		
+
+		/*
+		 * method : get  
+		 * params : userId (required)
+		 */		
+		this.USER_FRIEND_LIST = this.STAGE_REST + "/userFriendOrRequest";			
+		
+		/*
+		 * method : get  
+		 * params : userId1 (required)
+		 * 			userId2 (required)
+		 */		
+		this.USER1_RELATION_WITH_USER2 = this.STAGE_REST + "/userRelation";
+		
+		/*
+		 * 
+		 * USER_RELATION
+		 * 
+		 * 
+		 **/		
+			/*
+			 * method : post  
+			 * params : RELATION_PREFIX(path)
+			 * 			fromId (required)
+			 * 			toId (required)
+			 */		
+			this.POST_USER_RELATION_SET_STATE  = this.STAGE_REST + "/userRelationList/";
+
+			/*
+			 * RELATION_PREFIX
+			 */
+				this.REQUEST_RELATION = "R";
+				this.BLOCK_RELATION  = "B";	/*not use*/
+				this.FRIEND_RELATION  = "F";
+				this.DENY_RELATION  = "D";
+				this.MYSELF_RELATION  = "M";
+				this.NONE_RELATION  = "N";
 		
 
 

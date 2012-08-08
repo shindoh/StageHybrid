@@ -6,14 +6,16 @@
 
 #header {
 	text-align: center;
-	vertical-align: text-bottom;
 	height: 10%;
 	background-image: url(cssimage/header_bg.png);
 	margin: 0;
 	padding: 0;
 	height: 10%;
 }
-
+#header h1{
+	font-size: 23px;
+	text-align: center;
+}
 #id_header {
 	text-align: center;
 	background-color: gray;
