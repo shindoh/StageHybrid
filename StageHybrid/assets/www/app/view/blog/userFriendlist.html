@@ -10,69 +10,355 @@
 		</div>
 			<p>${otherSex}</p>
 			<p>${otherFrontComment}</p>
-			<input type="button" value="button" id="testbutton" class=${state}> 
+
+		<input type="button" class= ${state} value=" " id="testbtu">
 	</li>
 	</script>
-	
+	<style>
+#userFriend
+{
+	background-image: url(cssimage/back_bg.png);
+}
+#header 
+{
+	text-align:center;
+	height: 10%;
+	background-image: url(cssimage/header_bg.png);
+	margin: 0;
+}
+
+#header h1
+{
+	font-size: 23px;
+	text-align: center;
+}
+
+#content
+{
+		margin: 0;
+		padding: 0;
+}
+#id_header {
+	text-align: center;
+	background-color: gray;
+	opacity: 0.6;
+	margin: 0;
+	width: 100%;
+	font-size: 25px;
+	color: black;
+}
+#req_title{
+	width:96%;
+	text-align: left;
+	background-color: #87ceeb;
+	opacity: 0.6;
+	margin: 0;
+	margin-left:1.5%;
+	margin-top:5px;
+	padding-left:1.5%;
+	font-size: 20px;
+	font-weight:bold;
+	color: black;
+	border-radius: 6px;
+}
+#fri_title{
+	width:96%;
+	text-align: left;
+	background-color: #87ceeb;
+	opacity: 0.6;
+	margin: 0;
+	margin-left:1.5%;
+	padding-left:1.5%;
+	font-size: 20px;
+	font-weight:bold;
+	color: black;
+	border-radius: 6px;
+}
+.others {
+	overflow: auto;
+	width:95%;
+	height: 14%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	margin-left:2.5%;
+	background-color: #CAC9C9;
+	border-radius: 6px;
+}
+
+#others_text {
+	margin: 2%;
+	margin-top: 2.3%;
+	margin-right: 2%;
+	padding: 2%;
+	width: 65%;
+	text-align: left;
+	float: right;
+	background-color: #EAEAEA;
+	opacity: 0.6;
+	border-radius: 6px;
+}
+
+#others_text font {
+	opacity: 1;
+}
+
+#others_img {
+
+	width:73px;
+	height:75px;
+	margin:0;
+	margin-top: 2.3%;
+	margin-left:2%;
+	border-radius: 6px;
+}
+
+.add_fri{
+	float: right;
+	width: 13%;
+	box-shadow: 1px 1px 1px #878787;
+	-moz-box-shadow: 1px 1px 1px #878787;
+	-webkit-box-shadow: 1px 1px 1px #878787;
+}
+.delete_fri{
+	float: right;
+	width: 13%;
+	box-shadow: 1px 1px 1px #878787;
+	-moz-box-shadow: 1px 1px 1px #878787;
+	-webkit-box-shadow: 1px 1px 1px #878787;
+}
+#request {
+	margin-bottom: 20px;
+}
+
+#footer {
+	background-image: url(cssimage/header_bg.png);
+	height: 11%;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(cssimage/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(cssimage/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(cssimage/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(cssimage/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(cssimage/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(cssimage/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(cssimage/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(cssimage/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(cssimage/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
+}
+#back {
+	shadow: false;
+	margin: 0;
+	padding:0;
+	margin-top:3.5%;
+	border: none;
+	width: 17%;
+	height: 100%;
+}
+#line_left {
+	padding: 0;
+	margin: 0;
+	height: 90%;
+	width: 5%;
+	float: right;
+	background-image: url(cssimage/header_line.png);
+}
+#back img{
+	margin-top: 20%;
+	width:35%;
+	height: 50%;
+	border-radius: 0;
+	margin-right: 10%;
+}
+</style>
+
 	<script type="text/javascript">
-		$("#userFriend").on("pageinit", function(){
-				var params={};
-				params.userId = $('#name').val();
-				var options={};
-				options.autoLoad = false;
-				
-				$('#button').bind("click",function (){
-					$("#friendList").empty();
-					$.stageComponent.listview("friendList","userFriendTpl",$.stageRestPool.USER_FRIEND_LIST,
-							params,function(){
-						$("#friendList >li").bind("tap",function(){  //탭 클릭시
-							
-							var userId =$(this).attr("friendId");
-							$.stage.component.pageMove("userInfo.html",{userId:userId});		
-						});
-					$("#friendList .R").val("친구 수락");
-					$("#friendList .F").val("친구 삭제");
-					
-					$("#friendList .R").bind("click",function (){
-						event.cancelBubble=true;
-						alert("요청 수락");
-					
-					});
-					},options); //리스트가 25이하인 경우에 무한 로딩??
-					
+		var sessionId;
+		$("#userFriend").on("pageinit", function() {
+			var params = {};
+			//params.userId = $('#name').val();
+			params.userId = "test46";
+			sessionId = "test46";
+			$("#id_header").html("@" + params.userId);
+			getFriendList(params.userId);
+			
+		
+		});
+		function add_friend(id){
+			var answer = confirm('추가하시겠습니까?');
+			var url = $.stageRestPool.POST_USER_RELATION_SET_STATE;
+			
+			var params ={
+		  			fromId: id,
+		  			toId: sessionId
+			}; 
+			
+			if(answer == true)
+			{
+				url+= $.stageRestPool.FRIEND_RELATION;
+				$.stage.ajax.postJson(url, params, function(data) {
+					alert("추가되었습니다");
+					$("#request").empty();
+					$("#friend").empty();
+					getFriendList(sessionId);
 				});
-				
-				
-		});		
-     </script>
+			}
+		}
+		function delete_friend(id){
+			var answer = confirm('친구 삭제하시겠습니까?');
+			var url = $.stageRestPool.POST_USER_RELATION_SET_STATE;
+			
+			var params ={
+		  			fromId: id,
+		  			toId: sessionId
+			}; 
+			
+			if(answer == true)
+			{
+				url+= $.stageRestPool.NONE_RELATION;
+				$.stage.ajax.postJson(url, params, function(data) {
+					alert("삭제되었습니다");
+					$("#request").empty();
+					$("#friend").empty();
+					getFriendList(sessionId);
+				});
+			}
+		}
+		function getFriendList(id) {
+			var url = $.stageRestPool.USER_FRIEND_LIST;
+			var params = {
+				userId : id
+			};
+
+			$.stageAjax.getJson(url, params, function(result) {
+				var a = 0;
+				while (result.list[a] != null) {
+					var img_src = result.list[a].otherThumnail;
+					var comment = result.list[a].otherFrontComment;
+					if (img_src == null)
+						img_src = "gravatar.jpg";
+					if(comment == null)
+						comment=" ";
+					if (result.list[a].state == 'R') {
+						
+						$("<div class='others'>").appendTo("#request").html('<div id="others_text">'
+										+ '<font id="ID"><b>ID: </b>'
+										+ result.list[a].otherId
+										+ '</font><br/><b>상태메세지: </b>'
+										+ comment
+										+'<div class="add_img"><img src="cssimage/setting_btn.png" onclick="add_friend(id)" class="add_fri" id='+result.list[a].otherId+'></div>'
+										+ '</div><img src='+ img_src+' id="others_img">');
+
+					} else if (result.list[a].state == 'F') {
+						$("<div class='others'>").appendTo("#friend")
+						.html('<div id="others_text">'
+										+ '<font id="ID"><b>ID: </b>'
+										+ result.list[a].otherId
+										+ '</font><br/><b>상태메세지: </b>' 
+										+ comment
+										+'<div class="delete_img"><img src="cssimage/setting_btn.png" onclick="delete_friend(id)" class="delete_fri" id='+result.list[a].otherId+'></div>'	
+										+ '</div><img src='+ img_src+' id="others_img">');
+					}
+					a++;
+				}
+
+			});
+
+		}
+	</script>
+
+	<header data-role="header" data-position="fixed" data-tap-toggle="false" id="header">
+		<div id="back" class="ui-btn-left">
+				<img src="cssimage/back_btn.png">
+				<div id="line_left"></div>
+		</div>
+		<h1>친구 리스트</h1>
 	
-	<header data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>User Friend list</h1>
-        <a href="#" data-rel="back" data-icon="grid" data-theme="b">Back</a>
-    </header>
-    
-    <section data-role="content">
-    	<div data-role="fieldcontain">
-    	
-    		<label for="ID">ID :</label>
-    		
-   		 	<input type="text" name="name" id="name" value="test46" />
-   		 	
-   		 	<a href="" id="button" data-role="button">Search</a>
-   		 		
-		</div>	
-		<ul data-role="listview" id="friendList">
+	</header>
+
+	<div id="id_header"></div>
+
+	<section data-role="content" id="content">
+
+		<div id="req_title">Request Friends List</div>
+		<div id="request">
+		</div>
+		
+		<div id="fri_title">Request Friends List</div>
+		<div id="friend">
+			
+		</div>
+
+	</section>
+
+
+	<footer data-role="footer" id="footer" data-position="fixed"
+		data-tap-toggle="false">
+		<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="blog2.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="wall.html" id="mainSettingButton"></a></li>
 		</ul>
-    </section>
-	
-	
-	<footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-		<div data-role="navbar">
-			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">talklist</a>
-			<a href="clubList.html" data-role="button" id="mainClubButton">clublist</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">lounge</a>
-			<a href="blog.html" data-role="button" id="mainBlogButton">blog</a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">setting</a>	
-		</div>		
-    </footer>
+
+	</footer>
 </div>
