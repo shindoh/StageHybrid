@@ -16,7 +16,23 @@
 		<p>매력도 : ${awesomePoint}</p>
 	</div>
 	</script>
+<style>
+.overlay {
+	width: 35%;
+	position: absolute;
+	top: 11%;
+	left: 60%;
+	border-radius: 5px;
+	background: #8b0000;
+	z-index: 1501;
+	padding: 3px 5px 5px 5px;
+}
 
+#tas_list li{
+	font-size: 18px;
+	background-color: #ffa07a;	
+}
+</style>
 	<script type="text/javascript">
 		$("#userInfo").on("pageinit", function(){
 			var currentLoginId = $.stage.component.getSession();
@@ -123,7 +139,29 @@
 			//페이지 id값에서 정보 가져오기
 			$.stageComponent.infoview("userInfoList","userInfoTpl",$.stageRestPool.GET_USER_INFORM,pageParams,function(){
 			});
+			$("#user").live("click",function(){
+				$.stageComponent.pageMove("blog2.html",{}, currentLoginId.userId);
+	        });
+			$("#ablum").live("click",function(){
+				$.stageComponent.pageMove("camera.html",{}, currentLoginId.userId);
+	        });
+			$("#wall").live("click",function(){
+				$.stageComponent.pageMove("wall.html",{}, currentLoginId.userId);
+	        });
 			
+			$("#list").live("tap",function(){
+				$(".overlay").show();
+	        });
+			
+	        $(".ui-mobile-viewport").live("tap",function(event){
+	            var target = event.target;
+	            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
+	            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
+	            if($('#list').find(target).length==0 && $('.overlay').find(target).length==0) {
+	                $(".overlay").hide();
+	            }
+	            
+	        });
 		});		
 		
      </script>
@@ -135,14 +173,21 @@
 	</header>
 
 	<section data-role="content">
-		<span id="userInfoList"> </span>
-		<br> 
-		<a id="dynamic" data-role="button"></a> 
-		<a href="searchFriend.html" data-role="button">Search Friends</a> 
-		<a href="userFriendlist.html" data-role="button">User's friend</a>
-		
-	</section>
+		<span id="userInfoList"> </span> <br> <a id="dynamic"
+			data-role="button"></a> <a href="searchFriend.html"
+			data-role="button">Search Friends</a> <a href="userFriendlist.html"
+			data-role="button">User's friend</a>
 
+	</section>
+	<div class="overlay" style="display: none">
+		<div class="overlay-content">
+			<ul id='tas_list' data-role='listview'>
+				<li id="user">개인 정보</li>
+				<li id="ablum">앨범</li>
+				<li id="wall">담벼락</li>
+			</ul>
+		</div>
+	</div>
 	<footer data-role="footer" id="footer" data-theme="a"
 		data-position="fixed" data-tap-toggle="false">
 		<ul>

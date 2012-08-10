@@ -302,3 +302,18 @@
 	height: 36px;
 	float: right;
 }
+.overlay {
+	width: 35%;
+	position: absolute;
+	top: 17%;
+	left: 60%;
+	border-radius: 5px;
+	background: #8b0000;
+	z-index: 1501;
+	padding: 3px 5px 5px 5px;
+}
+
+#tas_list li{
+	font-size: 18px;
+	background-color: #ffa07a;	
+}

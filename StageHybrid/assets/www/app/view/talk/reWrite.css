@@ -2,12 +2,18 @@
 
 
 #content {
-	background: url(images/back_bg.png) repeat-x repeat-y;
+	
 }
+
+#talkreWritePage{
+	background: url(images/back_bg.png);
+}
+
 #picUp2{
 	margin:-27px 0 0 10px;
 }
 #reWriteTxt{
+	height : 250px;
 	margin: 10px 0 0 0;
 }
 #header #backRW{

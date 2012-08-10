@@ -1,12 +1,16 @@
 @CHARSET "EUC-KR";
 
 #content {
-	background: url(images/back_bg.png) repeat-x repeat-y;
+	
+}
+#talkWritePage{
+	background: url(images/back_bg.png);
 }
 #picUp{
 	margin:-27px 0 0 10px;
 }
 #writeTxt{
+	height : 250px;
 	margin: 10px 0 0 0;
 }
 

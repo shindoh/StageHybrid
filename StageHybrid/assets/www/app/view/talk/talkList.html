@@ -1,4 +1,4 @@
-<meta charset="UTF-8">
+
 <div data-role="page" id="talkListPage">
 <link rel = "stylesheet" type = "text/css" href="talkList.css">
 	<script id="talkItemTpl" type="text/x-jquery-tmpl">
@@ -71,6 +71,9 @@
 			
 			$.stageComponent.pageMove("write.html",{talkIdx:talkIdx, userId:userId, thumnail:thumnail, comment:comment},true);
 		});
+		$("#find").click(function (){
+			$.mobile.changePage("searchFriend.html");
+		});
      </script>
      
      
@@ -103,7 +106,7 @@
        <li><a href="../blog/blog2.html" id="mainBlogButton"></a></li>
        <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
        <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-       <li><a href="../session/login.html" id="mainSettingButton"></a>  </li>
+       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
  </ul>
     
      </footer>
