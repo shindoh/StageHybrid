@@ -1,6 +1,6 @@
 
 <div data-role="page" id="talkListPage">
-<link rel = "stylesheet" type = "text/css" href="talkList.css">
+	<link rel="stylesheet" type="text/css" href="talkList.css">
 	<script id="talkItemTpl" type="text/x-jquery-tmpl">
 <li data-messageId="${idx}" id='talkItemd${idx}'>
 	<img src="${thumnail}" id='thum'>	
@@ -19,7 +19,7 @@
 </li>
 	</script>
 
-     <script type="text/javascript"> 
+	<script type="text/javascript"> 
 		$("#talkListPage").on("pageinit", function(){
 			
 			$.stageComponent.listview("talkList","talkItemTpl",$.stageRestPool.GET_TALK_LIST,null,function(){
@@ -75,23 +75,24 @@
 			$.mobile.changePage("searchFriend.html");
 		});
      </script>
-     
-     
-    <header data-role="header" id="header" data-position="fixed" data-tap-toggle="false">
-        <h1>스테이지 톡</h1>
-        <div id="find"  class="ui-btn-left"></div>
-       	<div id="write" data-theme="e" class="ui-btn-right" ></div>
-       	<div id="backBtnLine1" class="ui-btn-left"></div>
-       	<div id="backBtnLine2" class="ui-btn-right"></div>
-    </header>
 
-    <section data-role="content" id="content">
-    
-		<ul  id="talkList">
+
+	<header data-role="header" id="header" data-position="fixed"
+		data-tap-toggle="false">
+		<h1>스테이지 톡</h1>
+		<div id="find" class="ui-btn-left"></div>
+		<div id="write" data-theme="e" class="ui-btn-right"></div>
+		<div id="backBtnLine1" class="ui-btn-left"></div>
+		<div id="backBtnLine2" class="ui-btn-right"></div>
+	</header>
+
+	<section data-role="content" id="content">
+
+		<ul id="talkList">
 		</ul>
-    </section>
+	</section>
 
-   <!--   <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+	<!--   <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
 		<div data-role="navbar">
 			<a href="talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">톡톡</a>
 			<a href="../party/partyList.html" data-role="button" id="mainClubButton">스테이지</a>
@@ -100,16 +101,17 @@
 			<a href="setting.html" data-role="button" id="mainSettingButton">셋팅</a>	
 		</div>		
     </footer>  -->
-    <footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-       <ul>
-       <li><a href="talkList.html" id="mainStalkButton"></a></li>
-       <li><a href="../blog/blog2.html" id="mainBlogButton"></a></li>
-       <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-       <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
- </ul>
-    
-     </footer>
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="../blog/wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
 </div>
 
 

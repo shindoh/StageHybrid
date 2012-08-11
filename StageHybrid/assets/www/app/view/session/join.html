@@ -1,94 +1,236 @@
-<div data-role="page" id="joinPage" >
+<div data-role="page" id="joinPage">
+	<link rel="stylesheet" type="text/css" href="join.css" />
+
 	<script type="text/javascript">
-		$.isNull = function(){
-			if($("#id").val()==""){
-				alert("ID媛�鍮꾩뿀�듬땲��");
+		///공백 비교 함수
+		$.isNull = function() {
+			if ($("#id").val() == "") {
+				alert("ID가 비었습니다.");
 				$("#id").focus();
 				return false;
-			}else if($("#code").val()==""){
-				alert("CODE媛�鍮꾩뿀�듬땲��");
+			} else if ($("#code").val() == "") {
+				alert("CODE가 비었습니다.");
 				$("#code").focus();
 				return false;
-			}else if($("#mail").val()==""){
-				alert("MAIL��鍮꾩뿀�듬땲��");
+			} else if ($("#mail").val() == "") {
+				alert("MAIL이 비었습니다.");
 				$("#mail").focus();
 				return false;
-			}else{
+			} else {
 				return true;
 			}
 		};
-	
-		$("#joinPage").on("pageinit", function(){
-			
-			
-			
-			$("#submit").bind("click",function(){
-				
-				if($.isNull()){
-					$.mobile.showPageLoadingMsg("b", "loading...", true);
-					var params ={};
-					params.id = $("#id").val();
-					params.pass = $("#code").val();
-					input[name='RadioButtonList1']:checked
-					params.sex = $("input[type='radio']").attr("checked",true).val();
-					alert(params.sex);
-					params.mail = $("#mail").val();
-					/*
-					$.stageAjax.postJson($.stageRestPool.LOGIN_USER,params,function(result){
-						var infoData = result.data;
-						if(infoData == null){
-							alert('ID �먮뒗 CODE媛��섎せ �섏뿀�듬땲��);
-						}else{
-							$.stage.component.setSession(params.id,params.pass);
-							$.mobile.changePage("../talk/talkList.html");
-						}
-					},true);*/
-					$.mobile.hidePageLoadingMsg();
+		///password 길이 비교 함수
+		$.isLeng = function() {
+			if ($("#code").val().length < 6) {
+				alert('CODE가 너무 짧습니다');
+				$("#code").val('');
+				$("#code").focus();
+				return false;
+			} else if ($("#code").val().length > 12) {
+				alert('CODE가 너무 깁니다');
+				$("#code").val('');
+				$("#code").focus();
+				return false;
+			} else {
+				return true;
+			}
+		};
 
-				}
-				
-				//$.mobile.changePage("join.html");
-			});
-		});	
+		$.isMail = function() { //이메일 형식 체크
+			var emailVal = $("#mail").val();
+			check_email = emailVal
+					.search(/^\s*[\w\~\-\.]+\@[\w\~\-]+(\.[\w\~\-]+)+\s*$/g);
+
+			if (check_email != 0) {
+				alert('이메일 형식이 일치하지 않습니다.');
+				$("#mail").focus();
+				return false;
+			} else {
+				return true;
+			}
+		};
+
+		$("#joinPage")
+				.on(
+						"pageinit",
+						function() {
+
+							$("#submit")
+									.bind(
+											"click",
+											function() {
+
+												if ($.isNull() && $.isLeng()
+														&& $.isMail()) {//모든 조건이 통화 한다면
+													$.mobile
+															.showPageLoadingMsg(
+																	"b",
+																	"loading...",
+																	true);
+													//파라미터 객체 생성 구문
+													var params = {};
+													params.id = $("#id").val();
+													params.pass = $("#code")
+															.val();
+													params.sex = $(
+															"input[name='radio-choice-2']:checked")
+															.val();
+													params.mail = $("#mail")
+															.val();
+
+													//post로 서버에 생성하는 구문
+													$.stageAjax
+															.postJson(
+																	$.stageRestPool.JOIN_USER,
+																	params,
+																	function(
+																			result) {
+																		var infoData = result.data;
+																		if (infoData == -1) {
+																			alert('ID 생성중 오류가 발생하였습니다.');
+																		} else {
+																			$.stage.component
+																					.setSession(
+																							params.id,
+																							params.pass);
+																			$.mobile
+																					.changePage("../blog/blog.html");
+																		}
+																	}, true);
+													$.mobile
+															.hidePageLoadingMsg();
+
+												}
+
+											});
+
+							$("#historyback").bind("click", function() {//이전 페이지(로그인)으로 가기 위한 구문
+								history.back(-1);//미완 테스트 필요
+							});
+
+							$("#radio1").bind(
+									"click",
+									function() {//남자성별이 선택된 이벤트
+										$("#radio1").attr("src",
+												"images/man_select.png");
+										$("#radio2").attr("src",
+												"images/woman_icon.png");
+										$("input[id='radio-choice-21']").attr(
+												"checked", true).checkboxradio(
+												"refresh");
+
+									});
+
+							$("#radio2").bind(
+									"click",
+									function() {//여자성별이 선택된 이벤트
+										$("#radio1").attr("src",
+												"images/man_icon.png");
+										$("#radio2").attr("src",
+												"images/woman_select.png");
+										$("input[id='radio-choice-22']").attr(
+												"checked", true).checkboxradio(
+												"refresh");
+									});
+						});
 	</script>
-	
 
 
- 	<header data-role="header" data-position="fixed" data-tap-toggle="false">
-        <h1>媛�엯</h1>
-    </header>
-    
-    <section data-role="content">
-		<label for="id">Personal ID :</label>
-    	<input type="text" name="name" maxlength="10" id="id" value="test1024"  />
-    	
-    	<label for="code">Security Code :</label>
-    	<input type="password" name="name" id="code" value="test1024"  />
-    	
-    	<fieldset data-role="controlgroup" data-type="horizontal">
-    	<legend>Gender :</legend>
-         	<input type="radio" name="radio-choice-2" id="radio-choice-21" value="M" checked="checked" />
-         	<label for="radio-choice-21">male</label>
 
-         	<input type="radio" name="radio-choice-2" id="radio-choice-22" value="F"  />
-         	<label for="radio-choice-22">Female</label>
-    	</fieldset>
-    	
-    	<label for="mail">E-Mail :</label>
-    	<input type="text" name="name" id="mail" value="test1024"  />
-    	
-    	<button type="submit" data-theme="a" id="submit">Submit</button>
-		
-		
-    </section>
-    
-    <footer data-role="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-		<div data-role="navbar">
-			<a href="../talk/talkList.html" data-role="button" data-icon="myapp-email" data-iconpos="top" id="mainTalkButton">�≫넚</a>
-			<a href="../party/partyList.html" data-role="button" id="mainClubButton">�ㅽ뀒�댁�</a>
-			<a href="lounge.html" data-role="button" id="mainLoungeButton">�쇱슫吏�/a>
-			<a href="../blog/camera.html" data-role="button" id="mainBlogButton">釉붾줈洹�/a>	
-			<a href="setting.html" data-role="button" id="mainSettingButton">�뗮똿</a>	
-		</div>		
-    </footer>
+	<header data-role="header" id="header" data-position="fixed"
+		data-tap-toggle="false">
+		<h1>가입하기</h1>
+		<div id="historyback" class="ui-btn-left"></div>
+		<div id="backBtnLine1" class="ui-btn-left"></div>
+	</header>
+
+	<section data-role="content" id="cont">
+		<div id="back">
+			<center>
+				<div id="title">
+					<h2>REGISTER</h2>
+				</div>
+			</center>
+			<br>
+
+			<center>
+				<div id="row">
+					<div id="side1">
+						<label for="id" id="text">아이디&nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="text" name="name" maxlength="10" id="id" value=""
+							data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+			<center>
+				<div id="row">
+					<div id="side1">
+						<label for="code" id="text">패스워드&nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="password" name="name" id="code" value=""
+							data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+			<center>
+				<div id="row">
+					<fieldset data-role="controlgroup" data-type="horizontal"
+						data-mini="true">
+						<div id="side1">
+							<p id="text_select">성별&nbsp;</p>
+						</div>
+						<div id="side2">
+							<img src="images/man_select.png" id="radio1"> <img
+								src="images/woman_icon.png" id="radio2">
+
+						</div>
+						<div id="side3">
+							<input type="radio" name="radio-choice-2" id="radio-choice-21"
+								value="M" checked="checked" /> <label for="radio-choice-21">m</label>
+
+							<input type="radio" name="radio-choice-2" id="radio-choice-22"
+								value="F" /> <label for="radio-choice-22">F</label>
+
+						</div>
+					</fieldset>
+				</div>
+			</center>
+
+
+			<center>
+				<div id="row" class="email">
+					<div id="side1">
+						<label for="mail" id="text">이메일&nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="text" name="name" id="mail" value="" data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+
+			<div id="submit">
+				<button type="submit" data-theme="a" data-mini="true">작성완료</button>
+			</div>
+
+		</div>
+	</section>
+
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="../blog/wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
 </div>
