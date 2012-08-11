@@ -1,0 +1,49 @@
+#footer {
+  background: url(images/header_bg.png) repeat-x;
+  height: 11%; }
+  #footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px; }
+    #footer ul li {
+      height: 100%; }
+      #footer ul li #mainStalkButton {
+        background: url(images/stalk_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainStalkButton:hover {
+          background: url(images/tap_stalk_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainBlogButton {
+        background: url(images/blog_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainBlogButton:hover {
+          background: url(images/tap_blog_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainPartyButton {
+        background: url(images/party_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainPartyButton:hover {
+          background: url(images/tap_party_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainLoungeButton {
+        background: url(images/lounge_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainLoungeButton:hover {
+          background: url(images/tap_lounge_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainSettingButton {
+        background: url(images/setting_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainSettingButton:hover {
+          background: url(images/tap_setting_icon.png) 50% 50% no-repeat; }
