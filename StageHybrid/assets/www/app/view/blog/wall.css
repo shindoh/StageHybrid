@@ -6,15 +6,30 @@
 
 #header {
 	height: 52px;
+	margin: 0;
 	background-image: url(cssimage/header_bg.png);
 	text-align: center;
 }
-#header h1{
+
+#id_header {
+	height: 35px;
+	margin-top: 52.4px;
+	background-color: gray;
+	opacity: 0.6;
+}
+#id_header h1{
+	margin-top:5px;
+	font-size: 20px;
+}
+
+#header h1 {
 	font-size: 23px;
 	text-align: center;
 }
+
 #content {
-	
+	margin-top: 55px;
+	margin-bottom: 45px;
 }
 
 #title {
@@ -49,9 +64,9 @@
 }
 
 #others_img {
-	width:58px;
-	height:53px;
-	margin:0;
+	width: 58px;
+	height: 53px;
+	margin: 0;
 	border-radius: 10px;
 }
 
@@ -60,13 +75,13 @@
 	margin-top: 1.8%;
 	margin-left: 5%;
 	margin-bottom: 3%;
-	padding:0;
+	padding: 0;
 	padding-left: 0.3%;
-	padding-top:1.2%;
+	padding-top: 1.2%;
 	text-align: center;
 	background-color: #CAC9C9;
 	width: 62px;
-	height:55px;
+	height: 55px;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px #878787;
 	-moz-box-shadow: 3px 3px 3px #878787;
@@ -102,9 +117,9 @@
 }
 
 #mine_img {
-	width:58px;
-	height:53px;
-	margin:0;
+	width: 58px;
+	height: 53px;
+	margin: 0;
 	border-radius: 10px;
 }
 
@@ -113,12 +128,12 @@
 	margin-right: 5%;
 	margin-bottom: 3%;
 	padding-left: 0.3%;
-	padding-top:1.2%;
+	padding-top: 1.2%;
 	text-align: center;
 	float: right;
 	background-color: #CAC9C9;
 	width: 62px;
-	height:55px;
+	height: 55px;
 	border-radius: 10px;
 	box-shadow: 3px 3px 3px #878787;
 	-moz-box-shadow: 3px 3px 3px #878787;
@@ -128,7 +143,14 @@
 #ID {
 	color: red;
 }
-
+#footer_input{
+	width:100%;
+	height: 36px;
+	margin-bottom: 55px;
+}
+#footer_input input{
+	margin: 0;
+}
 #footer {
 	background-image: url(cssimage/header_bg.png);
 	height: 55px;
@@ -204,16 +226,6 @@
 	background: url(cssimage/tap_setting_icon.png) 50% 50% no-repeat;
 }
 
-#id_header {
-	text-align: center;
-	background-color: gray;
-	opacity: 0.6;
-	margin: 0;
-	width: 100%;
-	font-size: 25px;
-	color: black;
-}
-
 #list {
 	shadow: false;
 	margin: 0;
@@ -253,7 +265,7 @@
 
 #back img {
 	margin-top: 20%;
-	width:35%;
+	width: 35%;
 	height: 50%;
 	border-radius: 0;
 	margin-right: 10%;
@@ -267,8 +279,6 @@
 	float: right;
 	background-image: url(cssimage/header_line.png);
 }
-
-
 
 #header_title {
 	margin-top: 15%;
@@ -302,10 +312,11 @@
 	height: 36px;
 	float: right;
 }
+
 .overlay {
 	width: 35%;
 	position: absolute;
-	top: 17%;
+	top: 9%;
 	left: 60%;
 	border-radius: 5px;
 	background: #8b0000;
@@ -313,7 +324,7 @@
 	padding: 3px 5px 5px 5px;
 }
 
-#tas_list li{
+#tas_list li {
 	font-size: 18px;
-	background-color: #ffa07a;	
+	background-color: #ffa07a;
 }

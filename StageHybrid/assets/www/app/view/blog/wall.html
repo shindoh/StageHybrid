@@ -9,21 +9,24 @@
 	<script type="text/javascript">
 		var increaseNumber;
 		var pageMaster;
-		$("#wallPage").on(
-				"pageinit",
-				function() {
+		$("#wallPage").on("pageinit",function() {
 
 					var pageParams = $.stageComponent.pageParam();
 					var currentLoginId = $.stage.component.getSession();
-					if (currentLoginId.userId == null) {
-						alert("로그인 해주세요!");
-						$.stageComponent.pageMove("../session/login.html", {});
-					}
+		
 					increaseNumber = 0;
-					pageMaster = "testimage";
 					console.log("userID : " + currentLoginId.userId);
 
-					$("#id_header").html("@" + pageMaster);
+					if(pageParams.userId==null){
+						if (currentLoginId.userId == null) {
+							$.stageComponent.pageMove("../session/login.html", {});
+						}
+						$("#id_header_title").html("@"+currentLoginId.userId);
+						pageMaster = currentLoginId.userId;
+					} else{
+						$("#id_header_title").html("@"+pageParams.userId);
+						pageMaster = pageParams.userId;
+					}
 					getInforList(0);
 					getthumnail();
 
@@ -89,7 +92,7 @@
 			        });
 					
 					$("#list").live("tap",function(){
-						$(".overlay").show();
+						$(".overlay").toggle(50);
 			        });
 					
 			        $(".ui-mobile-viewport").live("tap",function(event){
@@ -275,9 +278,12 @@
 		</div>
 
 	</header>
-
-	<div id="id_header"></div>
-
+	<header data-role="header" data-position="fixed" id="id_header"c>
+		<h1 id="id_header_title"></h1>
+	</header>
+	
+<!-- 	<div id="id_header"></div> -->
+ 
 	<section data-role="content" data-role="fieldcontain" id="content">
 
 		<ul data-role="listview" id="wallList">
@@ -293,13 +299,21 @@
 			</ul>
 		</div>
 	</div>
-	<div id="input_text">
+
+	<!-- <div id="input_text">
 		<img src="" id="input_img"> <img
 			src="cssimage/blog_write_btn.png" id="submitButton"> <input
 			type="text" id="insertText" value="" onfocus="hide_footer()"
 			onblur="show_footer()">
 	</div>
-
+	 -->
+	<footer data-role="footer" id="footer_input" data-position="fixed" data-tap-toggle="false"  data-theme="c">
+		<img src="" id="input_img"> <img
+			src="cssimage/blog_write_btn.png" id="submitButton"> <input
+			type="text" id="insertText" value="" onfocus="hide_footer()"
+			onblur="show_footer()">
+	</footer>
+	
 	<footer data-role="footer" id="footer" data-position="fixed"
 		data-tap-toggle="false">
 		<ul>

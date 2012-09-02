@@ -9,9 +9,10 @@
 		$("#cameraEditPage").on("pageinit", function() {
 			var img_data;
 			var currentLoginId = $.stage.component.getSession();
+			var pageParams = $.stageComponent.pageParam();
 			
 			getImage();
-			$("#id_header").html("@testimage");
+			$("#id_header").html("@"+pageParams.userId);
 			$.mobile.hidePageLoadingMsg();
 
 			$("#back").click(function() {
