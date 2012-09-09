@@ -1,0 +1,238 @@
+<div data-role="page" id="joinPage">
+	<link rel="stylesheet" type="text/css" href="join.css" />
+
+	<script type="text/javascript">
+		///怨듬갚 鍮꾧탳 �⑥닔
+		$.isNull = function() {
+			if ($("#id").val() == "") {
+				alert("ID媛�鍮꾩뿀�듬땲��");
+				$("#id").focus();
+				return false;
+			} else if ($("#code").val() == "") {
+				alert("CODE媛�鍮꾩뿀�듬땲��");
+				$("#code").focus();
+				return false;
+			} else if ($("#mail").val() == "") {
+				alert("MAIL��鍮꾩뿀�듬땲��");
+				$("#mail").focus();
+				return false;
+			} else {
+				return true;
+			}
+		};
+		///password 湲몄씠 鍮꾧탳 �⑥닔
+		$.isLeng = function() {
+			if ($("#code").val().length < 6) {
+				alert('CODE媛��덈Т 吏㏃뒿�덈떎');
+				$("#code").val('');
+				$("#code").focus();
+				return false;
+			} else if ($("#code").val().length > 12) {
+				alert('CODE媛��덈Т 源곷땲��);
+				$("#code").val('');
+				$("#code").focus();
+				return false;
+			} else {
+				return true;
+			}
+		};
+
+		$.isMail = function() { //�대찓���뺤떇 泥댄겕
+			var emailVal = $("#mail").val();
+			check_email = emailVal
+					.search(/^\s*[\w\~\-\.]+\@[\w\~\-]+(\.[\w\~\-]+)+\s*$/g);
+
+			if (check_email != 0) {
+				alert('�대찓���뺤떇���쇱튂�섏� �딆뒿�덈떎.');
+				$("#mail").focus();
+				return false;
+			} else {
+				return true;
+			}
+		};
+
+		$("#joinPage")
+				.on(
+						"pageinit",
+						function() {
+
+							$("#submit")
+									.bind(
+											"tap",
+											function(e) {
+
+												if ($.isNull() && $.isLeng()
+														&& $.isMail()) {//紐⑤뱺 議곌굔���듯솕 �쒕떎硫�
+													$.mobile
+															.showPageLoadingMsg(
+																	"b",
+																	"loading...",
+																	true);
+													//�뚮씪誘명꽣 媛앹껜 �앹꽦 援щЦ
+													var params = {};
+													params.id = $("#id").val();
+													params.pass = $("#code")
+															.val();
+													params.sex = $(
+															"input[name='radio-choice-2']:checked")
+															.val();
+													params.mail = $("#mail")
+															.val();
+
+													//post濡��쒕쾭���앹꽦�섎뒗 援щЦ
+													$.stageAjax
+															.postJson(
+																	$.stageRestPool.JOIN_USER,
+																	params,
+																	function(
+																			result) {
+																		var infoData = result.data;
+																		if (infoData == -1) {
+																			alert('ID �앹꽦以��ㅻ쪟媛�諛쒖깮�섏��듬땲��');
+																		} else {
+																			$.stage.component
+																					.setSession(
+																							params.id,
+																							params.pass);
+																			e.preventDefault();
+																			$.mobile
+																					.changePage("../blog/blog.html");
+																		}
+																	}, true);
+													$.mobile
+															.hidePageLoadingMsg();
+
+												}
+
+											});
+
+							$("#historyback").bind("tap", function(e) {//�댁쟾 �섏씠吏�濡쒓렇���쇰줈 媛�린 �꾪븳 援щЦ
+								e.preventDefault();
+								history.back(-1);//誘몄셿 �뚯뒪���꾩슂
+							});
+
+							$("#radio1").bind(
+									"tap",
+									function() {//�⑥옄�깅퀎���좏깮���대깽��
+										$("#radio1").attr("src",
+												"images/man_select.png");
+										$("#radio2").attr("src",
+												"images/woman_icon.png");
+										$("input[id='radio-choice-21']").attr(
+												"checked", true).checkboxradio(
+												"refresh");
+
+									});
+
+							$("#radio2").bind(
+									"tap",
+									function() {//�ъ옄�깅퀎���좏깮���대깽��
+										$("#radio1").attr("src",
+												"images/man_icon.png");
+										$("#radio2").attr("src",
+												"images/woman_select.png");
+										$("input[id='radio-choice-22']").attr(
+												"checked", true).checkboxradio(
+												"refresh");
+									});
+						});
+	</script>
+
+
+
+	<header data-role="header" id="header" data-position="fixed"
+		data-tap-toggle="false">
+		<h1>媛�엯�섍린</h1>
+		<div id="historyback" class="ui-btn-left"></div>
+		<div id="backBtnLine1" class="ui-btn-left"></div>
+	</header>
+
+	<section data-role="content" id="cont">
+		<div id="back">
+			<center>
+				<div id="title">
+					<h2>REGISTER</h2>
+				</div>
+			</center>
+			<br>
+
+			<center>
+				<div id="row">
+					<div id="side1">
+						<label for="id" id="text">�꾩씠��nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="text" name="name" maxlength="10" id="id" value=""
+							data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+			<center>
+				<div id="row">
+					<div id="side1">
+						<label for="code" id="text">�⑥뒪�뚮뱶&nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="password" name="name" id="code" value=""
+							data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+			<center>
+				<div id="row">
+					<fieldset data-role="controlgroup" data-type="horizontal"
+						data-mini="true">
+						<div id="side1">
+							<p id="text_select">�깅퀎&nbsp;</p>
+						</div>
+						<div id="side2">
+							<img src="images/man_select.png" id="radio1"> <img
+								src="images/woman_icon.png" id="radio2">
+
+						</div>
+						<div id="side3">
+							<input type="radio" name="radio-choice-2" id="radio-choice-21"
+								value="M" checked="checked" /> <label for="radio-choice-21">m</label>
+
+							<input type="radio" name="radio-choice-2" id="radio-choice-22"
+								value="F" /> <label for="radio-choice-22">F</label>
+
+						</div>
+					</fieldset>
+				</div>
+			</center>
+
+
+			<center>
+				<div id="row" class="email">
+					<div id="side1">
+						<label for="mail" id="text">�대찓��nbsp;</label>
+					</div>
+					<div id="side2">
+						<input type="text" name="name" id="mail" value="" data-mini="true" />
+					</div>
+				</div>
+			</center>
+
+
+			<div id="submit">
+				<button type="submit" data-theme="a" data-mini="true">�묒꽦�꾨즺</button>
+			</div>
+
+		</div>
+	</section>
+
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="../blog/wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
+</div>

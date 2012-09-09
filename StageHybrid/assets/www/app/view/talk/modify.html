@@ -50,6 +50,12 @@
 		});
 		
 		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		
+		if(pageParams.userId==null){
+			if(currentLoginId.userId == null)
+				$.stageComponent.pageMove("../session/login.html",{});
+		}
 		
 		if($("#imgUpM").attr('src',pageParams.imgUrl) != "images/pic_upload_btn.png")
 			$("#picUpM").hide();

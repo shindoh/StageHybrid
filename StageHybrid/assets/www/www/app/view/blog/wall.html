@@ -1,0 +1,329 @@
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta charset="UTF-8">
+
+
+<div data-role="page" id="wallPage">
+	<link rel="stylesheet" type="text/css" href="wall.css" />
+	<script type="text/javascript">
+		var increaseNumber;
+		var pageMaster;
+		$("#wallPage").on("pageinit",function() {
+
+					var pageParams = $.stageComponent.pageParam();
+					var currentLoginId = $.stage.component.getSession();
+		
+					increaseNumber = 0;
+					console.log("userID : " + currentLoginId.userId);
+
+					if(pageParams.userId==null){
+						if (currentLoginId.userId == null) {
+							$.stageComponent.pageMove("../session/login.html", {});
+						}
+						$("#id_header_title").html("@"+currentLoginId.userId);
+						pageMaster = currentLoginId.userId;
+					} else{
+						$("#id_header_title").html("@"+pageParams.userId);
+						pageMaster = pageParams.userId;
+					}
+					getInforList(0);
+					getthumnail();
+
+					$("#back").click(
+							function() {
+								$.stageComponent.pageMove(
+										"../talk/talkList.html", {},
+										currentLoginId.userId);
+							});
+
+					$("#submitButton").bind("click", function() {
+						var text = $("#insertText").val();
+						if (text == "" || text == " ")
+							;
+						else
+							setInforList(text);
+
+					});
+					$("#content .mine").live(
+							"click",
+							function() {
+								var id = this.id;
+								var index = id.split("/");
+								if (currentLoginId.userId == 'testimage'
+										|| currentLoginId.userId == index[2]) {
+
+									var answer = confirm("선택한 글을 삭제할까요?");
+									if (answer == true) {
+										$(this).remove();
+										deleteSeleteWall(this.id);
+									}
+								}
+							});
+					$("#content .others").live(
+							"click",
+							function() {
+								var id = this.id;
+								var index = id.split("/");
+
+								if (currentLoginId.userId == 'testimage'
+										|| currentLoginId.userId == index[2]) {
+
+									var answer = confirm("선택한 글을 삭제할까요?");
+									if (answer == true) {
+										$(this).remove();
+										deleteSeleteWall(this.id);
+									}
+								}
+							});
+
+					$("#list").bind("click", function() {
+
+					});
+
+					$("#user").live("click",function(){
+						$.stageComponent.pageMove("blog2.html",{}, currentLoginId.userId);
+			        });
+					$("#ablum").live("click",function(){
+						$.stageComponent.pageMove("camera.html",{}, currentLoginId.userId);
+			        });
+					$("#wall").live("click",function(){
+						$.stageComponent.pageMove("wall.html",{}, currentLoginId.userId);
+			        });
+					
+					$("#list").live("tap",function(){
+						$(".overlay").toggle(50);
+			        });
+					
+			        $(".ui-mobile-viewport").live("tap",function(event){
+			            var target = event.target;
+			            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
+			            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
+			            if($('#list').find(target).length==0 && $('.overlay').find(target).length==0) {
+			                $(".overlay").hide();
+			            }
+			            
+			        });
+				});
+		function hide_footer() {
+			//$("#footer").hide();
+		}
+		function show_footer() {
+			$("#footer").show();
+		}
+		function getthumnail() {
+			var currentLoginId = $.stage.component.getSession();
+
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+
+			var writerParams = {
+				userId : currentLoginId.userId
+			};
+
+			$.stage.ajax.getJson(inforUrl, writerParams, function(data) {
+				if (data.data.thumnail == null)
+					$("#input_img").attr("src", "gravatar.jpg");
+				else
+					$("#input_img").attr("src", data.data.thumnail);
+
+			}, true);
+		}
+		//리스트 가져오기 처음 시작할때
+		function getInforList(start) {
+
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+			var currentLoginId = $.stage.component.getSession();
+			var url = "http://specificconcept.cafe24.com/rest/userWall";
+
+			var params = {
+				userId : 'testimage',
+				listIndex : start,
+				listCount : 10
+			};
+
+			$.stage.ajax.getJson(url, params, function(data) {
+
+				for ( var a = 0; a < 10; a++) {
+					if (data.list[a] == null)
+						break;
+					listLoad(data.list[a].writerId, a, data);
+
+				}
+
+			}, true);
+			$.mobile.hidePageLoadingMsg();
+		}
+
+		//리스트 추가시키는것...
+		function listLoad(writerId, count, information) {
+
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var currentLoginId = $.stage.component.getSession();
+			var writerImage;
+
+			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+			var writerParams = {
+				userId : writerId
+			};
+
+			var ids = information.list[count].idx + "/"
+					+ information.list[count].userId + "/"
+					+ information.list[count].writerId;
+			$.stage.ajax
+					.getJson(
+							inforUrl,
+							writerParams,
+							function(data) {
+								writerImage = data.data.thumnail;
+								if (writerImage == null)
+									writerImage = "gravatar.jpg";
+								if (currentLoginId.userId == information.list[count].writerId) {
+									$("<div class='mine' "+"id="+ids+">")
+											.appendTo("#wallList")
+											.html(
+													'<div id="mine_text">'
+															+ '<font id="ID"><b>ID: </b>'
+															+ information.list[count].writerId
+															+ '</font><br/><b>Comment: </b>'
+															+ information.list[count].comment
+															+ '</div><div id="img_bg_mine"><img src='+ writerImage+' id="mine_img"></div>');
+
+								} else {
+									$("<div class='others' "+"id="+ids+">")
+											.appendTo("#wallList")
+											.html(
+													'<div id="others_text">'
+															+ '<font id="ID"><b>ID: </b>'
+															+ information.list[count].writerId
+															+ '</font><br/><b>Comment: </b>'
+															+ information.list[count].comment
+															+ '</div><div id="img_bg_others"><img src='+ writerImage+' id="others_img"></div>');
+
+								}
+								//	$("#wallList").listview("refresh");
+								$.mobile.hidePageLoadingMsg();
+							}, true);
+
+		}
+
+		function setInforList(content) {
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var currentLoginId = $.stage.component.getSession();
+			var url = "http://specificconcept.cafe24.com/rest/userWall";
+			var params = {
+				userId : 'testimage',
+				writerId : currentLoginId.userId,
+				comment : content
+			};
+			$.stage.ajax.postJson(url, params, function(data) {
+				$("#wallList").html("");
+				$("#insertText").val("");
+				getInforList(0);
+			}, true);
+		}
+
+		// 더보기 기능
+		function addInforList() {
+			increaseNumber += 10;
+			getInforList(increaseNumber);
+
+		}
+		function deleteSeleteWall(ids) {
+			var currentLoginId = $.stage.component.getSession();
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			var index = ids.split("/");
+			deleteWall(index[0], index[1], index[2]);
+			//idx userId writerId
+			$.mobile.hidePageLoadingMsg();
+
+		}
+
+		function deleteWall(id, user, writer) {
+			var delete_url = "http://specificconcept.cafe24.com/rest/userWall/delete/";
+			delete_url += id;
+			var delete_params = {
+				userId : user,
+				writerId : writer
+			};
+
+			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
+
+			}, true);
+		}
+
+		$(window).scroll(
+				function() {
+
+					if ($(window).scrollTop() == $(document).height()
+							- $(window).height()) {
+						$.mobile.showPageLoadingMsg("b", "loading...", true);
+						addInforList();
+					}
+				});
+	</script>
+
+
+
+	<header data-role="header" data-position="fixed" id="header">
+		<div id="back" class="ui-btn-left">
+			<img src="cssimage/back_btn.png">
+			<div id="line_left"></div>
+		</div>
+
+		<h1>담벼락</h1>
+
+		<div id="list" class="ui-btn-right">
+			<div id="line_right"></div>
+			<img src="cssimage/category_btn.png">
+		</div>
+
+	</header>
+	<header data-role="header" data-position="fixed" id="id_header"c>
+		<h1 id="id_header_title"></h1>
+	</header>
+	
+<!-- 	<div id="id_header"></div> -->
+ 
+	<section data-role="content" data-role="fieldcontain" id="content">
+
+		<ul data-role="listview" id="wallList">
+		</ul>
+
+	</section>
+	<div class="overlay" style="display: none">
+		<div class="overlay-content">
+			<ul id='tas_list' data-role='listview'>
+				<li id="user">개인 정보</li>
+				<li id="ablum">앨범</li>
+				<li id="wall">담벼락</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- <div id="input_text">
+		<img src="" id="input_img"> <img
+			src="cssimage/blog_write_btn.png" id="submitButton"> <input
+			type="text" id="insertText" value="" onfocus="hide_footer()"
+			onblur="show_footer()">
+	</div>
+	 -->
+	<footer data-role="footer" id="footer_input" data-position="fixed" data-tap-toggle="false"  data-theme="c">
+		<img src="" id="input_img"> <img
+			src="cssimage/blog_write_btn.png" id="submitButton"> <input
+			type="text" id="insertText" value="" onfocus="hide_footer()"
+			onblur="show_footer()">
+	</footer>
+	
+	<footer data-role="footer" id="footer" data-position="fixed"
+		data-tap-toggle="false">
+		<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
+
+</div>

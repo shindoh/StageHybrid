@@ -1,0 +1,156 @@
+<meta name="viewport"
+	content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="UTF-8">
+
+
+<div data-role="page" id="cameraEditPage">
+	<link rel="stylesheet" type="text/css" href="cameraEdit.css" />
+	<script type="text/javascript">
+		$("#cameraEditPage").on("pageinit", function() {
+			var img_data;
+			var currentLoginId = $.stage.component.getSession();
+			var pageParams = $.stageComponent.pageParam();
+			
+			getImage();
+			$("#id_header").html("@"+pageParams.userId);
+			$.mobile.hidePageLoadingMsg();
+
+			$("#back").click(function() {
+				$.stageComponent.pageMove("camera.html", {},currentLoginId);
+			});
+			
+			$("#space .photo").live("click", function() {
+				$(this).unbind('click'); // 중복클릭 막기.
+				$(this).unbind('click'); // 중복클릭 막기.
+				if (this.id == "img_1")
+					getImageFile();
+				else {
+					//$(this).toggleClass('delete_img_chose');
+					var answer = confirm("삭제할까요?");
+					if (answer == true) {
+						deleteImage(this.id);
+						$.mobile.showPageLoadingMsg("b", "loading...", true);
+					}
+
+				}
+			});
+			$(document).bind("flickrUploadFinish", function() {
+				var currentLoginId = $.stage.component.getSession();
+				var post_url = $.stage.restPool.POST_USER_PHOTO_ALBUM;
+				var post_params = {
+					userId : currentLoginId.userId,
+					photoUrl : FI.photoURL,
+					thumnail : FI.thumbnailUrl
+				};
+				$.stage.ajax.postJson(post_url, post_params, function(data) {
+					;
+				}, true);
+
+				getImage();
+			});
+		});
+		function getImage() {
+		
+			$("#space")
+					.html(
+							'<img src=cssimage/pic_upload_btn.png id="img_1" class=photo width="30%" height="20%" />');
+			var currentLoginId = $.stage.component.getSession();
+			var get_url = $.stage.restPool.GET_USER_PHOTO_ALBUM;
+			var get_params = {
+				userId : currentLoginId.userId,
+				listIndex : 0,
+				listCount : 20
+			};
+			$.stage.ajax.getJson(get_url, get_params, function(data) {
+				img_data = data;
+				for ( var a = 0; a < 20; a++) {
+					if (data.list[a] == null) {
+						lastIndex = a;
+						break;
+					}
+					$("<img>").appendTo("#space").attr("src",
+							data.list[a].photoUrl).attr("width", '30%').attr(
+							"height", '20%').attr('class', 'photo').attr('id',
+							a);
+				}
+			}, true);
+			$.mobile.hidePageLoadingMsg();
+		}
+
+		function getImageFile() {
+			navigator.camera.getPicture(function(URI) {
+				FI.imageURI = URI;
+				var answer = confirm("사진을 올릴까요?");
+				if (answer == true) {
+					proc();
+					$.mobile.showPageLoadingMsg("b", "loading...", true);
+				}
+			}, function(message) {
+				FI.imageURI = "";
+				FI.photoURL = "";
+				FI.frob = "";
+			}, {
+				quality : 50,
+				destinationType : navigator.camera.DestinationType.FILE_URI,
+				sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
+			});
+		}
+
+		function deleteImage(index) {
+
+			var delete_idx = img_data.list[index].idx;
+			deleteImageFile(delete_idx);
+		}
+
+		function deleteImageFile(delete_idx) {
+			var currentLoginId = $.stage.component.getSession();
+			var delete_url = $.stage.restPool.DELETE_USER_PHOTO_ALBUM;
+			var idx = delete_idx;
+			delete_url += idx;
+			var delete_params = {
+				userId : currentLoginId.userId
+
+			};
+			$.stage.ajax.postJson(delete_url, delete_params, function(data) {
+				alert("삭제 완료");
+				$.mobile.hidePageLoadingMsg();
+				getImage();
+			}, true);
+
+		}
+	</script>
+
+	<header data-role="header" data-position="fixed" id="header">
+
+		<div id="back" class="ui-btn-left">
+			<img src="cssimage/back_btn.png">
+			<div id="line_left"></div>
+		</div>
+		<h1>블로그_편집</h1>
+
+	</header>
+	<section data-role="content" data-role="fieldcontain" id="content">
+		<!-- <div id="loading">
+			<img id="loading-image" src="../../../libs/images/ajax-loader.gif"
+				alt="Loading..." />
+		</div> -->
+		<div id="space">
+			<img src="pic_upload_btn.png" id="img_1" class=photo width="30%"
+				height="20%" />
+
+		</div>
+	</section>
+
+	<footer data-role="footer" id="footer" data-position="fixed"
+		data-tap-toggle="false">
+		<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
+
+</div>

@@ -203,7 +203,7 @@ $.stage.component.hasSession = function()
 	var result = false;
 	if(userInformation && userInformation.userId)
 	{
-		result = true
+		result = true;
 	}
 	return result;
 }

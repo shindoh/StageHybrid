@@ -1,0 +1,106 @@
+<div data-role="page" id="talkWritePage">
+<link rel = "stylesheet" type = "text/css" href="write.css">
+	<header data-role="header" id ="header" data-position="fixed"
+		data-tap-toggle="false">
+<!-- 		<a href="talkList.html" id="back" class="ui-btn-left"></a> -->
+		<div id="backW" class="ui-btn-left"></div>
+		<h1>톡 쓰기</h1>
+		<div id="btn"  class="ui-btn-right" ></div>
+		<div id="backBtnLine1" class="ui-btn-left"></div>
+       	<div id="backBtnLine2" class="ui-btn-right"></div>
+	</header>
+
+	<section data-role="content" id="content">
+
+		<div id="picArea">
+			<img src="images/pic_upload_btn.png" id="imgUp" width="82px" height="85px" class=photo />
+			<div id='picUp'>사진올리기</div>
+		</div>
+		<textarea cols=40" rows="15" id="writeTxt" value="" /> </textarea>
+	</section>
+
+	<footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
+       <ul>
+       <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+       <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+       <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+       <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
+ 	   </ul>
+    
+     </footer>
+	<script type="text/javascript">
+	$('#talkWritePage').bind("pageinit",function(){ 
+				
+		$("#backW").bind("tap",function(e){
+			e.preventDefault();
+			$.mobile.changePage("talkList.html");
+		});
+		$("#picArea .photo").live("click", function() {
+			$(this).unbind('click'); // 중복클릭 막기.
+			$(this).unbind('click'); // 중복클릭 막기.
+			if (this.id == "imgUp")
+				getImageFile();
+			if(FI.imageURI)
+        	{
+            	$.ajaxUploadPhotoToFlickr(FI.imageURI);            		
+        	}
+		});
+		
+		function getImageFile() {
+			navigator.camera.getPicture(function(URI) {
+				FI.imageURI = URI;
+				var answer = confirm("사진을 올릴까요?");
+				if (answer == true) {
+					proc();
+					$.mobile.showPageLoadingMsg("b", "loading...", true);
+				}
+			}, function(message) {
+				FI.imageURI = "";
+				FI.photoURL = "";
+				FI.frob = "";
+			}, {
+				quality : 50,
+				destinationType : navigator.camera.DestinationType.FILE_URI,
+				sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
+			});
+		}
+		$(document).bind("flickrUploadFinish", function() {
+				
+			$("#imgUp").attr('src',FI.photoURL);
+			$.mobile.hidePageLoadingMsg();
+
+		}); 
+	 	$("#btn").click(function (e){
+	 		
+	 		var userInformation = $.stageComponent.getSession();
+	 		
+	 		var param={
+	 				userId: userInformation.userId,
+	 				comment:$("#writeTxt").val(),
+	 				imgUrl : '',
+	 				type : 1,
+	 		};
+	 		
+	 		if(document.getElementById('imgUp').getAttribute('src') != 'images/pic_upload_btn.png'){
+	 			param.imgUrl = document.getElementById('imgUp').getAttribute('src');
+	 		}
+	 		else if(document.getElementById('imgUp').getAttribute('src') == 'images/pic_upload_btn.png'){
+	 			param.imgUrl= '';
+	 		}
+	 		
+	 		
+	 		
+	 		$.stageAjax.postJson($.stageRestPool.STAGE_REST+"/talk",param,function(result){
+	 			alert("등록완료 "+result);				
+			},true);
+	 		
+	 		e.preventDefault();
+	 		$.stageComponent.pageMove("talkList.html",param);
+	 	}); 		
+
+		
+	}); 
+
+</script>
+</div>

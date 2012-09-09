@@ -1,0 +1,92 @@
+<meta charset="UTF-8">
+<div data-role="page" id="partyInformPage">	
+ <link rel = "stylesheet" type = "text/css" href="partyInform.css">
+	<script id="partyInformTpl" type="text/x-jquery-tmpl">
+	<div id ="textSection">
+	<li><div class="miniArrow"></div><div class="headText">파티 명</div><div class="contentLine"></div><div class="bodyText">${partyName}</div></li>
+	<li><div class="miniArrow"></div><div class="headText">장소</div><div class="contentLine"></div><div class="bodyText">${location} ${clubName}</div></li>
+	<li id = "date"><p>${openDate}</p></li>
+	<li id = "formDate"><div class="miniArrow"></div><div class="headText">날짜</div><div class="contentLine"></div></li>
+	<li><div class="miniArrow"></div><div class="headText">인원</div><div class="contentLine"></div><div class="bodyText">${persons}</div></li>	
+	<li><div class="miniArrow"></div><div class="headText">안내 사항</div><div class="contentLine"></div><div class="bodyText">${comment}</div></li>
+	</div>
+
+	<div id="imgSection">
+	<img src="${poster1}" width="100%">
+	<img src="${poster2}" width="100%">
+	<img src="${poster3}" width="100%">
+	<img src="${poster4}" width="100%">
+	<img src="${poster5}" width="100%">
+	</div>
+
+	</script>
+
+
+	<script type="text/javascript">
+	
+	
+		$("#partyInformPage").on("pageinit", function(){
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+
+			var pageParams = $.stageComponent.pageParam();
+			var partyInformIdx = pageParams.partyIdx;
+			var partyInformUrl= $.stageRestPool.GET_PARTY_INFORM+partyInformIdx;
+			
+			
+			
+			$.stageComponent.infoview("partyInform","partyInformTpl",partyInformUrl,null,function(){
+				var orgDate = $("#textSection>li>p").text();
+					var UTCmilli = orgDate*1;
+					var today = new Date(UTCmilli);
+					var year = today.getYear()+1900;
+					var month = today.getMonth()+1;
+					var date = today.getDate();
+					var day = today.getDay();
+					var dayArr= new Array ("일", "월", "화", "수", "목", "금", "토");
+
+					$("#date").remove();					
+				    $("#formDate").append("<div class='bodyText'>"+year+"년 "+month+"월 "+date+"일 "+dayArr[day]+"요일</div>");
+
+
+					list.listview("refresh");
+			});
+
+			
+		});	
+		
+		$("#backArea").bind("tap", function(e) {
+			
+			e.preventDefault();
+			
+			$.stage.component.pageMove("partyList.html");
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			
+			
+		});
+		
+	</script>
+	
+    <header data-role="header" id="piHeader" data-position="fixed">
+    	<div id="backArea">
+	        <div id="backBtn"></div>
+	        <div id="backBtnLine"></div>
+	    </div>
+       <span>파티 상세보기</span>
+    </header>
+
+    <section data-role="content" class="content">
+		<ul data-role="none"  id="partyInform">
+		</ul>
+    </section>
+
+    <footer data-role="footer" id="footer" data-position="fixed" data-tap-toggle="false">
+			<ul>
+			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+ 	        <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+    	    <li><a href="partyList.html" id="mainPartyButton"></a></li>
+       		<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+       		<li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
+			</ul>
+		</div>		
+    </footer>
+</div>

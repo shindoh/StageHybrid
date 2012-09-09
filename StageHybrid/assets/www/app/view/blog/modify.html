@@ -47,20 +47,61 @@
 					
 				},true);
 			});
+			
+			$("#back").click(function() {
+				$.stage.component.pageMove("../blog/blog.html");
+			});
+			/*
+			$("#edit").click(function() {
+				$.stageComponent.pageMove("cameraEdit.html",{});
+		});
+		$("#user").live("click",function(){
+			$.stageComponent.pageMove("blog.html",{});
+        });
+		$("#ablum").live("click",function(){
+			$.stageComponent.pageMove("camera.html",{});
+        });
+		$("#wall").live("click",function(){
+			$.stageComponent.pageMove("wall.html",{});
+        });
+		
+		$("#category").live("tap",function(){
+			$(".overlay").toggle(50);
+        });
+		
+        $(".ui-mobile-viewport").live("tap",function(event){
+            var target = event.target;
+            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
+            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
+            if($('#category').find(target).length==0 && $('.overlay').find(target).length==0) {
+                $(".overlay").hide();
+            }
+            
+        });*/
 		});		
 		
      </script>
 
-	<header data-role="header" id="header" data-position="fixed"
-		data-tap-toggle="false">
+	<header data-role="header" id="header" data-position="fixed" data-tap-toggle="false">
+		<div id="back" class="ui-btn-left"></div>
 		<h1>블로그</h1>
-		<div id="category" class="ui-btn-right"></div>
+	<!-- <div id="category" class="ui-btn-right"></div> -->	
 	</header>
 
 	<section data-role="content">
 		<span id="userModifyList"> </span> <a id="dynamic" data-role="button">수정하기</a>
 	</section>
-
+<!--
+	<div class="overlay" style="display: none">
+		<div class="overlay-content">
+			<ul id='tas_list' data-role='listview'>
+				<li id="user">개인 정보</li>
+				<li id="ablum">앨범</li>
+				<li id="wall">담벼락</li>
+			</ul>
+		</div>
+	</div>
+	-->
 	<footer data-role="footer" id="footer" data-theme="a"
 		data-position="fixed" data-tap-toggle="false">
 		<ul>

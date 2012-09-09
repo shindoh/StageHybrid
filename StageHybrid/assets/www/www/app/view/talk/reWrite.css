@@ -1,0 +1,137 @@
+@CHARSET "EUC-KR";
+
+
+#content {
+	
+}
+
+#talkreWritePage{
+	background: url(images/back_bg.png);
+}
+
+#picUp2{
+	margin:-27px 0 0 10px;
+}
+#reWriteTxt{
+	height : 250px;
+	margin: 10px 0 0 0;
+}
+#header #backRW{
+	background: url(images/back_btn.png) 27% 45% no-repeat;
+
+	width:50px;
+	height:41px;
+	border: none;
+	border-radius : 0px;
+	background-size:45%;
+}
+#header #reBtn{
+	background: url(images/write_btn.png) 50% 50% no-repeat;
+	width: 15%;
+	height: 90%;
+	border: none;
+	border-radius : 0px;
+	background-size:70%;
+}
+#header #backBtnLine1 {
+	float: left;
+	margin: 0px 0px 0px 50px;
+	padding: 0px;
+	background: url(images/header_line.png) 0% 0% no-repeat;
+	width: 2px;
+	height: 90%;
+	background-size: 100%;
+}
+#header #backBtnLine2 {
+	float: left;
+	margin: 0px 50px 0px 0px;
+	padding: 0px;
+	background: url(images/header_line.png) 0% 0% no-repeat;
+	width: 2px;
+	height: 90%;
+	background-size: 100%;
+}
+#header {
+	background: url(images/header_bg.png) repeat-x;
+	height: 50px;
+}
+
+#header h1 {
+	font-size: 24px;
+	text-align: center;
+}
+
+#footer {
+	background: url(images/header_bg.png) repeat-x;
+	height: 55px;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(images/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(images/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(images/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(images/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(images/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(images/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(images/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(images/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(images/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(images/tap_setting_icon.png) 50% 50% no-repeat;
+}

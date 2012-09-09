@@ -1,0 +1,211 @@
+@CHARSET "EUC-KR";
+
+#talkList {
+	padding: 1% 3% 0 1%;
+	margin: 0px;
+	list-style-type: none;
+}
+
+#talkList li {
+	height: 75px;
+ 	border-radius: 7px;
+ 	margin: 5px 0 5px 0;
+}
+#talkList li #arrow{
+	margin: 25px 0 0 3px;
+	float:left;
+	width:11px;
+	height:20px;
+	background: url(images/thumbnail_arrow2.png) no-repeat;
+	background-size: 100%;
+}
+#talkList li #thum{
+	width:20%;
+	float: left;
+	height:80%;
+	border-radius: 7px;
+	border: 3px solid #d5d5d5;
+	margin: 1% 3% 0px 2%;
+	background-color:#d5d5d5;
+	-webkit-box-shadow: 2px 1px 5px 1px rgba(120, 120, 120, 0.8);
+	box-shadow: 2px 1px 5px 1px rgba(120, 120, 120, 0.8);
+}
+
+#div1 {
+ 	height: 80%;	
+	width: 190px;
+	float: right;
+	
+	border-radius: 7px;
+	border: 6px solid #d5d5d5;
+	background-color:#d5d5d5;
+	-webkit-box-shadow: 2px 1px 5px 1px rgba(120, 120, 120, 0.8);
+	box-shadow: 2px 1px 5px 1px rgba(120, 120, 120, 0.8);
+}
+
+#div2{
+	width:100%;
+	height:30px;
+}
+
+#div3{
+	font-size: 14px;
+	width:100%;
+overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+#talkImg{
+	float: right;
+}
+
+#talkList li h3 {
+	float: left;
+	font-size: 17px;
+	color: #6e1515;
+	margin: 0px;
+}
+#talkList li h1 {
+	width:25%;
+	text-align:center;
+	padding:2px 0 0 0;
+	color: white;
+	width:27px;
+	height: 33px;
+	font-size: 13px;
+	margin: 0px;
+	float: right; 
+}
+
+#talkList li p {
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+#content {
+	margin:0;
+	padding:0;
+ 	background: url(images/back_bg.png) ; 
+}
+
+#header {
+	background: url(images/header_bg.png) repeat-x;
+	height: 50px;
+	
+}
+#header #find{
+	float: left;
+ 	background: url(images/people_search_btn.png) 0 45% no-repeat;
+	width: 20%;
+	height: 90%;
+	border: none;
+	border-radius : 0px;
+	background-size: 70%;
+}
+#header #backBtnLine1 {
+	float: left;
+	margin: 0px 0px 0px 50px;
+	padding: 0px;
+	background: url(images/header_line.png) 0% 0% no-repeat;
+	width: 2px;
+	height: 90%;
+	background-size: 100%;
+}
+#header #backBtnLine2 {
+	float: left;
+	margin: 0px 50px 0px 0px;
+	padding: 0px;
+	background: url(images/header_line.png) 0% 0% no-repeat;
+	width: 2px;
+	height: 90%;
+	background-size: 100%;
+}
+#header #write{
+	background: url(images/write_btn.png) 50% 50% no-repeat;
+	width: 15%;
+	height: 90%;
+	border: none;
+	border-radius : 0px;
+	background-size:70%;
+}
+#header h1 {
+	font-size: 24px;
+	text-align: center;
+}
+
+#footer {
+	background: url(images/header_bg.png) repeat-x;
+	height: 55px;
+}
+
+#footer ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer ul li {
+	height: 100%;
+}
+
+#footer ul li #mainStalkButton {
+	background: url(images/stalk_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainStalkButton:hover {
+	background: url(images/tap_stalk_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainBlogButton {
+	background: url(images/blog_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainBlogButton:hover {
+	background: url(images/tap_blog_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainPartyButton {
+	background: url(images/party_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainPartyButton:hover {
+	background: url(images/tap_party_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainLoungeButton {
+	background: url(images/lounge_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainLoungeButton:hover {
+	background: url(images/tap_lounge_icon.png) 50% 50% no-repeat;
+}
+
+#footer ul li #mainSettingButton {
+	background: url(images/setting_icon.png) 50% 50% no-repeat;
+	width: 64px;
+	height: 55px;
+	float: left;
+	background-size: 92%;
+}
+
+#footer ul li #mainSettingButton:hover {
+	background: url(images/tap_setting_icon.png) 50% 50% no-repeat;
+}

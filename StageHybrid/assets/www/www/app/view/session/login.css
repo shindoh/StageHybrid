@@ -1,0 +1,171 @@
+#header{
+  background: url(images/header_bg.png) repeat-x;
+  height: 10%;  
+  margin:0;}
+#header h1{
+  font-size : 23px;
+  text-align : center; }
+
+#header #historyback{
+	float: left;
+ 	background: url(images/back_btn.png) 0 45% no-repeat;
+ 	margin-left:7px;
+	width: 20%;
+	height: 90%;
+	border: none;
+	border-radius : 0px;
+	background-size: 40%;
+}
+#header #backBtnLine1 {
+	float: left;
+	margin: 0px 0px 0px 50px;
+	padding: 0px;
+	background: url(images/header_line.png) 0% 0% no-repeat;
+	width: 2px;
+	height: 90%;
+	background-size: 100%;
+}
+
+
+#footer {
+  background: url(images/header_bg.png) repeat-x;
+  height: 11%; }
+  #footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px; }
+    #footer ul li {
+      height: 100%; }
+      #footer ul li #mainStalkButton {
+        background: url(images/stalk_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainStalkButton:hover {
+          background: url(images/tap_stalk_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainBlogButton {
+        background: url(images/blog_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainBlogButton:hover {
+          background: url(images/tap_blog_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainPartyButton {
+        background: url(images/party_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainPartyButton:hover {
+          background: url(images/tap_party_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainLoungeButton {
+        background: url(images/lounge_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainLoungeButton:hover {
+          background: url(images/tap_lounge_icon.png) 50% 50% no-repeat; }
+      #footer ul li #mainSettingButton {
+        background: url(images/setting_icon.png) 50% 50% no-repeat;
+        width: 64px;
+        height: 55px;
+        float: left;
+        background-size: 92%; }
+        #footer ul li #mainSettingButton:hover {
+          background: url(images/tap_setting_icon.png) 50% 50% no-repeat; }
+          
+          
+          
+#loginPage{
+  background: url(images/back_bg.png) repeat;
+}
+
+
+#cont{
+	padding : 0;
+}
+  
+#back{
+	margin-top : 12%;
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-bottom : 12%;
+	background: url(images/login_bg.png) repeat-x;
+	background-size: 80%;
+	height : 320px;
+	width : 252px;
+	border-radius : 10px;
+	border-color : white;
+	border-width : medium;
+	display : inline-block;
+	-webkit-box-shadow: 2px 2px 5px 1px rgba(160, 160, 160, 1);
+	box-shadow: 2px 2px 5px 1px rgba(160, 160, 160, 1);
+}
+#back h2{
+	color : #F6F6F6;
+	text-shadow:-1px -2px 2px #333;
+}
+
+#title{
+	position : relative;
+	margin-top : 22px;
+}
+
+
+#area_id{
+	clear:both;
+	position : relative;
+	margin-top : 15px;
+	margin-left : 17%;
+	display : inline-block;
+}
+#label_ID{
+	float : right;
+	color : white;
+	margin-top:2px;
+}
+#ID{
+	position:relative;
+	width : 65%;
+	margin-top:-5px;
+}
+
+
+#area_pw{
+	clear:both;
+	position : relative;
+	margin-top : 13px;
+	margin-left : 17%;
+	display : inline-block;
+}
+#label_PW{
+	float : right;
+	color : white;
+	margin-top:2px;
+}
+#CODE{
+	position:relative;
+	width : 65%;
+	margin-top:-7px;
+}
+
+
+#button{
+	position:relative;
+	margin-top : 40px;
+	width : 190px;
+	disply : inline;
+}
+#JOIN{
+	float : left;
+	width : 95px;
+}
+#SUBMIT{
+	float : right;
+	width : 95px;
+}
+
+          

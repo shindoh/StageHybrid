@@ -24,18 +24,26 @@
 			*/
 			
 			//페이지 파라미터에서 id값 추출
+			var currentLoginId = $.stage.component.getSession();
 			var pageParams = $.stage.component.pageParam();
 			var session = null;
 			var state = null;
-			
-			
+			var pageSessionId=null;
 			if($.stage.component.hasSession()){ //세션을 가지고 있다면
+				
 				//세션값 추출
 				session = $.stage.component.getSession();
+				pageSessionId=session.userId;
+				//alert(pageParams.userId + "<><>" +session.userId);
+				if(pageParams.userId == null)
+					pageParams.userId = currentLoginId.userId;
 				//비교 결과 가져오기
 				if(pageParams.userId == session.userId){//세션id와 페이지 id가 같으면
 					state = $.stageRestPool.MYSELF_RELATION;
+				
 					$("#dynamic").text("정보수정");
+				//	if($("#dynamic").text()=="정보수정")
+				//		alert(1);
 					$("#dynamic").bind("click",function (){
 						//사용자의 정보수정 페이지로 이동 (미완)
 						var userId = $("div[id='summary']").attr("idvalue");//아이디
@@ -49,6 +57,7 @@
 													age:age,work:work,lookingFor:lookingFor});
 						
 					});
+					
 				}else{//세션id와 페이지 id가 다르면
 					var params = {};
 					params.userId1 = session.userId;
@@ -131,7 +140,33 @@
 				}
 				
 			});
-			
+		
+		$("#edit").click(function() {
+				$.stageComponent.pageMove("cameraEdit.html",{userId:pageSessionId});
+		});
+		$("#user").live("click",function(){
+			$.stageComponent.pageMove("blog.html",{userId:pageSessionId});
+        });
+		$("#ablum").live("click",function(){
+			$.stageComponent.pageMove("camera.html",{userId:pageSessionId});
+        });
+		$("#wall").live("click",function(){
+			$.stageComponent.pageMove("wall.html",{userId:pageSessionId});
+        });
+		
+		$("#category").live("tap",function(){
+			$(".overlay").toggle(50);
+        });
+		
+        $(".ui-mobile-viewport").live("tap",function(event){
+            var target = event.target;
+            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
+            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
+            if($('#category').find(target).length==0 && $('.overlay').find(target).length==0) {
+                $(".overlay").hide();
+            }
+            
+        });
 		});	//init 함수의 끝	
 
      </script>
@@ -147,6 +182,16 @@
 		<a id="dynamic" data-role="button" ></a>
     </section>
     
+    <div class="overlay" style="display: none">
+		<div class="overlay-content">
+			<ul id='tas_list' data-role='listview'>
+				<li id="user">개인 정보</li>
+				<li id="ablum">앨범</li>
+				<li id="wall">담벼락</li>
+			</ul>
+		</div>
+	</div>
+	
     <footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
        <ul>
        <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>

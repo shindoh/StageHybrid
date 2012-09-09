@@ -1,22 +1,24 @@
 <div data-role="page" id="talkWritePage">
-<link rel = "stylesheet" type = "text/css" href="write.css">
-	<header data-role="header" id ="header" data-position="fixed"
+	<link rel="stylesheet" type="text/css" href="write.css">
+	<header data-role="header" id="header" data-position="fixed"
 		data-tap-toggle="false">
-<!-- 		<a href="talkList.html" id="back" class="ui-btn-left"></a> -->
+		<!-- 		<a href="talkList.html" id="back" class="ui-btn-left"></a> -->
 		<div id="backW" class="ui-btn-left"></div>
 		<h1>톡 쓰기</h1>
-		<div id="btn"  class="ui-btn-right" ></div>
+		<div id="btn" class="ui-btn-right"></div>
 		<div id="backBtnLine1" class="ui-btn-left"></div>
-       	<div id="backBtnLine2" class="ui-btn-right"></div>
+		<div id="backBtnLine2" class="ui-btn-right"></div>
 	</header>
 
 	<section data-role="content" id="content">
 
 		<div id="picArea">
-			<img src="images/pic_upload_btn.png" id="imgUp" width="82px" height="85px" class=photo />
+			<img src="images/pic_upload_btn.png" id="imgUp" width="82px"
+				height="85px" class=photo />
 			<div id='picUp'>사진올리기</div>
 		</div>
-		<textarea cols=40" rows="15" id="writeTxt" value="" /> </textarea>
+		<textarea cols=40 " rows="15" id="writeTxt" value="" />
+		</textarea>
 	</section>
 
 	<!-- 
@@ -32,19 +34,26 @@
 		</div>
 	</footer>
 	 -->
-	    <footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
-       <ul>
-       <li><a href="talkList.html" id="mainStalkButton"></a></li>
-       <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
-       <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-       <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
- </ul>
-    
-     </footer>
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="talkList.html" id="mainStalkButton"></a></li>
+			<li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+			<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+			<li><a href="../blog/wall.html" id="mainSettingButton"></a></li>
+		</ul>
+
+	</footer>
 	<script type="text/javascript">
 	$('#talkWritePage').bind("pageinit",function(){ 
-				
+		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		
+		if(pageParams.userId==null){
+			if(currentLoginId.userId == null)
+				$.stageComponent.pageMove("../session/login.html",{});
+		}
 		$("#backW").bind("tap",function(){
 			$.mobile.changePage("talkList.html");
 		});

@@ -1,0 +1,152 @@
+<div data-role="page" id="talkSubListPage">
+	<link rel="stylesheet" type="text/css" href="talkSubList.css">
+	<script id="talkSubItemTpl" type="text/x-jquery-tmpl">
+		
+	<li data-messageId="${idx}" id='talkItemd${idx}'>
+		<img src="${thumnail}" id='thum'>	
+		<div id='arrow'>
+		</div>	
+		<div id='div1'>
+			<div id='div2'>
+				<h3>${userId}</h3>			
+				<img src="${imgUrl}"  id="talkImg">
+			</div>	
+			<div class="ui-block-b" id= "div3">
+				${comment}
+			</div>
+		</div>
+	</li>
+
+	</script>
+
+	<script type="text/javascript">
+	
+		$("#talkSubListPage").bind( "pageinit", function() {
+		
+			$("#backSub").bind("tap",function(e){
+				e.preventDefault();
+				$.mobile.changePage("talkList.html");
+			});
+			
+			var params ={autoLoad:false};
+			
+			var pageParams = $.stageComponent.pageParam();
+			var userInformation = $.stageComponent.getSession();
+			var param = {
+				userId : userInformation.userId,
+					talkIdx : pageParams.talkIdx,
+				};
+			
+				if (param.userId != pageParams.userId) {
+					$("#mod").hide();
+					$("#del").hide();
+					$("#backBtnLine4").hide();
+					$("#backBtnLine3").hide();
+				}
+				
+				var list = $("#talkSubList");
+				$("#talkSubItemTpl").tmpl(pageParams).appendTo(list);
+				$.stageComponent.listview("talkSubList", "talkSubItemTpl",
+						$.stageRestPool.GET_TALK_SUB_LIST
+								+ pageParams.talkIdx, null, function() {
+						},params);
+
+				});
+		$("#del").click(
+				function(e) {
+
+					var pageParams = $.stageComponent.pageParam();
+					var userInformation = $.stageComponent.getSession();
+					var param = {
+						userId : userInformation.userId,
+						talkIdx : pageParams.talkIdx,
+					};
+					//	 		alert(param.userId);
+					//	 		alert(pageParams.userId);  // 메인글 아이디
+					if (param.userId == pageParams.userId) {
+						$.stageAjax.postJson($.stageRestPool.DELETE_TALK,param, function(result) {
+									alert("삭제완료 ");
+									e.preventDefault();
+									$.stageComponent.pageMove("talkList.html");
+								}, true);
+					}
+					else{
+						alert("상대방의 글을 삭제할 수 없습니다");
+					}
+				});
+		
+			
+			$("#mod").click(function(e) {
+				var userInformation = $.stageComponent.getSession(); 
+		 		var pageParams = $.stageComponent.pageParam();
+				
+//		 		alert(userInformation.userId);
+//		 		alert(pageParams.userId);  // 메인글 아이디
+				
+		 		if (userInformation.userId == pageParams.userId) {
+			 	
+			//		var pageParams = $.stageComponent.pageParam();
+			
+					e.preventDefault();
+					$.stageComponent.pageMove("modify.html", pageParams, true);
+		 		}
+		 		else {
+					alert("상대방의 글을 수정할 수 없습니다");	
+				}
+			});
+		
+		
+		$("#re").click(function(e) {
+			var pageParams = $.stageComponent.pageParam();
+			e.preventDefault();
+			$.stageComponent.pageMove("reWrite.html", pageParams, true);
+		});
+	</script>
+
+	<header data-role="header" id="header" data-position="fixed" data-id="foo">
+		
+		<div id="backSub" class="ui-btn-left"></div>
+		<div id="backBtnLine1" class="ui-btn-left"></div>
+	 	<div id="del" class="ui-btn-left"></div>
+	 	<div id="backBtnLine3" class="ui-btn-left"></div>
+	 	
+		
+		<h1>톡보기</h1>
+		
+		<div id="backBtnLine4" class="ui-btn-right"></div>
+		<div id="mod" class='ui-btn-right'></div> 
+ 		<div id="backBtnLine2" class="ui-btn-right"></div>
+ 		<div id="re" class="ui-btn-right"></div>
+
+	</header>
+
+	<section data-role="content" id="content">
+
+		<ul id="talkSubList">
+		</ul>
+
+	</section>
+	<!-- 
+	<footer data-role="footer" data-theme="a" data-position="fixed"
+		data-id="foo1">
+		<div data-role="navbar">
+			<a href="talkList.html" data-role="button" data-icon="myapp-email"
+				data-iconpos="top" id="mainTalkButton">톡톡</a> <a
+				href="clubList.html" data-role="button" id="mainClubButton">스테이지</a>
+			<a href="lounge.html" data-role="button" id="mainLoungeButton">라운지</a>
+			<a href="blog.html" data-role="button" id="mainBlogButton">블로그</a> <a
+				href="setting.html" data-role="button" id="mainSettingButton">셋팅</a>
+		</div>
+	</footer> -->
+	<footer data-role="footer" id="footer" data-theme="a"
+		data-position="fixed" data-tap-toggle="false">
+		<ul>
+	   <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
+       <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+       <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
+       <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
+       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
+		</ul>
+
+	</footer>
+</div>
