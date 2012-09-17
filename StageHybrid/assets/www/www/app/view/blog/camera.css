@@ -19,18 +19,21 @@
 }
 
 #id_header {
-	text-align: center;
+	height: 35px;
+	margin-top: 52.4px;
 	background-color: gray;
 	opacity: 0.6;
-	margin: 0;
-	width: 100%;
-	font-size: 25px;
-	color: black;
+}
+
+#id_header h1 {
+	margin-top: 5px;
+	font-size: 20px;
 }
 
 #content {
 	overflow: auto;
 	margin: 0;
+	margin-top: 55px;
 	padding: 1%;
 }
 

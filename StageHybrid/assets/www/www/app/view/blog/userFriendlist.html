@@ -17,38 +17,60 @@
 
 	<script type="text/javascript">
 		var sessionId;
-		$("#userFriend").on("pageinit", function() {
+		var clickCount =0;
+		$("#userFriend").on("pageinit", function(e) {
+			e.preventDefault();
 			var params = {};
+			
+			var pageParams = $.stageComponent.pageParam();
+			var currentLoginId = $.stage.component.getSession();
+			if(pageParams.userId == null)
+				pageParams.userId = currentLoginId.userId;
 			//params.userId = $('#name').val();
-			params.userId = "test46";
-			sessionId = "test46";
-			$("#id_header").html("@" + params.userId);
+			params.userId = pageParams.userId;
+			sessionId = pageParams.userId;
+
+			$("#id_header").html("@" + sessionId);
+			
 			getFriendList(params.userId);
-			$("#user").live("click",function(){
-				$.stageComponent.pageMove("blog2.html",{}, currentLoginId.userId);
+			 
+			$("#back").live("click",function(e){
+				e.preventDefault();
+				parent.history.back();
+			});
+			
+			$("#user").live("click",function(e){
+				e.preventDefault();
+				$.stageComponent.pageMove("blog.html",{}, currentLoginId.userId);
 	        });
-			$("#ablum").live("click",function(){
+			$("#ablum").live("click",function(e){
+				e.preventDefault();
 				$.stageComponent.pageMove("camera.html",{}, currentLoginId.userId);
 	        });
-			$("#wall").live("click",function(){
+			$("#wall").live("click",function(e){
+				e.preventDefault();
 				$.stageComponent.pageMove("wall.html",{}, currentLoginId.userId);
 	        });
-			
-			$("#list").live("tap",function(){
-				$(".overlay").show();
+			$("#fri_list").live("click",function(e){
+				e.preventDefault();
+				$.stageComponent.pageMove("userFriendlist.html",{userId:pageParams.userId});
 	        });
-			
-	        $(".ui-mobile-viewport").live("tap",function(event){
-	            var target = event.target;
-	            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
-	            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
-	            if($('#list').find(target).length==0 && $('.overlay').find(target).length==0) {
-	                $(".overlay").hide();
-	            }
-	            
+			$("#list").live("tap",function(e){
+				e.preventDefault();
+				if(clickCount%2==0){
+					$(".overlay").show();
+					clickCount++;
+				}	
+				else{
+					$(".overlay").hide();
+					clickCount++;
+				}
 	        });
 			
 		});
+		function moveImg(id){
+			$.stage.component.pageMove("../blog/blog.html",{userId:id},true);
+		}
 		function reject_friend(id){
 			
 			var answer = confirm('거절하시겠습니까?');
@@ -112,6 +134,7 @@
 		}
 		function getFriendList(id) {
 			var url = $.stageRestPool.USER_FRIEND_LIST;
+			var currentLoginId = $.stage.component.getSession();
 			var params = {
 				userId : id
 			};
@@ -125,30 +148,48 @@
 						img_src = "gravatar.jpg";
 					if(comment == null)
 						comment=" ";
+					
 					if (result.list[a].state == 'R') {
 						
 						$("<div class='others'>").appendTo("#request").html('<div id="others_text"><font id="ID">'
 										+ result.list[a].otherId
 										+ '</font><br/><font>'
 										+ comment
-										+'</font><div class="reject_img"><img src="cssimage/delete_btu.png" onclick="reject_friend(id)" class="reject_fri" id='+result.list[a].otherId+'></div>'
-										+'<div class="add_img"><img src="cssimage/chinchu_btn.png" onclick="add_friend(id)" class="add_fri" id='+result.list[a].otherId+'></div>'
-										+ '</div><img src='+ img_src+' id="others_img">');
+										+'</font><div class="reject_img" id="rej_img"><img src="cssimage/delete_btu.png" onclick="reject_friend(id)" class="reject_fri" id='+result.list[a].otherId+'></div>'
+										+'<div class="add_img" id="plus_img"><img src="cssimage/chinchu_btn.png" onclick="add_friend(id)" class="add_fri" id='+result.list[a].otherId+'></div>'
+										+ '</div><img src='+ img_src+' class="others_img" id='+result.list[a].otherId+' onclick="moveImg(id)">');
 
 					} else if (result.list[a].state == 'F') {
-						$("<div class='others'>").appendTo("#friend")
-						.html('<div id="others_text"><font id="ID">'
-										+ result.list[a].otherId
-										+ '</font><br/><font>'
-										+ comment
-										+'</font><div class="delete_img"><img src="cssimage/delete_btu.png" onclick="delete_friend(id)" class="delete_fri" id='+result.list[a].otherId+'></div>'	
-										+ '</div><img src='+ img_src+' id="others_img">');
+						
+						if(currentLoginId.userId != sessionId){
+							$("<div class='others'>").appendTo("#friend")
+							.html('<div id="others_text"><font id="ID">'
+											+ result.list[a].otherId
+											+ '</font><br/><font>'
+											+ comment
+											+'</font>'	
+											+ '</div><img src='+ img_src+' class="others_img" id='+result.list[a].otherId+' onclick="moveImg(id)">');
+						}else{
+							$("<div class='others'>").appendTo("#friend")
+							.html('<div id="others_text"><font id="ID">'
+											+ result.list[a].otherId
+											+ '</font><br/><font>'
+											+ comment
+											+'</font><div class="delete_img"><img src="cssimage/delete_btu.png" onclick="delete_friend(id)" class="delete_fri" id='+result.list[a].otherId+'></div>'	
+											+ '</div><img src='+ img_src+' class="others_img" id='+result.list[a].otherId+' onclick="moveImg(id)">');
+						}
+					
 					}
 					a++;
 				}
-
+				
 			});
-
+			
+			if(currentLoginId.userId!= sessionId){
+				$("#req_title").hide();
+				$("#request").hide();
+				
+			}
 		}
 	</script>
 
@@ -159,7 +200,10 @@
 			<div id="line_left"></div>
 		</div>
 		<h1>친구 리스트</h1>
-
+		<div id="list" class="ui-btn-right">
+			<div id="line_right"></div>
+			<img src="cssimage/category_btn.png">
+		</div>
 	</header>
 
 	<div id="id_header"></div>
@@ -179,6 +223,7 @@
 				<li id="user">개인 정보</li>
 				<li id="ablum">앨범</li>
 				<li id="wall">담벼락</li>
+				<li id="fri_list">친구 목록</li>
 			</ul>
 		</div>
 	</div>
@@ -190,7 +235,7 @@
 			<li><a href="blog.html" id="mainBlogButton"></a></li>
 			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
 			<li><a href="camera.html" id="mainLoungeButton"></a></li>
-			<li><a href="wall.html" id="mainSettingButton"></a></li>
+			<li><a href="../session/login.html" id="mainSettingButton"></a></li>
 		</ul>
 
 	</footer>

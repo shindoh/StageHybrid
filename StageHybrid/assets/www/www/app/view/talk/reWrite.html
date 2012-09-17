@@ -34,6 +34,14 @@
 	<script type="text/javascript">
 	$('#talkreWritePage').bind("pageinit",function(){ 
 		
+		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		
+		if(pageParams.userId==null){
+			if(currentLoginId.userId == null)
+				$.stageComponent.pageMove("../session/login.html",{});
+		}
+		
 		$("#backRW").bind("tap",function(e){
 			e.preventDefault();
 			$.mobile.changePage("talkList.html");

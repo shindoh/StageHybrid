@@ -56,7 +56,7 @@ $.stage.ajax.postJson = function(url,params,successFunc,isLogOnCosole)
 			resultParams+="&";
 		}		
 		resultParams = resultParams.substring(0, resultParams.length-1);
-
+		console.log("1111"+resultParams);
 	}		
 
 	if(isLogOnCosole)

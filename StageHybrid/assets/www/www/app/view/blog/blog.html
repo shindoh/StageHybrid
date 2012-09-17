@@ -16,24 +16,34 @@
 	</script>
 	
 	<script type="text/javascript">
-		$("#userInfo").on("pageinit", function(){
-			
+	var clickCount=0;
+		$("#userInfo").on("pageinit", function(e){
+			e.preventDefault();
 			/* 페이지이동시 사용할 구문. userId도 넘겨야 함.
 			var userId =$(this).children("h3").text(); //암기
 			$.stage.component.pageMove("../blog/blog.html",{userId:userId});
-			*/
-			
+			*/			
 			//페이지 파라미터에서 id값 추출
+			var currentLoginId = $.stage.component.getSession();
 			var pageParams = $.stage.component.pageParam();
 			var session = null;
 			var state = null;
-			
+			var pageSessionId=null;
 			
 			if($.stage.component.hasSession()){ //세션을 가지고 있다면
 				//세션값 추출
 				session = $.stage.component.getSession();
+				pageSessionId=session.userId;
+				
+				alert(session.userId + "<1>"+pageParams.userId);
+				
+				if(pageParams.userId == null)
+					pageParams.userId = currentLoginId.userId;
 				//비교 결과 가져오기
+				alert(session.userId + "<2>"+pageParams.userId);
+				
 				if(pageParams.userId == session.userId){//세션id와 페이지 id가 같으면
+					
 					state = $.stageRestPool.MYSELF_RELATION;
 					$("#dynamic").text("정보수정");
 					$("#dynamic").bind("click",function (){
@@ -131,14 +141,62 @@
 				}
 				
 			});
-			
+		$("#edit").click(function(e) {
+				e.preventDefault();
+				$.stageComponent.pageMove("cameraEdit.html",{userId:pageParams.userId});
+		});
+		$("#user").live("click",function(e){
+			e.preventDefault();
+			$.stageComponent.pageMove("blog.html",{userId:pageParams.userId});
+        });
+		$("#ablum").live("click",function(e){
+			e.preventDefault();
+			$.stageComponent.pageMove("camera.html",{userId:pageParams.userId});
+        });
+		$("#wall").live("click",function(e){
+			e.preventDefault();
+			$.stageComponent.pageMove("wall.html",{userId:pageParams.userId});
+        });
+		
+		$("#fri_list").live("click",function(e){
+			e.preventDefault();
+			$.stageComponent.pageMove("userFriendlist.html",{userId:pageParams.userId});
+        });
+		
+		$("#category").bind("click",function(e){
+			//$.stageComponent.pageMove("wall.html",{userId:pageParams.userId});
+			e.preventDefault();
+			if(clickCount%2==0){
+				$(".overlay").show();
+				clickCount++;
+			}	
+			else{
+				$(".overlay").hide();
+				clickCount++;
+			}	
+        });
+
 		});	//init 함수의 끝	
 
      </script>
 
  	<header data-role="header" id="header" data-position="fixed" data-tap-toggle="false">
         <h1>블로그</h1>
-        <div id="category" class="ui-btn-right"></div>
+        <div id="category" class="ui-btn-right">
+       <!--  
+   		<form id="listForm" method="post" action="#">
+					<div data-role="fieldcontain">
+						<select id="list" name="list" data-native-menu="false" data-inline="true" data-iconpos="notext">
+							<option value="개인정보">개인 정보</option>
+							<option value="앨범">앨범</option>
+							<option value="담벼락" selected>담벼락</option>
+							<option value="친구목록">친구 목록</option>
+						</select>
+					</div>
+		</form> 
+			 -->	
+			
+        </div>
     </header>
     
     <section data-role="content">
@@ -147,6 +205,17 @@
 		<a id="dynamic" data-role="button" ></a>
     </section>
     
+    <div class="overlay" style="display: none">
+		<div class="overlay-content">
+			<ul id='tas_list' data-role='listview'>
+				<li id="user">개인 정보</li>
+				<li id="ablum">앨범</li>
+				<li id="wall">담벼락</li>
+				<li id="fri_list">친구 목록</li>
+			</ul>
+		</div>
+	</div>
+	
     <footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
        <ul>
        <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>

@@ -3,7 +3,7 @@
 	<script id="talkSubItemTpl" type="text/x-jquery-tmpl">
 		
 	<li data-messageId="${idx}" id='talkItemd${idx}'>
-		<img src="${thumnail}" id='thum'>	
+		<img src="${thumnail}" id='thum' class='thum_img'>	
 		<div id='arrow'>
 		</div>	
 		<div id='div1'>
@@ -33,46 +33,62 @@
 			var pageParams = $.stageComponent.pageParam();
 			var userInformation = $.stageComponent.getSession();
 			var param = {
-				userId : userInformation.userId,
+					userId : userInformation.userId,
 					talkIdx : pageParams.talkIdx,
 				};
-			
-				if (param.userId != pageParams.userId) {
-					$("#mod").hide();
-					$("#del").hide();
-					$("#backBtnLine4").hide();
-					$("#backBtnLine3").hide();
-				}
+		
+			if (param.userId != pageParams.userId) {
+				$("#mod").hide();
+				$("#del").hide();
+				$("#backBtnLine4").hide();
+				$("#backBtnLine3").hide();
+			}
 				
-				var list = $("#talkSubList");
-				$("#talkSubItemTpl").tmpl(pageParams).appendTo(list);
-				$.stageComponent.listview("talkSubList", "talkSubItemTpl",
-						$.stageRestPool.GET_TALK_SUB_LIST
-								+ pageParams.talkIdx, null, function() {
-						},params);
-
+			var list = $("#talkSubList");
+			$("#talkSubItemTpl").tmpl(pageParams).appendTo(list);
+			$.stageComponent.listview("talkSubList", "talkSubItemTpl",$.stageRestPool.GET_TALK_SUB_LIST+ pageParams.talkIdx, null, function() {
+				$(".thum_img").bind("tap",function(e){
+					e.preventDefault();
+					var userId =$(this).parent("li").children("div").children('div').children("h3").text();
+					//alert(userId);
+					$.stage.component.pageMove("../blog/blog.html",{userId:userId},true);
 				});
-		$("#del").click(
-				function(e) {
+			},params);
+			
+			$(".thum_img").bind("tap",function(e){
+				e.preventDefault();
+				var userId =$(this).parent("li").children("div").children('div').children("h3").text();
+				//alert(userId);
+				$.stage.component.pageMove("../blog/blog.html",{userId:userId},true);
+			});
+			});
+		
+		
+		
+		$("#del").click(function(e) {
 
-					var pageParams = $.stageComponent.pageParam();
-					var userInformation = $.stageComponent.getSession();
-					var param = {
-						userId : userInformation.userId,
-						talkIdx : pageParams.talkIdx,
-					};
-					//	 		alert(param.userId);
-					//	 		alert(pageParams.userId);  // 메인글 아이디
-					if (param.userId == pageParams.userId) {
-						$.stageAjax.postJson($.stageRestPool.DELETE_TALK,param, function(result) {
-									alert("삭제완료 ");
-									e.preventDefault();
-									$.stageComponent.pageMove("talkList.html");
-								}, true);
+				var pageParams = $.stageComponent.pageParam();
+				var userInformation = $.stageComponent.getSession();
+				var param = {
+					userId : userInformation.userId,
+					talkIdx : pageParams.talkIdx,
+				};
+				//	 		alert(param.userId);
+				//	 		alert(pageParams.userId);  // 메인글 아이디
+				var answer = confirm("삭제할까요?");
+					if (answer == true) {
+						if (param.userId == pageParams.userId) {
+							$.stageAjax.postJson($.stageRestPool.DELETE_TALK,param, function(result) {
+										alert("삭제완료 ");
+										e.preventDefault();
+										$.stageComponent.pageMove("talkList.html");
+										}, true);
+							}
+							else{
+								alert("상대방의 글을 삭제할 수 없습니다");
+							}
 					}
-					else{
-						alert("상대방의 글을 삭제할 수 없습니다");
-					}
+	
 				});
 		
 			

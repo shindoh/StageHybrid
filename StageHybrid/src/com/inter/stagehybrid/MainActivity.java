@@ -12,7 +12,7 @@ public class MainActivity extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        super.loadUrl("file:///android_asset/www/app/main.html");
+        super.loadUrl("file:///android_asset/www/www/app/main.html");
 
         
         super.appView.setVerticalScrollBarEnabled(true);

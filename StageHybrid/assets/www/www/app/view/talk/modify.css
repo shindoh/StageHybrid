@@ -1,7 +1,7 @@
 @CHARSET "EUC-KR";
 
-#content {
-	background: url(images/back_bg.png) repeat-x repeat-y;
+#modifyPage {
+	background: url(images/back_bg.png);
 }
 #picUpM{
 	margin:-27px 0 0 10px;

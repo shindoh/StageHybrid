@@ -3,10 +3,10 @@
 <link rel = "stylesheet" type = "text/css" href="talkList.css">
 	<script id="talkItemTpl" type="text/x-jquery-tmpl">
 <li data-messageId="${idx}" id='talkItemd${idx}'>
-	<img src="${thumnail}" id='thum'>	
+	<img src="${thumnail}" id='thum' class='thum_img'>	
 	<div id='arrow'>
 	</div>	
-	<div id='div1'>
+	<div id='div1' class='content_txt'>
 		<div id='div2'>
 			<h3>${userId}</h3>			
 			<img src="${imgUrl}"  id="talkImg">
@@ -20,9 +20,10 @@
 	</script>
 
      <script type="text/javascript"> 
-		$("#talkListPage").on("pageinit", function(){
-			
-			
+     	var Master;
+		$("#talkListPage").on("pageinit", function(e){
+
+			e.preventDefault();
 			$.stageComponent.listview("talkList","talkItemTpl",$.stageRestPool.GET_TALK_LIST,null,function(){
 				
 				var h1s = $("#talkList >li").children("div").children('div').children('h1');
@@ -44,8 +45,32 @@
 					if(scnt!="")
 						$(this).children("div").children("div").children("#sCnt").css("background","url(images/reply_icon.png) no-repeat");
 				});
-						
-				$("#talkList >li ").bind("tap",function(e){
+				
+				$(".thum_img").bind("tap",function(e){
+					e.preventDefault();
+					var userId =$(this).parent("li").children("div").children('div').children("h3").text();
+					//alert(userId);
+					$.stage.component.pageMove("../blog/blog.html",{userId:userId},true);
+				});		
+				
+				$(".content_txt").bind("tap",function(e){
+					e.preventDefault();
+					
+					var talkIdx =$(this).parent("li").attr("data-messageId");
+					var userId =$(this).parent("li").children("div").children('div').children("h3").text();
+					var thumnail =$(this).parent("li").children("img").attr("src");
+					var subCount = $(this).parent("li").children("#div1").children("#div2").children("sCnt").text();
+					var comment = $(this).parent("li").children("#div1").children("#div3").text();
+					var imgUrl = $(this).parent("li").children("#div1").children("#div2").children("#talkImg").attr("path");		
+					
+					$.stage.component.pageMove("talkSubList.html",{
+							talkIdx:talkIdx, userId:userId, 
+							thumnail:thumnail, comment:comment,
+							imgUrl:imgUrl, subCount:subCount
+					},true);		
+				
+				});
+				/*$("#talkList >li ").bind("tap",function(e){
 					
 					// ${이름} 과  변수명이 같아야 한다 그래야 tmpl 에서 알아서 찾아줌 
 					var talkIdx =$(this).attr("data-messageId");
@@ -53,17 +78,19 @@
 					var thumnail =$(this).children("img").attr("src");
 					var subCount = $(this).children("#div1").children("#div2").children("sCnt").text();
 					var comment = $(this).children("#div1").children("#div3").text();
-		
 					var imgUrl = $(this).children("#div1").children("#div2").children("#talkImg").attr("path");		
+					
 					e.preventDefault();
-						$.stage.component.pageMove("talkSubList.html",{
+					$.stage.component.pageMove("talkSubList.html",{
 							talkIdx:talkIdx, userId:userId, 
 							thumnail:thumnail, comment:comment,
 							imgUrl:imgUrl, subCount:subCount
-						},true);		
-				});
+					},true);		
+					
+				});*/
 			});
 		});
+		
 		$("#write").click(function (e){
 			var talkIdx =$(this).attr("data-messageId");
 			var userId =$(this).children("div").children("h3").text();
@@ -89,7 +116,6 @@
     </header>
 
     <section data-role="content" id="content">
-    
 		<ul  id="talkList">
 		</ul>
     </section>
@@ -109,8 +135,8 @@
        <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
        <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
        <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
- </ul>
+       <li><a href="../session/login.html" id="mainSettingButton"></a>  </li>
+ 	</ul>
     
      </footer>
 </div>

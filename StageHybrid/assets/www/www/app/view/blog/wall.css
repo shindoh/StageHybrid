@@ -43,7 +43,7 @@
 	margin-bottom: 1%;
 }
 
-#others_text {
+.others_text {
 	margin: 2%;
 	margin-top: 2.5%;
 	margin-right: 4%;
@@ -63,7 +63,7 @@
 	opacity: 1;
 }
 
-#others_img {
+.others_img {
 	width: 58px;
 	height: 53px;
 	margin: 0;
@@ -95,7 +95,7 @@
 	margin-bottom: 1%;
 }
 
-#mine_text {
+.mine_text {
 	margin: 2%;
 	margin-top: 1.5%;
 	margin-left: 4%;
@@ -116,7 +116,7 @@
 	opacity: 1;
 }
 
-#mine_img {
+.mine_img {
 	width: 58px;
 	height: 53px;
 	margin: 0;

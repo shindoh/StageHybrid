@@ -9,8 +9,9 @@
 	<script type="text/javascript">
 		var increaseNumber;
 		var pageMaster;
-		$("#wallPage").on("pageinit",function() {
-
+		var clickCount =0;
+		$("#wallPage").on("pageinit",function(e) {
+			e.preventDefault();
 					var pageParams = $.stageComponent.pageParam();
 					var currentLoginId = $.stage.component.getSession();
 		
@@ -27,17 +28,18 @@
 						$("#id_header_title").html("@"+pageParams.userId);
 						pageMaster = pageParams.userId;
 					}
+					
 					getInforList(0);
 					getthumnail();
 
-					$("#back").click(
-							function() {
-								$.stageComponent.pageMove(
-										"../talk/talkList.html", {},
-										currentLoginId.userId);
-							});
+					$("#back").click(function(e) {
+						e.preventDefault();
+					//	$.stageComponent.pageMove("../talk/talkList.html", {},currentLoginId.userId);
+						 parent.history.back(); 
+					});
 
-					$("#submitButton").bind("click", function() {
+					$("#submitButton").bind("click", function(e) {
+						e.preventDefault();
 						var text = $("#insertText").val();
 						if (text == "" || text == " ")
 							;
@@ -45,11 +47,26 @@
 							setInforList(text);
 
 					});
-					$("#content .mine").live(
-							"click",
-							function() {
+					$("#content .mine_text").live("click",function(e) {
+						e.preventDefault();
 								var id = this.id;
 								var index = id.split("/");
+								var pageParams = $.stageComponent.pageParam();
+								if (currentLoginId.userId == pageParams.userId
+										|| currentLoginId.userId == index[2]) {
+
+									var answer = confirm("선택한 글을 삭제할까요?");
+									if (answer == true) {
+										$(this).remove();
+										deleteSeleteWall(this.id);
+									}
+								}
+							});
+					$("#content .others_text").live("click",function(e) {
+						e.preventDefault();
+								var id = this.id;
+								var index = id.split("/");
+
 								if (currentLoginId.userId == 'testimage'
 										|| currentLoginId.userId == index[2]) {
 
@@ -60,50 +77,47 @@
 									}
 								}
 							});
-					$("#content .others").live(
-							"click",
-							function() {
-								var id = this.id;
-								var index = id.split("/");
-
-								if (currentLoginId.userId == 'testimage'
-										|| currentLoginId.userId == index[2]) {
-
-									var answer = confirm("선택한 글을 삭제할까요?");
-									if (answer == true) {
-										$(this).remove();
-										deleteSeleteWall(this.id);
-									}
-								}
-							});
-
-					$("#list").bind("click", function() {
-
+					$("#content .mine_img").live("click",function(e) {
+						e.preventDefault();
+						var id = this.id;
+						$.stageComponent.pageMove("blog.html",{userId:id});
 					});
-
-					$("#user").live("click",function(){
-						$.stageComponent.pageMove("blog2.html",{}, currentLoginId.userId);
+					
+					$("#content .others_img").live("click",function(e) {
+						e.preventDefault();
+						var id = this.id;
+						$.stageComponent.pageMove("blog.html",{userId:id});
+					});
+					
+					$("#user").live("click",function(e){
+						e.preventDefault();
+						$.stageComponent.pageMove("blog.html",{}, currentLoginId.userId);
 			        });
-					$("#ablum").live("click",function(){
+					$("#ablum").live("click",function(e){
+						e.preventDefault();
 						$.stageComponent.pageMove("camera.html",{}, currentLoginId.userId);
 			        });
-					$("#wall").live("click",function(){
+					$("#wall").live("click",function(e){
+						e.preventDefault();
 						$.stageComponent.pageMove("wall.html",{}, currentLoginId.userId);
 			        });
-					
-					$("#list").live("tap",function(){
-						$(".overlay").toggle(50);
+					$("#fri_list").live("click",function(e){
+						e.preventDefault();
+						$.stageComponent.pageMove("userFriendlist.html",{userId:pageParams.userId});
+			        });
+					$("#list").bind("click",function(e){
+						e.preventDefault();
+						if(clickCount%2==0){
+							$(".overlay").show();
+							clickCount++;
+						}	
+						else{
+							$(".overlay").hide();
+							clickCount++;
+						}
 			        });
 					
-			        $(".ui-mobile-viewport").live("tap",function(event){
-			            var target = event.target;
-			            //Close the overlay if you have clicked on anywhere in body except the overlay itself and the button in header.
-			            //If the check for button in this if is skipped,you will not be able to show the overlay.Clicking on button in header to close is //handled by previous event handler.
-			            if($('#list').find(target).length==0 && $('.overlay').find(target).length==0) {
-			                $(".overlay").hide();
-			            }
-			            
-			        });
+					
 				});
 		function hide_footer() {
 			//$("#footer").hide();
@@ -113,7 +127,7 @@
 		}
 		function getthumnail() {
 			var currentLoginId = $.stage.component.getSession();
-
+			
 			var inforUrl = $.stage.restPool.GET_USER_INFORM;
 
 			var writerParams = {
@@ -130,13 +144,14 @@
 		}
 		//리스트 가져오기 처음 시작할때
 		function getInforList(start) {
-
+			$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var inforUrl = $.stage.restPool.GET_USER_INFORM;
+			var pageParams = $.stageComponent.pageParam();
 			var currentLoginId = $.stage.component.getSession();
 			var url = "http://specificconcept.cafe24.com/rest/userWall";
 
 			var params = {
-				userId : 'testimage',
+				userId : pageParams.userId,
 				listIndex : start,
 				listCount : 10
 			};
@@ -157,7 +172,7 @@
 		//리스트 추가시키는것...
 		function listLoad(writerId, count, information) {
 
-			$.mobile.showPageLoadingMsg("b", "loading...", true);
+		//	$.mobile.showPageLoadingMsg("b", "loading...", true);
 			var currentLoginId = $.stage.component.getSession();
 			var writerImage;
 
@@ -169,53 +184,51 @@
 			var ids = information.list[count].idx + "/"
 					+ information.list[count].userId + "/"
 					+ information.list[count].writerId;
-			$.stage.ajax
-					.getJson(
-							inforUrl,
-							writerParams,
+			$.stage.ajax.getJson(inforUrl,writerParams,
 							function(data) {
 								writerImage = data.data.thumnail;
 								if (writerImage == null)
 									writerImage = "gravatar.jpg";
 								if (currentLoginId.userId == information.list[count].writerId) {
-									$("<div class='mine' "+"id="+ids+">")
+									$("<div class='mine'>")
 											.appendTo("#wallList")
-											.html(
-													'<div id="mine_text">'
+											.html('<div class="mine_text"' +"id="+ids+'>'
 															+ '<font id="ID"><b>ID: </b>'
 															+ information.list[count].writerId
 															+ '</font><br/><b>Comment: </b>'
 															+ information.list[count].comment
-															+ '</div><div id="img_bg_mine"><img src='+ writerImage+' id="mine_img"></div>');
+															+ '</div><div id="img_bg_mine"><img src='+ writerImage+' class="mine_img" id='+information.list[count].writerId+'></div>');
 
 								} else {
-									$("<div class='others' "+"id="+ids+">")
-											.appendTo("#wallList")
+									$("<div class='others'>").appendTo("#wallList")
 											.html(
-													'<div id="others_text">'
+													'<div class="others_text"' +"id="+ids+'>'
 															+ '<font id="ID"><b>ID: </b>'
 															+ information.list[count].writerId
 															+ '</font><br/><b>Comment: </b>'
 															+ information.list[count].comment
-															+ '</div><div id="img_bg_others"><img src='+ writerImage+' id="others_img"></div>');
+															+ '</div><div id="img_bg_others"><img src='+ writerImage+' class="others_img" id='+information.list[count].writerId+'></div>');
 
 								}
 								//	$("#wallList").listview("refresh");
-								$.mobile.hidePageLoadingMsg();
+								//$.mobile.hidePageLoadingMsg();
 							}, true);
 
 		}
 
 		function setInforList(content) {
-			$.mobile.showPageLoadingMsg("b", "loading...", true);
+			$.mobile.showPageLoadingMsg("b", "loading...", true);	
+			var pageParams = $.stageComponent.pageParam();
 			var currentLoginId = $.stage.component.getSession();
 			var url = "http://specificconcept.cafe24.com/rest/userWall";
 			var params = {
-				userId : 'testimage',
+				userId : pageParams.userId,
 				writerId : currentLoginId.userId,
 				comment : content
 			};
+			alert(pageParams.userId+" 1 "+currentLoginId.userId+" 2 "+content);
 			$.stage.ajax.postJson(url, params, function(data) {
+			//	alert(1);
 				$("#wallList").html("");
 				$("#insertText").val("");
 				getInforList(0);
@@ -278,7 +291,8 @@
 		</div>
 
 	</header>
-	<header data-role="header" data-position="fixed" id="id_header"c>
+	
+	<header data-role="header" data-position="fixed" id="id_header">
 		<h1 id="id_header_title"></h1>
 	</header>
 	
@@ -296,6 +310,7 @@
 				<li id="user">개인 정보</li>
 				<li id="ablum">앨범</li>
 				<li id="wall">담벼락</li>
+				<li id="fri_list">친구 목록</li>
 			</ul>
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 			<img src="images/pic_upload_btn.png" id="imgUp" width="82px" height="85px" class=photo />
 			<div id='picUp'>사진올리기</div>
 		</div>
-		<textarea cols=40" rows="15" id="writeTxt" value="" /> </textarea>
+		<textarea cols=40" rows="15" id="writeTxt" /></textarea>
 	</section>
 
 	<footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
@@ -31,11 +31,20 @@
      </footer>
 	<script type="text/javascript">
 	$('#talkWritePage').bind("pageinit",function(){ 
+		
+		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		
+		if(pageParams.userId==null){
+			if(currentLoginId.userId == null)
+				$.stageComponent.pageMove("../session/login.html",{});
+		}
 				
 		$("#backW").bind("tap",function(e){
 			e.preventDefault();
 			$.mobile.changePage("talkList.html");
 		});
+		
 		$("#picArea .photo").live("click", function() {
 			$(this).unbind('click'); // 중복클릭 막기.
 			$(this).unbind('click'); // 중복클릭 막기.
@@ -65,16 +74,17 @@
 				sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
 			});
 		}
+		
 		$(document).bind("flickrUploadFinish", function() {
 				
 			$("#imgUp").attr('src',FI.photoURL);
 			$.mobile.hidePageLoadingMsg();
 
 		}); 
+		
 	 	$("#btn").click(function (e){
 	 		
-	 		var userInformation = $.stageComponent.getSession();
-	 		
+	 		var userInformation = $.stageComponent.getSession(); 
 	 		var param={
 	 				userId: userInformation.userId,
 	 				comment:$("#writeTxt").val(),
@@ -89,14 +99,18 @@
 	 			param.imgUrl= '';
 	 		}
 	 		
+	 		if($("#writeTxt").val()==""){
+	 			alert("입력하세요");
+	 		}else{
+
+		 		$.stageAjax.postJson($.stageRestPool.STAGE_REST+"/talk",param,function(result){
+		 			alert("등록완료 ");				
+				},true);
+		 		
+		 		e.preventDefault();
+		 		$.stageComponent.pageMove("talkList.html",param);
+	 		}
 	 		
-	 		
-	 		$.stageAjax.postJson($.stageRestPool.STAGE_REST+"/talk",param,function(result){
-	 			alert("등록완료 "+result);				
-			},true);
-	 		
-	 		e.preventDefault();
-	 		$.stageComponent.pageMove("talkList.html",param);
 	 	}); 		
 
 		

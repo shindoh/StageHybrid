@@ -4,7 +4,7 @@
 	<link rel="stylesheet" type="text/css" href="total.css" />
 	<script id="userModifyTpl" type="text/x-jquery-tmpl">
 	<div id="summary">
-		<div ><img id="image" src="${frontPhoto}"></div>
+		<div ><img id="image" class="p_img" src="${frontPhoto}"></div>
 		<div id="profile">ID : ${userId}<br><hr>최근 상태 <br>
 						 <textarea cols="24%" rows="4" name="textarea" id="frontComment" value="${frontComment}" data-mini="true" /></div>
 	</div>
@@ -17,24 +17,34 @@
 	</script>
 
 	<script type="text/javascript">
-		$("#userModify").on("pageinit", function(){
-			
+		$("#userModify").on("pageinit", function(e){
+			e.preventDefault();
 			//페이지 파라미터에서 id값 추출
 			var pageParams = $.stage.component.pageParam();
 			//템플릿 적용
 			var info = $('#userModifyList');
+			
+			var profile_img = pageParams.frontPhoto;
+			
 			$('#userModifyTpl').tmpl(pageParams).appendTo(info);
+
+			$("#frontComment").html(pageParams.frontComment);
+		
+			$(".p_img").bind("click",function (e){
+				getImageFile();
+			});
 			
 			//정보 수정 클릭시 이벤트
-			$("a#dynamic").bind("click",function (){
+			$("a#dynamic").bind("click",function (e){
+				e.preventDefault();
 				var params = {};
 				params.id = pageParams.userId;
-				params.frontPhoto = pageParams.frontPhoto; //수정하기
+				params.thumnail = profile_img; //수정하기
+				params.frontPhoto = profile_img;
 				params.frontComment = $('#frontComment').val();
 				params.age = $('#age').val();
 				params.work = $('#work').val();
 				params.lookingFor = $('#lookingFor').val();
-				
 				
 				$.stageAjax.postJson($.stageRestPool.POST_USER_INFORM_MODIFY,params,function(result){
 					var data = result.data;
@@ -47,14 +57,54 @@
 					
 				},true);
 			});
+		
+			$("#back").click(function(e) {
+				e.preventDefault();
+				parent.history.back(); 
+			});
+			
+			$(document).bind("flickrUploadFinish", function() {
+				profile_img = FI.thumbnailUrl;
+
+				$(".p_img").attr('src',profile_img);
+
+				//alert(profile_img);
+				$.mobile.hidePageLoadingMsg();
+				/*
+					userId : currentLoginId.userId,
+					photoUrl : FI.photoURL,
+					thumnail : FI.thumbnailUrl
+				*/
+			});
+			
 		});		
+		
+		function getImageFile() {
+			$(this).unbind('click'); // 중복클릭 막기.
+			$(this).unbind('click'); // 중복클릭 막기.
+			navigator.camera.getPicture(function(URI) {
+				FI.imageURI = URI;
+				proc();
+				$.mobile.showPageLoadingMsg("b", "loading...", true);
+				
+			}, function(message) {
+				FI.imageURI = "";
+				FI.photoURL = "";
+				FI.frob = "";
+			}, {
+				quality : 50,
+				destinationType : navigator.camera.DestinationType.FILE_URI,
+				sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
+			});
+		}
 		
      </script>
 
 	<header data-role="header" id="header" data-position="fixed"
 		data-tap-toggle="false">
+		<div id="back" class="ui-btn-left"></div>
 		<h1>블로그</h1>
-		<div id="category" class="ui-btn-right"></div>
+	<!-- <div id="category" class="ui-btn-right"></div> -->	
 	</header>
 
 	<section data-role="content">

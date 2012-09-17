@@ -11,12 +11,11 @@
 
 	<section data-role="content" id="content">
 
-		
 		<div id="picAreaM">
 			<img src="images/pic_upload_btn.png" id="imgUpM" class=photo width="82px" height="85px" />
 			<div id='picUpM'>사진올리기</div>
 		</div>
-		<textarea cols="40" rows="15" id="modifyTxt" value="" /> </textarea>
+		<textarea cols="40" rows="15" id="modifyTxt"/></textarea>
 		
 	</section>
 
@@ -45,13 +44,24 @@
 	<script type="text/javascript">
 	$('#modifyPage').on("pageinit",function(e){
 		e.preventDefault();
-		
+
 		$("#backmod").bind("tap",function(e){
 			e.preventDefault();
-			$.mobile.changePage("talkList.html");
+			parent.history.back();
+			//$.mobile.changePage("talkList.html");
 		});
 		
 		var pageParams = $.stageComponent.pageParam();
+		var currentLoginId = $.stage.component.getSession();
+		var mod_comment = pageParams.comment;
+		var mod_com = mod_comment.split(" ");
+
+		$("#modifyTxt").html(mod_com[4]);
+		
+		if(pageParams.userId==null){
+			if(currentLoginId.userId == null)
+				$.stageComponent.pageMove("../session/login.html",{});
+		}
 		
 		if($("#imgUpM").attr('src',pageParams.imgUrl) != "images/pic_upload_btn.png")
 			$("#picUpM").hide();
@@ -70,6 +80,8 @@
 		function getImageFile() {
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
+				$(this).unbind('click'); // 중복클릭 막기.
+				$(this).unbind('click'); // 중복클릭 막기.
 				var answer = confirm("사진을 올릴까요?");
 				if (answer == true) {
 					proc();
