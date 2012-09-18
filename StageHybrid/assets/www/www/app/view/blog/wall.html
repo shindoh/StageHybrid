@@ -226,8 +226,9 @@
 				writerId : currentLoginId.userId,
 				comment : content
 			};
-			alert(pageParams.userId+" 1 "+currentLoginId.userId+" 2 "+content);
+			//alert(pageParams.userId+" 1 "+currentLoginId.userId+" 2 "+content);
 			$.stage.ajax.postJson(url, params, function(data) {
+				alert(data);
 			//	alert(1);
 				$("#wallList").html("");
 				$("#insertText").val("");

@@ -26,8 +26,6 @@
 			});
 			
 			$("#space .photo").live("click", function(e) {
-				$(this).unbind('click'); // 중복클릭 막기.
-				$(this).unbind('click'); // 중복클릭 막기.
 				e.preventDefault();
 				if (this.id == "img_1")
 					getImageFile();
@@ -83,8 +81,6 @@
 		}
 
 		function getImageFile() {
-			$(this).unbind('click'); // 중복클릭 막기.
-			$(this).unbind('click'); // 중복클릭 막기.
 			navigator.camera.getPicture(function(URI) {
 				FI.imageURI = URI;
 				var answer = confirm("사진을 올릴까요?");
