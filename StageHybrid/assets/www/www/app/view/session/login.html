@@ -1,82 +1,71 @@
+<meta charset="UTF-8">
 <div data-role="page" id="loginPage">
 	<link rel="stylesheet" type="text/css" href="login.css" />
 
 	<script type="text/javascript">
-		$.isNull = function() { //怨듬갚 鍮꾧탳 �⑥닔
+		//$.isNull = function() { //怨듬갚 鍮꾧탳 �⑥닔
+		function nullCheck(){
 			if ($("#ID").val() == "") {
-				alert("ID媛�鍮꾩뿀�듬땲��");
+				alert("ID를 입력하세요");
 				$("#ID").focus();
 				return false;
 			} else if ($("#CODE").val() == "") {
-				alert("CODE媛�鍮꾩뿀�듬땲��");
+				alert("비밀번호를 입력하세요");
 				$("#CODE").focus();
 				return false;
 			} else {
 				return true;
 			}
-		};
-		$("#loginPage")
-				.on(
-						"pageinit",
-						function() {
+		}
+		$("#loginPage").on("pageinit",function() {
+			
+			$("#SUBMIT").bind("tap",function(e) {
+				if ( nullCheck() ){
+					$.mobile.showPageLoadingMsg("b","loading...",true);
+					var params = {};
+					params.id = $("#ID").val();
+					params.pass = $("#CODE").val();
+					$.stageAjax.postJson($.stageRestPool.LOGIN_USER,params,function(result) {
+						var infoData = result.data;
+						if (infoData == null) {
+							alert('ID 또는 비밀번호가 다릅니다.');
+						} else {
+							$.stage.component.setSession(params.id,params.pass);
+							e.preventDefault();
+							$.mobile.hidePageLoadingMsg();
+							parent.history.back(); 
+							//$.mobile.changePage("../blog/blog.html");
+						}
+					}, true);
+				}
+				$.mobile.hidePageLoadingMsg();
+			
+			});
+			
+			$("#JOIN").bind("tap", function(e) { //�뚯썝媛�엯 踰꾪듉���꾨Ⅴ硫��뚯썝 媛�엯 �쇱쑝濡�
+				e.preventDefault();
+				$.mobile.changePage("join.html");
+			});
 
-							$("#SUBMIT")
-									.bind(
-											"tap",
-											function(e) {
-												if ($.isNull()) {//id��password媛�鍮꾩뼱 �덉� �딆쑝硫�
-													$.mobile
-															.showPageLoadingMsg(
-																	"b",
-																	"loading...",
-																	true);
-													//�뚮씪誘명꽣 �앹꽦
-													var params = {};
-													params.id = $("#ID").val();
-													params.pass = $("#CODE")
-															.val();
-													$.stageAjax
-															.postJson(
-																	$.stageRestPool.LOGIN_USER,
-																	params,
-																	function(
-																			result) {
-																		var infoData = result.data;
-																		if (infoData == null) {
-																			alert('ID �먮뒗 CODE媛��섎せ �섏뿀�듬땲��);
-																		} else {
-																			$.stage.component
-																					.setSession(
-																							params.id,
-																							params.pass);
-																			e.preventDefault();
-																			$.mobile
-																					.changePage("../blog/blog.html");
-																		}
-																	}, true);
-													$.mobile
-															.hidePageLoadingMsg();
-												}
-
-											});
-
-							$("#JOIN").bind("tap", function(e) { //�뚯썝媛�엯 踰꾪듉���꾨Ⅴ硫��뚯썝 媛�엯 �쇱쑝濡�
-								e.preventDefault();
-								$.mobile.changePage("join.html");
-							});
-
-							$("#historyback").bind("tap", function(e) { //�댁쟾�섏씠吏�� �꾨Ⅴ硫��좏겕 由ъ뒪�몃줈 �대룞�쒕떎.
-								e.preventDefault()
-								$.mobile.changePage("../talk/talkList.html");
-							});
-						});
+			$("#historyback").bind("tap", function(e) { //�댁쟾�섏씠吏�� �꾨Ⅴ硫��좏겕 由ъ뒪�몃줈 �대룞�쒕떎.
+				e.preventDefault()
+				$.mobile.changePage("../talk/talkList.html");
+			});
+			
+		});
+		function BlogBtu(){
+			var currentLoginId = $.stage.component.getSession();
+			if(currentLoginId == null)
+				$.mobile.changePage("../session/login.html");
+			$.stage.component.pageMove("../blog/blog.html",{userId:currentLoginId.userId});
+		}
 	</script>
 
 	<header data-role="header" id="header" data-position="fixed"
 		data-tap-toggle="false">
-		<h1>濡쒓렇��/h1>
-		<div id="historyback" class="ui-btn-left"></div>
-		<div id="backBtnLine1" class="ui-btn-left"></div>
+		<h1>로그인</h1>
+			<div id="historyback" class="ui-btn-left"></div>
+			<div id="backBtnLine1" class="ui-btn-left"></div>
 	</header>
 
 	<section data-role="content" id="cont" data-role="fieldcontain">
@@ -92,26 +81,24 @@
 					id="label_ID">&nbsp;Personal ID</label>
 			</div>
 			<center>
-				<input type="text" name="name" maxlength="10" id="ID" value=""
-					data-mini="true" />
+				<input type="text" name="name" maxlength="10" id="ID" value="" data-mini="true" />
 			</center>
 
 			<div id="area_pw">
-				<img src="images/pw_icon.png" align="left"> <label for="CODE"
-					id="label_PW">&nbsp;Password</label>
+				<img src="images/pw_icon.png" align="left">
+				<label for="CODE" id="label_PW"> &nbsp;Password</label>
 			</div>
 			<center>
-				<input type="password" name="name" id="CODE" value=""
-					data-mini="true" />
+				<input type="password" name="name" id="CODE" value="" data-mini="true" />
 			</center>
 
 			<center>
 				<div id="button">
 					<div id="JOIN">
-						<button type="submit" data-theme="d" data-mini="true">媛�엯�섍린</button>
+						<button type="submit" data-theme="d" data-mini="true">회원가입</button>
 					</div>
 					<div id="SUBMIT">
-						<button type="submit" data-theme="c" data-mini="true">濡쒓렇��/button>
+						<button type="submit" data-theme="c" data-mini="true">로그인</button>
 					</div>
 				</div>
 			</center>
@@ -122,10 +109,10 @@
 		data-position="fixed" data-tap-toggle="false">
 		<ul>
 			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
-			<li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+			 <li onclick="BlogBtu()"><a href="#" id="mainBlogButton"></a></li>
 			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-			<li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-			<li><a href="../blog/wall.html" id="mainSettingButton"></a></li>
+			<li><a href="#" id="mainLoungeButton"></a></li>
+			<li><a href="#" id="mainSettingButton"></a></li>
 		</ul>
 
 	</footer>

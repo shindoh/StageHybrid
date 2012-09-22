@@ -53,7 +53,14 @@
 
 				getImage();
 			});
+		
 		});
+		function BlogBtu(){
+			var currentLoginId = $.stage.component.getSession();
+			if(currentLoginId == null)
+				$.mobile.changePage("../session/login.html");
+			$.stage.component.pageMove("../blog/blog.html",{userId:currentLoginId.userId});
+		}
 		function getImage() {
 		
 			$("#space").html('<img src=cssimage/pic_upload_btn.png id="img_1" class=photo width="30%" height="20%" />');
@@ -121,6 +128,7 @@
 			}, true);
 
 		}
+		
 	</script>
 
 	<header data-role="header" data-position="fixed" id="header">
@@ -148,10 +156,10 @@
 		data-tap-toggle="false">
 		<ul>
 			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
-			<li><a href="blog.html" id="mainBlogButton"></a></li>
+			 <li onclick="BlogBtu()"><a href="#" id="mainBlogButton"></a></li>
 			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-			<li><a href="camera.html" id="mainLoungeButton"></a></li>
-			<li><a href="wall.html" id="mainSettingButton"></a></li>
+			<li><a href="#" id="mainLoungeButton"></a></li>
+			<li><a href="#" id="mainSettingButton"></a></li>
 		</ul>
 
 	</footer>

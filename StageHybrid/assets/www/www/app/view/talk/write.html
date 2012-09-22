@@ -22,10 +22,10 @@
 	<footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
        <ul>
        <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
-       <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+       <li onclick="BlogBtu()"><a href="#" id="mainBlogButton"></a></li>
        <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-       <li><a href="../blog/camera.html" id="mainLoungeButton"></a></li>
-       <li><a href="../blog/wall.html" id="mainSettingButton"></a>  </li>
+       <li><a href="#" id="mainLoungeButton"></a></li>
+       <li><a href="#" id="mainSettingButton"></a>  </li>
  	   </ul>
     
      </footer>
@@ -35,11 +35,9 @@
 		var pageParams = $.stageComponent.pageParam();
 		var currentLoginId = $.stage.component.getSession();
 		
-		if(pageParams.userId==null){
-			if(currentLoginId.userId == null)
-				$.stageComponent.pageMove("../session/login.html",{});
-		}
-				
+		if(currentLoginId.userId == null)
+			$.stageComponent.pageMove("../session/login.html",{});
+	
 		$("#backW").bind("tap",function(e){
 			e.preventDefault();
 			$.mobile.changePage("talkList.html");
@@ -112,9 +110,13 @@
 	 		}
 	 		
 	 	}); 		
-
 		
 	}); 
-
+	function BlogBtu(){
+		var currentLoginId = $.stage.component.getSession();
+		if(currentLoginId == null)
+			$.mobile.changePage("../session/login.html");
+		$.stage.component.pageMove("../blog/blog.html",{userId:currentLoginId.userId});
+	}
 </script>
 </div>

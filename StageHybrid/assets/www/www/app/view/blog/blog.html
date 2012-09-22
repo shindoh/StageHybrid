@@ -18,34 +18,35 @@
 	<script type="text/javascript">
 	var clickCount=0;
 		$("#userInfo").on("pageinit", function(e){
+
 			e.preventDefault();
 			/* 페이지이동시 사용할 구문. userId도 넘겨야 함.
 			var userId =$(this).children("h3").text(); //암기
 			$.stage.component.pageMove("../blog/blog.html",{userId:userId});
 			*/			
 			//페이지 파라미터에서 id값 추출
-			var currentLoginId = $.stage.component.getSession();
 			var pageParams = $.stage.component.pageParam();
 			var session = null;
 			var state = null;
 			var pageSessionId=null;
-			
+			if(pageParams.userId == null){
+				$.mobile.changePage("../session/login.html");
+			}
 			if($.stage.component.hasSession()){ //세션을 가지고 있다면
 				//세션값 추출
 				session = $.stage.component.getSession();
 				pageSessionId=session.userId;
-				
-				alert(session.userId + "<1>"+pageParams.userId);
-				
+
 				if(pageParams.userId == null)
 					pageParams.userId = currentLoginId.userId;
 				//비교 결과 가져오기
-				alert(session.userId + "<2>"+pageParams.userId);
+				alert(session.userId + "<>"+ pageParams.userId);
 				
 				if(pageParams.userId == session.userId){//세션id와 페이지 id가 같으면
 					
 					state = $.stageRestPool.MYSELF_RELATION;
 					$("#dynamic").text("정보수정");
+					
 					$("#dynamic").bind("click",function (){
 						//사용자의 정보수정 페이지로 이동 (미완)
 						var userId = $("div[id='summary']").attr("idvalue");//아이디
@@ -119,6 +120,7 @@
 				
 			}else{//세션이 없다면 로그인 창 출력...
 				$("#dynamic").text("친구요청");
+			alert(21);
 				$("#dynamic").bind("click",function (){
 					//기능은 로그인 페이지로 이동
 					$.stage.component.pageMove("../session/login.html");
@@ -137,6 +139,7 @@
 					window.location.reload(true);//현재 자신의 페이지를 다시 부르기 위한 구문
 					//$.stage.component.pageMove("../blog/blog.html");//다른 페이지로 이동하기 위한 구문
 				}else{//세션이 없다면,로그인 페이지로 이동
+					alert(31);
 					$.stage.component.pageMove("../session/login.html");
 				}
 				
@@ -175,9 +178,14 @@
 				clickCount++;
 			}	
         });
-
+	
 		});	//init 함수의 끝	
-
+		function BlogBtu(){
+			var currentLoginId = $.stage.component.getSession();
+			if(currentLoginId == null)
+				$.mobile.changePage("../session/login.html");
+			$.stage.component.pageMove("../blog/blog.html",{userId:currentLoginId.userId});
+		}
      </script>
 
  	<header data-role="header" id="header" data-position="fixed" data-tap-toggle="false">
@@ -219,10 +227,10 @@
     <footer data-role="footer" id="footer" data-theme="a" data-position="fixed" data-tap-toggle="false">
        <ul>
        <li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
-       <li><a href="../blog/blog.html" id="mainBlogButton"></a></li>
+        <li onclick="BlogBtu()"><a href="#" id="mainBlogButton"></a></li>
        <li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-       <li><a href="../blog/blog.html" id="mainLoungeButton"></a></li>
-       <li><a href="../session/login.html" id="mainSettingButton"></a>  </li>
+       <li><a href="#" id="mainLoungeButton"></a></li>
+       <li><a href="#" id="mainSettingButton"></a>  </li>
  		</ul>
     
      </footer>

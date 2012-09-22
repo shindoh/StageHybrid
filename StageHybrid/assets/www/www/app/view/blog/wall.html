@@ -91,15 +91,15 @@
 					
 					$("#user").live("click",function(e){
 						e.preventDefault();
-						$.stageComponent.pageMove("blog.html",{}, currentLoginId.userId);
+						$.stageComponent.pageMove("blog.html",{userId:pageParams.userId});
 			        });
 					$("#ablum").live("click",function(e){
 						e.preventDefault();
-						$.stageComponent.pageMove("camera.html",{}, currentLoginId.userId);
+						$.stageComponent.pageMove("camera.html",{userId:pageParams.userId});
 			        });
 					$("#wall").live("click",function(e){
 						e.preventDefault();
-						$.stageComponent.pageMove("wall.html",{}, currentLoginId.userId);
+						$.stageComponent.pageMove("wall.html",{userId:pageParams.userId});
 			        });
 					$("#fri_list").live("click",function(e){
 						e.preventDefault();
@@ -117,8 +117,14 @@
 						}
 			        });
 					
-					
+				
 				});
+		function BlogBtu(){
+			var currentLoginId = $.stage.component.getSession();
+			if(currentLoginId == null)
+				$.mobile.changePage("../session/login.html");
+			$.stage.component.pageMove("../blog/blog.html",{userId:currentLoginId.userId});
+		}
 		function hide_footer() {
 			//$("#footer").hide();
 		}
@@ -274,6 +280,7 @@
 						addInforList();
 					}
 				});
+	
 	</script>
 
 
@@ -334,10 +341,10 @@
 		data-tap-toggle="false">
 		<ul>
 			<li><a href="../talk/talkList.html" id="mainStalkButton"></a></li>
-			<li><a href="blog.html" id="mainBlogButton"></a></li>
+			 <li onclick="BlogBtu()"><a href="#" id="mainBlogButton"></a></li>
 			<li><a href="../party/partyList.html" id="mainPartyButton"></a></li>
-			<li><a href="camera.html" id="mainLoungeButton"></a></li>
-			<li><a href="wall.html" id="mainSettingButton"></a></li>
+			<li><a href="#" id="mainLoungeButton"></a></li>
+			<li><a href="#" id="mainSettingButton"></a></li>
 		</ul>
 
 	</footer>

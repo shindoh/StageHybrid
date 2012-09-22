@@ -202,9 +202,15 @@ $.stage.component.pageMove = function(page,jsonParams,doSessionCheck,options)
  */
 $.stage.component.hasSession = function()
 {
-	var userInformation = JSON.parse(localStorage.getItem("userInformation"));
+	var userInformation = localStorage.getItem("userInformation");
+	
+	if(userInformation != null )
+	{
+		userInformation = JSON.parse(localStorage.getItem("userInformation"));				
+	}
+	
 	var result = false;
-	if(userInformation && userInformation.userId)
+	if((userInformation!=null)&&(userInformation.userId))
 	{
 		result = true
 	}
